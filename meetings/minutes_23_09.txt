@@ -1,0 +1,14 @@
+Meeting 1
+Date: 23/09/19
+
+Discussed any work I completed over summer and what research I have conducted. For me I had read the Cryptocurrency technology book that was suggested to me before summer.
+
+Talked about how the issues with using mining in a project of this scale and how it would take a large amount of time to generate a new block because of the limitations on hardware that I have access to. Instead of the regular mining method, instead I will most likely have to have each node generate a random number and then have the node that selected the lowest number be the one to "mine" the block.
+
+We also discussed how the main test harness will be one of the biggest challanges to this project.
+
+There will be a security focus to this project and the blockchain must be resistant to many different attacks.
+
+Decided the plan for this week will be to start work on the blockchain and try some basic tests.
+
+We decided the next meeting will be held at 3:30 on Tuesday the 1st.
