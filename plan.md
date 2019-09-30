@@ -1,15 +1,16 @@
 # Plan
 
-* PROJECT TITLE
-* YOUR NAME
-* STUDENT ID
-* SUPERVISOR NAME
+* Implementing a Cryptocurrency
+* Sean Horgan
+* 2184253
+* Dr Ron Poet
 
 Week-by-week plan for the whole project. Update this as you go along.
 
 ## Winter semester
 
 * **Week 1**
+Setting up environment and starting work on the blockchain. Should try to start testing it with transactions.
 * **Week 2**
 * **Week 3**
 * **Week 4**

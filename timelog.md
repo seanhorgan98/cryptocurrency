@@ -1,9 +1,9 @@
 # Timelog
 
-* PROJECT NAME
-* YOUR NAME
-* STUDENT_ID
-* SUPERVISOR NAME
+* Implementing a Cryptocurrency
+* Sean Horgan
+* 2184253
+* Dr Ron Poet
 
 ## Guidance
 
@@ -14,13 +14,17 @@
 
 ## Week 1
 
-### 19 Oct 2019
+### 26 Sep 2019
 
-* *4 hours* Read the project guidance notes
-* *0.5 hour* Created GitLab repository and cloned the cookiecutter for the projects
-* *1 hour* Modified dissertation template, compiled  
+* *0.5 hour* Meeting with supervisor
+* *2 hours* Attending Project Guidance lectures 
+* *0.5 hour* Created GitLab repository and cloned the skeleton file structure for the projects
 
-## 20 Oct 2019
+### 29 Sept 2019
 
-* *1 hour* meeting with supervisor
-* *2 hours* writing initial version of test harness
+* *2 hours* Read Hall of Fame dissertaions
+
+### 30 Sept 2019
+
+* *0.5 hour* Updating all documentation with default info
+* *0.5 hour* Updating timelog
