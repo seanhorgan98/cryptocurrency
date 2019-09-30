@@ -5,15 +5,15 @@ import java.security.NoSuchAlgorithmException;
 import java.math.BigInteger;
 
 class Block {
+    private final Long timeStamp;
+    private final String data;
     public final int index;
-    public final Long timeStamp;
     public final String previousHash;
-    public final String data;
     public final String hash;
 
-    public Block(int index, Long timeStamp, String previousHash, String data){
+    public Block(int index, String previousHash, String data){
         this.index = index;
-        this.timeStamp = timeStamp;
+        this.timeStamp = Instant.now().getEpochSecond();
         this.previousHash = previousHash;
         this.data = data;
         this.hash = getSHAString(Integer.toString(index) + previousHash + timeStamp.toString() + data);;

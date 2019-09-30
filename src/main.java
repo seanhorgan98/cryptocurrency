@@ -4,16 +4,18 @@
 
 import Block.java;
 import Blockchain.java;
-import java.time.Instant;
 
 class Main{
     public static void main(String[] args) {
-        System.out.println("-----------------------------------------");
-        //1. Create Genisis Block
-        //2. Create blockchain
-        Long unixTime = Instant.now().getEpochSecond();
-        Block firstBlock = new Block(1, unixTime, "previousBlockHash", "new data!");
+        System.out.println("---------------OUTPUT------------------");
+
+        Block genisisBlock = new Block(0, "previousBlockHash", "Genisis Data!");
+        Blockchain blockChain = new Blockchain(genisisBlock);
+
+        Block secondBlock = new Block(1, genisisBlock.hash, "Second block data!");
+        blockChain.addBlock(secondBlock);
         
-        System.out.println("Block Info: " + firstBlock.hash);
+        System.out.println("Genisis Block Hash: " + genisisBlock.hash);
+        System.out.println("Second Block previousHash: " + blockChain.blockChain.get(1).previousHash);
     }
 }
