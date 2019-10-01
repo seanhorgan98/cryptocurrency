@@ -24,7 +24,7 @@ class Block {
     }
 
     private static String getSHAString(String input){
-        BigInteger number = new BigInteger(1, getSHA(input));
+        BigInteger number = new BigInteger(1, getDigest(input));
         StringBuilder hexString = new StringBuilder(number.toString(16));
         while(hexString.length() < 32){
             hexString.insert(0, '0');
@@ -32,7 +32,7 @@ class Block {
         return hexString.toString();
     }
 
-    private static byte[] getSHA(String input){
+    private static byte[] getDigest(String input){
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             return md.digest(input.getBytes(StandardCharsets.UTF_8)); 

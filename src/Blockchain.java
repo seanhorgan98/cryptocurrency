@@ -12,4 +12,11 @@ class Blockchain {
     public void addBlock(Block blockToAdd){
         blockChain.add(blockToAdd);
     }
+
+    public void printBlockchain(){
+        System.out.println("Blockchain:");
+        for (Block block : blockChain) {
+            System.out.println("Block " + block.index + ": " + block.hash);
+        }
+    }
 }

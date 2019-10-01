@@ -28,3 +28,4 @@
 
 * *0.5 hour* Updating all documentation with default info
 * *0.5 hour* Updating timelog
+* *3 hours* Created Block and Blockchain data structures and began testing
