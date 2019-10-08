@@ -1,0 +1,12 @@
+Meeting 2
+Date: 01/10/19
+
+Discussed the progress I made creating the Block & Blockchain data structures. I also started testing their implementation and the links to the other blocks with hashs.
+
+Decided the github repository should be private.
+
+Decided to leave the OP_codes used in bitcoin to verify transactions out of scope for the moment but can add them in at a later date if all is going well.
+
+Plan for next week is to start implementing transactions into the blocks. We agreed I would implement these using a merkle tree structure in the blocks.
+
+We decided the next meeting will be held at 16:00 on Tuesday the 8th.
