@@ -15,9 +15,14 @@ class Main{
         Block secondBlock = new Block(1, genisisBlock.hash, "Second block data!");
         blockChain.addBlock(secondBlock);
 
-        blockChain.printBlockchain();
+        Block thirdBlock = new Block(2, secondBlock.hash, "Third block data!");
+        blockChain.addBlock(thirdBlock);
         
-        // System.out.println("Genisis Block Hash: " + genisisBlock.hash);
-        // System.out.println("Second Block previousHash: " + blockChain.blockChain.get(1).previousHash);
+        System.out.println("Mining block 0...");
+        blockChain.blockChain.get(0).mineBlock(2);
+        
+        System.out.println("Genisis Block Hash: " + genisisBlock.hash);
+        System.out.println("Second Block Hash: " + blockChain.blockChain.get(1).hash);
+        System.out.println("Third Block Hash: " + blockChain.blockChain.get(2).hash);
     }
 }
