@@ -36,16 +36,13 @@ class Block {
     }
 
     public void mineBlock(int difficulty) {
-		String target = new String(new char[difficulty]).replace('\0', '0'); 
-		while(!(hash.substring( 0, difficulty).equals(target))) {
+        String target = new String(new char[difficulty]).replace('\0', '0'); 
+        String newHash = hash;
+		while(!(newHash.substring( 0, difficulty).equals(target))) {
             nonce ++;
-            if(nonce < 15){
-                System.out.println("Nonce: " + nonce + ", Target: " + target + ", Hash: " + hash.substring(0, difficulty));
-            }
-            
-			hash = calculateHash();
+			newHash = calculateHash();
 		}
-		System.out.println("Block Mined!!! : " + hash);
+		System.out.println("Block Mined!!! : " + newHash);
 	}
 
 }

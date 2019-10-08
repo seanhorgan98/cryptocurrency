@@ -2,7 +2,7 @@ import Block.java;
 import java.util.*;
 
 class Blockchain {
-    public ArrayList<Block> blockChain = new ArrayList<Block>();
+    public ArrayList<Block> blockChain = new ArrayList<Block>(1);
     public static int diffuculty = 1;
 
     public Blockchain(Block genisisBlock){
@@ -17,19 +17,19 @@ class Blockchain {
     public void printBlockchain(){
         System.out.println("Blockchain:");
         for (Block block : blockChain) {
-            System.out.println("Block " + block.index + ": " + block.hash);
+            System.out.println("Block: " + block.index + ", Hash: " + block.hash + ", previousHash: " + block.previousHash);
         }
     }
 
     public Boolean validateChain(){
-        for(int i = 0; i < blockChain.size(); i++){
+        for(int i = 1; i < blockChain.size(); i++){
             Block currentBlock = blockChain.get(i);
             Block previousBlock = blockChain.get(i-1);
 
-            if (currentBlock.hash != currentBlock.calculateHash()){
+            if (!currentBlock.hash.equals(currentBlock.calculateHash())){
                 return false;
             }
-            if (currentBlock.previousHash != previousBlock.hash){
+            if (!currentBlock.previousHash.equals(previousBlock.hash)){
                 return false;
             }
         }
