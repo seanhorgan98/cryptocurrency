@@ -19,5 +19,10 @@ public class StringUtil {
 		catch(Exception e) {
 			throw new RuntimeException(e);
 		}
-	}	
+	}
+
+	//Returns a string value from a public or private key
+	public static String getStringFromKey(Key key) {
+		return Base64.getEncoder().encodeToString(key.getEncoded());
+	}
 }
