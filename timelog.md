@@ -29,3 +29,19 @@
 * *0.5 hour* Updating all documentation with default info
 * *0.5 hour* Updating timelog
 * *3 hours* Created Block and Blockchain data structures and began testing
+
+### 8 Oct 2019
+
+* *2 hours* Block validation and starting mining
+
+### 9 Oct 2019
+
+* *1.5 hours* Finished basic mining and started transactions
+
+### 14 Oct 2019
+
+* *2 hours* Created transactions base data structure
+
+### 15 Oct 2019
+
+* *2 hours* Created classes for transaction inputs and outputs

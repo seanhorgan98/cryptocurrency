@@ -1,0 +1,16 @@
+Meeting 4
+Date: 15/10/19
+
+Discussed my development over the last week of creating the base transaction data structures.
+This includes their meta data, inputs and outputs using helper classes.
+Got a good idea of what I am doing going forward for adding transactions to blocks.
+
+Discussed reading and writing to file for inputs and outputs in order to be used and 
+what file formats I should use for this.
+
+Plan for the next two weeks is to start processing transaction signatures (generation and verification)
+and processing the value of these transactions including when the output is smaller than the input for 
+sending transaction fees.
+
+As we are not meeting next week if I complete this I also plan to try adding transactions to blocks
+using merkle tree structures.

@@ -1,0 +1,14 @@
+Meeting 3
+Date: 08/10/19
+
+Discussed the progress I made validating the blockchain and started creating
+basic mining functionality. Also did research on merkle trees for storing transactions inside blocks
+
+Asked about how the future mining functoinality will work when on a large scale.
+Decided the basic process I am using now will be able to work if the target value for the
+hashing calculations is set to an easy difficulty.
+
+Planned for the next week to implement the transactions and have them added to blocks
+and stored using merkle trees.
+
+Next meeting is planned for Tuesday the 15th at 16:00
