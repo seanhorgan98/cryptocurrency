@@ -46,16 +46,47 @@ class Transaction{
         String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value)	;
         return StringUtil.verifyECDSASig(sender, data, signature);
     }
+
+    public float getInputSum(){
+        float inputTotal = 0;
+        for (TransactionInput input : inputs){
+            float inputValue = input.value;
+            if (inputValue != 0){
+                inputTotal += inputValue;
+            }
+        }
+        return inputTotal;
+    }
+
+
+    public boolean processTransaction(){
+        if (verifiySignature() == false){
+            System.out.println("Transaction failed to verify.");
+            return false;
+        }
+
+        float transactionFee = getInputSum() - value;
+        transactionHash = calulateHash();
+        outputs.add(new TransactionOutput(this.reciepient, value, transactionHash));
+        //Transaction Fee
+        outputs.add(new TransactionOutput( this.sender, transactionFee, transactionHash));
+
+        return true;
+        
+    }
 }
 
 class TransactionInput{
     public String previousOutId; //Hash pointer to previous output
     public int index; //The index of the previous transactions' output that is being claimed
     public byte[] signature;
+    public float value;
 
     public TransactionInput(String previousOutId){
         this.previousOutId = previousOutId;
     }
+
+    
 
 }
 
