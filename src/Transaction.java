@@ -25,12 +25,27 @@ class Transaction{
 		this.sender = sender;
 		this.reciepient = reciepient;
 		this.value = value;
-		this.inputs = inputs;
+        this.inputs = inputs;
     }
 
     private String calulateHash() {
 		return StringUtil.applySha256(StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value));
-	}
+    }
+    
+
+    //Generates a signature for the transaction
+    //In future will add in the inputs and outputs
+    public void generateSignature(PrivateKey privateKey) {
+        String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value)	;
+        signature = StringUtil.applyECDSASig(privateKey,data);		
+    }
+
+    //Verifies that the signature is valid for the transaction
+    //In future will add in the inputs and outputs
+    public boolean verifiySignature() {
+        String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value)	;
+        return StringUtil.verifyECDSASig(sender, data, signature);
+    }
 }
 
 class TransactionInput{
