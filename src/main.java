@@ -1,5 +1,3 @@
-import java.security.*;
-
 /**
  * Main Class used for testing the blockchain and blocks.
  */
@@ -18,7 +16,7 @@ class Main{
         Transaction transaction = new Transaction(walletA.publicKey, walletB.publicKey, 5, null);
         transaction.generateSignature(walletA.privateKey);
         
-        System.out.println("Is signature verified");
+        System.out.println("Is signature verified?");
 		System.out.println(transaction.verifiySignature());
 
 /*
