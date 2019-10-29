@@ -1,9 +1,4 @@
 import java.time.Instant;
-import java.security.MessageDigest;
-import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.math.BigInteger;
-import StringUtil.java;
 
 class Block {
     private Long timeStamp;

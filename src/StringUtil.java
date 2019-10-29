@@ -1,5 +1,6 @@
-
+import java.security.Key;
 import java.security.MessageDigest;
+import java.util.Base64;
 
 public class StringUtil {
 	//Applies Sha256 to a string and returns the result. 

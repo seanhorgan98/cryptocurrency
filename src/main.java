@@ -2,9 +2,6 @@
  * Main Class used for testing the blockchain and blocks.
  */
 
-import Block.java;
-import Blockchain.java;
-
 class Main{
     public static void main(String[] args) {
         System.out.println("---------------OUTPUT------------------");

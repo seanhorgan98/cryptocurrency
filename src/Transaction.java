@@ -54,6 +54,6 @@ class TransactionOutput{
         this.reciepient = reciepient;
         this.value = value;
         this.parentTransactionId = parentTransactionId;
-        this.id = StringUtil.applySha256(StringUtil.getStringFromKey(reciepient) + Float.toString(value) + originalTransactionId);
+        this.id = StringUtil.applySha256(StringUtil.getStringFromKey(reciepient) + Float.toString(value) + parentTransactionId);
     }
 }
