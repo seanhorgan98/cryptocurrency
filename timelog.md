@@ -45,3 +45,12 @@
 ### 15 Oct 2019
 
 * *2 hours* Created classes for transaction inputs and outputs
+
+### 2 Nov 2019
+
+* *2 hours* Added some verification for data structures
+
+### 5 Nov 2019
+
+* *2 hours* Worked on dissertation
+* *1 hour* Cleaned up code

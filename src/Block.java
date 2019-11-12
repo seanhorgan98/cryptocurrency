@@ -18,7 +18,7 @@ class Block {
         this.hash = calculateHash();
     }
 
-    //Would need to redo the merkle tree after adding
+    //Will need to redo the merkle tree after adding
     public void addTransaction(Transaction t){
         transactions.add(t);
     }

@@ -2,12 +2,6 @@ import java.security.*;
 import java.util.ArrayList;
 
 
-/**
- * When Transaction is created:
- * Create metadata
- * Create Transaction Inputs
- * Create Transaction Outputs
- */
 class Transaction{
     public String transactionHash; //Serves as an ID
     public PublicKey sender;
@@ -17,8 +11,8 @@ class Transaction{
 
     public byte[] signature; //Used for verification
 
-    public ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();  //These types will have
-    public ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>(); //to be changed to objects
+    public ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
+    public ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
     
 
     public Transaction(PublicKey sender, PublicKey reciepient, float value,  ArrayList<TransactionInput> inputs) {

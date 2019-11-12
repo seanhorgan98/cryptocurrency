@@ -1,0 +1,13 @@
+Meeting 6
+Date: 05/11/19
+
+As I had a busy week due to coursework for all the modules being released and 
+busy away hockey fixtures I was only able to add a basic blockchain validation
+method and clean up the overall code of the project. I also set up the 
+enviroment for the dissertation and changed the title, metadata, etc.
+
+The plan for the next week is to finish off adding unit tests for the different
+data structures and and continue to work of the background sections for the
+dissertation.
+
+The next meeting will be at 4pm on Tuesday the 12th of November.

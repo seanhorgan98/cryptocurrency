@@ -1,0 +1,17 @@
+Meeting 5
+Date: 29/10/19
+
+Over the past 2 weeks I added signature functionality for generating and verifying signatures
+for transactions. I created the merkle tree structure for when transactions are added to
+blocks. I also created basic wallet functionality to start testing the transaction process
+and see how transfering values between public keys is working. Also changed the stringUtil
+hashing function.
+
+Decided it would be a good idea to start working on the background work for the dissertation
+as soon as possible while it is still fresh in my mind.
+
+Plan for next week is to add some unit tests to verify that the blockchain is valid and also
+that the merkle tree structure in the blocks is correct. I also plan to start working on the 
+dissertation.
+
+The next meeting will be at 4pm on Tuesday the 5th of November.
