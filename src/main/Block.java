@@ -16,11 +16,21 @@ class Block {
         this.timeStamp = Instant.now().getEpochSecond();
         this.previousHash = previousHash;
         this.hash = calculateHash();
+        this.merkleRoot = null;
     }
 
-    //Will need to redo the merkle tree after adding
-    public void addTransaction(Transaction t){
+    public boolean addTransaction(Transaction t){
+        if(t == null){ return false;}
+        if(previousHash.equals("0")){return false;}
+
+        if(t.processTransaction() != true){
+            System.out.println("Transaction failed to process. Discarded");
+            return false;
+        }
+
         transactions.add(t);
+        System.out.println("Transaction successfully added to block.");
+        return true;
     }
 
     public String calculateHash() {
@@ -42,6 +52,7 @@ class Block {
 		System.out.println("Block Mined!!! : " + newHash);
     }
     
+    //Called once all transactions are added
     public void buildMerkleTree(){
         List<String> tree = new ArrayList<String>();
 
