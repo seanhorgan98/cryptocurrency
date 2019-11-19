@@ -16,17 +16,19 @@ class Transaction{
     public ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
     public ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
     
-
+    
     public Transaction(PublicKey sender, PublicKey reciepient, float value,  ArrayList<TransactionInput> inputs) {
 		this.sender = sender;
 		this.reciepient = reciepient;
         this.value = value;
+
         
         if (inputs == null){
-            inputs = new ArrayList<TransactionInput>();
-        }else{
-            this.inputs = inputs;
+            System.out.println("Invalid transaction: No inputs");
+            return;
         }
+        
+        this.inputs = inputs;
         
         this.transactionId = calulateHash();
     }
@@ -34,7 +36,7 @@ class Transaction{
     private String calulateHash() {
 		return StringUtil.applySha256(StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value));
     }
-    
+
 
     //Generates a signature for the transaction
     //In future will add in the inputs and outputs

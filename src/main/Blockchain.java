@@ -1,5 +1,6 @@
 package main;
 
+import java.security.PublicKey;
 import java.util.*;
 import main.TransactionOutput;
 
@@ -38,5 +39,10 @@ class Blockchain {
             }
         }
         return true;
+    }
+    
+    public void createCoin(PublicKey reciepient, float value){
+        TransactionOutput createOutput = new TransactionOutput(reciepient, value, "0");
+        UTXOs.put(createOutput.id, createOutput);
     }
 }
