@@ -1,0 +1,13 @@
+Meeting 7
+Date 12/11/19
+
+Implemented some basic merkle tree validation. Tested the whole process
+of creating wallets, creating transactions, adding those transactions to 
+blocks and mining those blocks. Then adding those blocks to the blockchain.
+Made sure that this was all working and all the hashs matched up and the
+data structures were all valid. I also did some work on the dissertation,
+adding the abstract.
+
+The plan for next week is to distinguise between coin creation transactions
+and actual transaction between two wallets. This as well as updating balances
+in wallets when transactions are recieved.
