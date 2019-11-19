@@ -1,3 +1,5 @@
+package main;
+
 import java.util.*;
 
 class Blockchain {
@@ -16,7 +18,7 @@ class Blockchain {
     public void printBlockchain(){
         System.out.println("Blockchain:");
         for (Block block : blockChain) {
-            System.out.println("Block: " + block.index + ", Hash: " + block.hash + ", previousHash: " + block.previousHash);
+            System.out.println("Hash: " + block.hash + ", previousHash: " + block.previousHash);
         }
     }
 

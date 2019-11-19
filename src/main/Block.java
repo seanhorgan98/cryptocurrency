@@ -1,3 +1,5 @@
+package main;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -5,29 +7,27 @@ import java.util.List;
 class Block {
     private Long timeStamp;
     private String merkleRoot;
-    public int index;
     public String previousHash;
     public String hash;
     private int nonce;
     public List<Transaction> transactions;
 
-    public Block(int index, String previousHash){
-        this.index = index;
+    public Block(String previousHash){
         this.timeStamp = Instant.now().getEpochSecond();
         this.previousHash = previousHash;
         this.hash = calculateHash();
         this.merkleRoot = null;
+        this.transactions = new ArrayList<Transaction>();
     }
 
     public boolean addTransaction(Transaction t){
-        if(t == null){ return false;}
+        if(t == null){return false;}
         if(previousHash.equals("0")){return false;}
 
         if(t.processTransaction() != true){
             System.out.println("Transaction failed to process. Discarded");
             return false;
         }
-
         transactions.add(t);
         System.out.println("Transaction successfully added to block.");
         return true;
@@ -58,7 +58,7 @@ class Block {
 
         //Create tree of hashes
         for (Transaction t : transactions){
-            tree.add(t.transactionHash);
+            tree.add(t.transactionId);
         }
 
         List<String> newTxList = getNewTxList(tree);
@@ -67,6 +67,12 @@ class Block {
         }
     
         this.merkleRoot = newTxList.get(0);
+    }
+
+    public boolean merkleTreeTest(){
+
+
+        return true;
     }
 
     private List<String> getNewTxList(List<String> tempTxList){
