@@ -39,7 +39,7 @@ public class Wallet {
 	public void updateWallet(){
 		//Loop through UTXOs and update balance where hashs match this wallet
 		for (Map.Entry<String, TransactionOutput> entry : Blockchain.UTXOs.entrySet()) {
-			if(entry.getKey() == StringUtil.getStringFromKey(publicKey)){
+			if(StringUtil.getStringFromKey(entry.getValue().reciepient)  == StringUtil.getStringFromKey(publicKey)){
 				balance += entry.getValue().value;
 			}
 		}

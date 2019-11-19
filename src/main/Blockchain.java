@@ -6,7 +6,8 @@ import main.TransactionOutput;
 
 class Blockchain {
     public ArrayList<Block> blockChain = new ArrayList<Block>(1);
-    public static Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>(); //list of all unspent transactions. 
+    //List of all unspent transactions in a Map<TransactionOutput.id, TransactionOutput>
+    public static Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
     public static int diffuculty = 1;
     public static final float MIN_TRANSACTION = 1.0f;
 
