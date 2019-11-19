@@ -71,4 +71,6 @@
 
 ### 19 Nov 2019
 
-*
+* *2 hours* Created UTXOs to keep track of unspent coins
+* *1 hour* Added wallet balances
+* *2 hours* Worked on creating coins
