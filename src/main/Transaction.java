@@ -50,7 +50,8 @@ class Transaction{
         return StringUtil.verifyECDSASig(sender, data, signature);
     }
 
-    public float getInputSum(){
+    //Get sum of input values
+    public float getInputsSum(){
         float inputTotal = 0;
         for (TransactionInput input : inputs){
             float inputValue = input.value;
@@ -61,6 +62,15 @@ class Transaction{
         return inputTotal;
     }
 
+    //Get sum of output values
+    public float getOutputsSum() {
+		float total = 0;
+		for(TransactionOutput o : outputs) {
+			total += o.value;
+		}
+		return total;
+	}
+
 
     public boolean processTransaction(){
         if (verifiySignature() == false){
@@ -68,41 +78,35 @@ class Transaction{
             return false;
         }
 
-        float transactionFee = getInputSum() - value;
+        // Get transaction inputs
+        for (TransactionInput i : inputs){
+            i.UTXO = Blockchain.UTXOs.get(i.previousOutId);
+        }
+
+        //check if transaction is valid:
+		if(getInputsSum() < Blockchain.MIN_TRANSACTION) {
+			System.out.println("#Transaction Inputs to small: " + getInputsSum());
+			return false;
+		}
+
+        float transactionFee = getInputsSum() - value;
         transactionId = calulateHash();
         outputs.add(new TransactionOutput(this.reciepient, value, transactionId));
         //Transaction Fee
         outputs.add(new TransactionOutput( this.sender, transactionFee, transactionId));
 
+        //add outputs to Unspent list
+		for(TransactionOutput o : outputs) {
+			Blockchain.UTXOs.put(o.id , o);
+        }
+        
+        //remove transaction inputs from UTXO lists as spent:
+		for(TransactionInput i : inputs) {
+			if(i.UTXO == null) continue; //if Transaction can't be found skip it 
+			Blockchain.UTXOs.remove(i.UTXO.id);
+		}
+
         return true;
         
-    }
-}
-
-class TransactionInput{
-    public String previousOutId; //Hash pointer to previous output
-    public int index; //The index of the previous transactions' output that is being claimed
-    public byte[] signature;
-    public float value;
-
-    public TransactionInput(String previousOutId){
-        this.previousOutId = previousOutId;
-    }
-
-    
-
-}
-
-class TransactionOutput{
-    public float value;
-    public String id;
-    public PublicKey reciepient;
-    public String parentTransactionId;
-
-    public TransactionOutput(PublicKey reciepient, float value, String parentTransactionId){
-        this.reciepient = reciepient;
-        this.value = value;
-        this.parentTransactionId = parentTransactionId;
-        this.id = StringUtil.applySha256(StringUtil.getStringFromKey(reciepient) + Float.toString(value) + parentTransactionId);
     }
 }

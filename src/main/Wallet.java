@@ -1,13 +1,23 @@
+package main;
+
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;
+import java.util.Map;
 
 public class Wallet {
 	
 	public PrivateKey privateKey;
 	public PublicKey publicKey;
+	private float balance;
 	
 	public Wallet(){
-		generateKeyPair();	
+		generateKeyPair();
+		this.balance = 0;
+	}
+
+	public float getBalance(){
+		updateWallet();
+		return balance;
 	}
 		
 	public void generateKeyPair() {
@@ -23,6 +33,15 @@ public class Wallet {
             publicKey = keyPair.getPublic();
 		}catch(Exception e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	public void updateWallet(){
+		//Loop through UTXOs and update balance where hashs match this wallet
+		for (Map.Entry<String, TransactionOutput> entry : Blockchain.UTXOs.entrySet()) {
+			if(entry.getKey() == StringUtil.getStringFromKey(publicKey)){
+				balance += entry.getValue().value;
+			}
 		}
 	}
 	

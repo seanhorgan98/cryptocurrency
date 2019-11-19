@@ -1,10 +1,13 @@
 package main;
 
 import java.util.*;
+import main.TransactionOutput;
 
 class Blockchain {
     public ArrayList<Block> blockChain = new ArrayList<Block>(1);
+    public static Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>(); //list of all unspent transactions. 
     public static int diffuculty = 1;
+    public static final float MIN_TRANSACTION = 1.0f;
 
     public Blockchain(Block genisisBlock){
         //Create genisis block
