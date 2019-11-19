@@ -54,3 +54,21 @@
 
 * *2 hours* Worked on dissertation
 * *1 hour* Cleaned up code
+
+### 7 Nov 2019
+
+* *2 hours* Added some merkle tree validation
+* *1 hour* Started testing whole process
+
+### 10 Nov 2019
+
+* *1.5 hours* Read through some of the HoF dissertations
+* *1 hour* Added Abstract to dissertation
+
+### 15 Nov 2019
+
+* *1 hour* Started introducing balances to wallets
+
+### 19 Nov 2019
+
+*
