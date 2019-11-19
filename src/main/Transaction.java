@@ -1,9 +1,11 @@
+package main;
+
 import java.security.*;
 import java.util.ArrayList;
 
 
 class Transaction{
-    public String transactionHash; //Serves as an ID
+    public String transactionId; //Serves as an ID
     public PublicKey sender;
     public PublicKey reciepient;
 
@@ -18,8 +20,15 @@ class Transaction{
     public Transaction(PublicKey sender, PublicKey reciepient, float value,  ArrayList<TransactionInput> inputs) {
 		this.sender = sender;
 		this.reciepient = reciepient;
-		this.value = value;
-        this.inputs = inputs;
+        this.value = value;
+        
+        if (inputs == null){
+            inputs = new ArrayList<TransactionInput>();
+        }else{
+            this.inputs = inputs;
+        }
+        
+        this.transactionId = calulateHash();
     }
 
     private String calulateHash() {
@@ -60,10 +69,10 @@ class Transaction{
         }
 
         float transactionFee = getInputSum() - value;
-        transactionHash = calulateHash();
-        outputs.add(new TransactionOutput(this.reciepient, value, transactionHash));
+        transactionId = calulateHash();
+        outputs.add(new TransactionOutput(this.reciepient, value, transactionId));
         //Transaction Fee
-        outputs.add(new TransactionOutput( this.sender, transactionFee, transactionHash));
+        outputs.add(new TransactionOutput( this.sender, transactionFee, transactionId));
 
         return true;
         
