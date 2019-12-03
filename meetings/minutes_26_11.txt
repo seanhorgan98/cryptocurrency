@@ -1,0 +1,13 @@
+Meeting 9
+Date: 26/11/19
+
+Was very busy this week with coursework due for other courses and 
+traveling due to 3 hockey matches. Because of this I was unable to find
+time to work on the project.
+
+Then plan for next week is to finish off the previous weeks work like ading
+validation to wallets balances when creating transactions and making sure
+coin creation is secure. I also plan to create a roadmap for the work I will
+be doing over the Christmas break.
+
+The next meeting will be the same time next week. 4pm Tuesday.
