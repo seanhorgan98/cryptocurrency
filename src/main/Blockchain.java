@@ -1,6 +1,5 @@
 package main;
 
-import java.security.PublicKey;
 import java.util.*;
 import main.TransactionOutput;
 
@@ -9,7 +8,8 @@ class Blockchain {
     //List of all unspent transactions in a Map<TransactionOutput.id, TransactionOutput>
     public static Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
     public static int diffuculty = 1;
-    public static final float MIN_TRANSACTION = 1.0f;
+    public static final float MIN_TRANSACTION = 0.1f;
+    public static final int DIFFICULTY = 1;
 
     public Blockchain(Block genisisBlock){
         //Create genisis block
@@ -17,6 +17,10 @@ class Blockchain {
     }
 
     public void addBlock(Block blockToAdd){
+        //System.out.println(blockChain.get(blockChain.size()-1).hash);
+        
+        blockToAdd.previousHash = blockChain.get(blockChain.size()-1).hash;
+        blockToAdd.mineBlock(DIFFICULTY);
         blockChain.add(blockToAdd);
     }
 
@@ -40,10 +44,5 @@ class Blockchain {
             }
         }
         return true;
-    }
-    
-    public void createCoin(PublicKey reciepient, float value){
-        TransactionOutput createOutput = new TransactionOutput(reciepient, value, "0");
-        UTXOs.put(createOutput.id, createOutput);
     }
 }
