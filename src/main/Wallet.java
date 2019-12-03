@@ -3,6 +3,7 @@ package main;
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class Wallet {
 	
@@ -43,6 +44,23 @@ public class Wallet {
 				balance += entry.getValue().value;
 			}
 		}
+	}
+
+	//Client side check to see if wallet has enough coins to make transaction
+	public boolean sufficientFunds(Transaction tx){
+		if(balance < tx.value){
+			return false;
+		}
+
+		return true;
+	}
+
+
+	public Transaction createTransaction(PublicKey recipient, float value, ArrayList<TransactionInput> inputs){
+		Transaction tx = new Transaction(publicKey, recipient, value, inputs);
+		tx.outputs.add(new TransactionOutput(tx.reciepient, tx.value, tx.transactionId));
+		tx.generateSignature(privateKey);
+		return tx;
 	}
 	
 }

@@ -1,7 +1,9 @@
 package main;
 
 import java.security.*;
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 class Transaction{
@@ -13,22 +15,22 @@ class Transaction{
 
     public byte[] signature; //Used for verification
 
-    public ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
-    public ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
+    public List<TransactionInput> inputs = new ArrayList<TransactionInput>();
+    public List<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
     
     
     public Transaction(PublicKey sender, PublicKey reciepient, float value,  ArrayList<TransactionInput> inputs) {
-		this.sender = sender;
+		
 		this.reciepient = reciepient;
         this.value = value;
+        this.sender = sender;
 
-        
+        //Check if coin creation
         if (inputs == null){
-            System.out.println("Invalid transaction: No inputs");
-            return;
+            this.inputs = Collections.emptyList();
+        }else{
+            this.inputs = inputs;
         }
-        
-        this.inputs = inputs;
         
         this.transactionId = calulateHash();
     }
@@ -42,7 +44,7 @@ class Transaction{
     //In future will add in the inputs and outputs
     public void generateSignature(PrivateKey privateKey) {
         String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value)	;
-        signature = StringUtil.applyECDSASig(privateKey,data);		
+        signature = StringUtil.applyECDSASig(privateKey,data);
     }
 
     //Verifies that the signature is valid for the transaction
@@ -84,18 +86,29 @@ class Transaction{
         for (TransactionInput i : inputs){
             i.UTXO = Blockchain.UTXOs.get(i.previousOutId);
         }
+        float inputSum = getInputsSum();
 
         //check if transaction is valid:
-		if(getInputsSum() < Blockchain.MIN_TRANSACTION) {
-			System.out.println("#Transaction Inputs to small: " + getInputsSum());
+		if(inputSum < Blockchain.MIN_TRANSACTION && inputs.size() > 0) {
+			System.out.println("Transaction Inputs too small: " + getInputsSum());
 			return false;
-		}
+        }
+        
+        // Check sufficient funds
+        if(inputSum < value){
+            System.out.println("Insufficient funds, Inputs: " + inputSum + ", Value: " + value);
+            return false;
+        }
 
-        float transactionFee = getInputsSum() - value;
+        float transactionFee = value - getInputsSum();
         transactionId = calulateHash();
         outputs.add(new TransactionOutput(this.reciepient, value, transactionId));
-        //Transaction Fee
-        outputs.add(new TransactionOutput( this.sender, transactionFee, transactionId));
+
+        //Transaction Fee only when not coin creation
+        if(inputs.size() > 0){
+            outputs.add(new TransactionOutput( this.sender, transactionFee, transactionId));
+        }
+        
 
         //add outputs to Unspent list
 		for(TransactionOutput o : outputs) {
