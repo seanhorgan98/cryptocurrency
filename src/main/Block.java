@@ -8,21 +8,21 @@ class Block {
     private Long timeStamp;
     private String merkleRoot;
     public String previousHash;
-    public String hash;
+    public String hash; //ID
     private int nonce;
     public List<Transaction> transactions;
 
-    public Block(String previousHash){
+    public Block(){
         this.timeStamp = Instant.now().getEpochSecond();
-        this.previousHash = previousHash;
         this.hash = calculateHash();
         this.merkleRoot = null;
         this.transactions = new ArrayList<Transaction>();
+        this.nonce = 0;
     }
 
     public boolean addTransaction(Transaction t){
         if(t == null){return false;}
-        if(previousHash.equals("0")){return false;}
+        if(previousHash == null){return false;}
 
         if(t.processTransaction() != true){
             System.out.println("Transaction failed to process. Discarded");
