@@ -8,42 +8,39 @@ class Main{
         Wallet walletB = new Wallet();
         
 
-        // System.out.println("Private and public keys:");
-		// System.out.println(StringUtil.getStringFromKey(walletA.privateKey));
-		// System.out.println(StringUtil.getStringFromKey(walletA.publicKey));
+        // Transactions should always be wallet to wallet
+        // But coin creation can just be a new transaction created with no sender or inputs
 
         //Genesis Transaction
-        Transaction genesisTransaction = new Transaction(walletA.publicKey, walletB.publicKey, 5, null);
-        genesisTransaction.generateSignature(walletA.privateKey);
-        genesisTransaction.inputs.add(new TransactionInput("0"));
-        genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.reciepient, genesisTransaction.value, genesisTransaction.transactionId));
+        Transaction genesisTransaction = walletA.createTransaction(walletB.publicKey, 5, null);
+        
 
         //Genesis Block
-        Block genesisBlock = new Block("genesis");
+        Block genesisBlock = new Block();
         genesisBlock.addTransaction(genesisTransaction);
+        
+        //Merkle tree caught in infinite loop
         //genesisBlock.buildMerkleTree();
 
         Blockchain blockchain = new Blockchain(genesisBlock);
 
-        Block block1 = new Block(genesisBlock.hash);
-        Transaction transactionB = new Transaction(walletB.publicKey, walletA.publicKey, 5, null);
-        block1.addTransaction(transactionB);
-        block1.mineBlock(2);
+        //Coin creation, remember to add to block
+        //Transaction creationTx = new Transaction(null, walletA.publicKey, 999, null);
+
+        Block block1 = new Block();
+        block1.addTransaction(walletB.createTransaction(walletA.publicKey, 5, null));
         blockchain.addBlock(block1);
 
-        Block block2 = new Block(block1.hash);
-        Transaction transactionC = new Transaction(walletA.publicKey, walletB.publicKey, 3, null);
-        block2.addTransaction(transactionC);
-        block2.mineBlock(2);
+        Block block2 = new Block();
+        block2.addTransaction(walletA.createTransaction(walletB.publicKey, 3, null));
         blockchain.addBlock(block2);
 
-        Block block3 = new Block(block2.hash);
-        Transaction transactionD = new Transaction(walletA.publicKey, walletB.publicKey, 3, null);
-        block3.addTransaction(transactionD);
-        block3.mineBlock(2);
+        Block block3 = new Block();
+        block3.addTransaction(walletA.createTransaction(walletB.publicKey, 3, null));
         blockchain.addBlock(block3);
 
         System.out.println("Blockchain is: " + Boolean.toString(blockchain.validateChain()));
+        blockchain.printBlockchain();
         
         
 
