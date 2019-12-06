@@ -9,17 +9,14 @@ class Blockchain {
     public static Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
     public static int diffuculty = 1;
     public static final float MIN_TRANSACTION = 0.1f;
-    public static final int DIFFICULTY = 1;
+    public static final int DIFFICULTY = 2;
 
     public Blockchain(Block genesisBlock){
         //Create genisis block
-        genesisBlock.mineBlock(DIFFICULTY);
         this.blockChain.add(genesisBlock);
     }
 
-    public void addBlock(Block blockToAdd){
-        //System.out.println(blockChain.get(blockChain.size()-1).hash);
-        
+    public void addBlock(Block blockToAdd){        
         blockToAdd.previousHash = blockChain.get(blockChain.size()-1).hash;
         blockToAdd.mineBlock(DIFFICULTY);
         blockChain.add(blockToAdd);
@@ -37,7 +34,7 @@ class Blockchain {
             Block currentBlock = blockChain.get(i);
             Block previousBlock = blockChain.get(i-1);
 
-            if (!currentBlock.hash.equals(currentBlock.calculateHash())){
+            if (currentBlock.hash.equals(currentBlock.calculateHash(0)) == false){
                 return false;
             }
             if (!currentBlock.previousHash.equals(previousBlock.hash)){
