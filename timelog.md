@@ -74,3 +74,21 @@
 * *2 hours* Created UTXOs to keep track of unspent coins
 * *1 hour* Added wallet balances
 * *2 hours* Worked on creating coins
+
+### 23 Nov 2019
+
+* *1 hour* Started work on making coin creation immutable
+
+### 26 Nov 2019
+
+* *1 hour* Started making plan for christmas break
+
+### 29 Nov 2019
+
+* *3 hours* Changed so transactions are now called from wallets
+
+### 3 Dec 2019
+
+* *3 hours* Coin creation changed to be a new transaction in order to be immutable
+
+### 6 Dec 2019
