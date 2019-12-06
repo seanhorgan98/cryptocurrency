@@ -22,10 +22,20 @@ class Blockchain {
         blockChain.add(blockToAdd);
     }
 
-    public void printBlockchain(){
+    public void printBlocks(){
         System.out.println("Blockchain:");
         for (Block block : blockChain) {
             System.out.println("Hash: " + block.hash + ", previousHash: " + block.previousHash);
+        }
+    }
+
+    public void printTransactions(){
+        System.out.println("\n--------Full Blockchain Transactions--------");
+        for (Block block : blockChain){
+            for(Transaction t : block.transactions){
+                System.out.println("From: " + StringUtil.getStringFromKey(t.sender) + ", To: " + StringUtil.getStringFromKey(t.reciepient));
+                System.out.println("Value: " + t.value);
+            }
         }
     }
 
