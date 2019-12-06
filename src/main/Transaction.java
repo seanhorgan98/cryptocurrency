@@ -20,24 +20,23 @@ class Transaction{
     public List<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
     
     
-    public Transaction(PublicKey sender, PublicKey reciepient, float value,  ArrayList<TransactionInput> inputs) {
+    public Transaction(PublicKey sender, PublicKey reciepient, float value,  List<TransactionInput> inputs) {
 		
 		this.reciepient = reciepient;
         this.value = value;
+        
         //Check for coin creation
-        if(sender == null){
+        if(sender == null || inputs == null){
             coinCreationFlag = true;
-        }
-        this.sender = sender;
-       
-        //Check if coin creation
-        if (inputs == null){
             this.inputs = Collections.emptyList();
         }else{
+            coinCreationFlag = false;
             this.inputs = inputs;
         }
+        this.sender = sender;
         
         this.transactionId = calulateHash();
+        
     }
 
     private String calulateHash() {
@@ -108,29 +107,30 @@ class Transaction{
             System.out.println("Insufficient funds, Inputs: " + inputSum + ", Value: " + value);
             return false;
         }
-
-        float transactionFee = value - getInputsSum();
-        transactionId = calulateHash();
-        outputs.add(new TransactionOutput(this.reciepient, value, transactionId));
-
-        //Transaction Fee only when not coin creation
-        if(inputs.size() > 0){
-            outputs.add(new TransactionOutput( this.sender, transactionFee, transactionId));
+        float overPay = inputSum - value;
+        if(inputSum == 0){
+            overPay = 0;
         }
         
+        System.out.println("Value: " + value + ", Inputsum: " + inputSum + ", Overpay: " + overPay);
+        transactionId = calulateHash();
+        outputs.add(new TransactionOutput(this.reciepient, value, transactionId)); //Send value to reciepient
+        outputs.add(new TransactionOutput( this.sender, overPay, transactionId)); //Send Left over back to sender
+        
+        //UTXo key cannot be address as it will overwrite previous transactions. Needs to be transaction ID
 
-        //add outputs to Unspent list
+        //Add outputs to Unspent list
 		for(TransactionOutput o : outputs) {
 			Blockchain.UTXOs.put(o.id , o);
-        }
-        
-        //remove transaction inputs from UTXO lists as spent:
+		}
+		
+		//Remove transaction inputs from UTXO lists as spent:
 		for(TransactionInput i : inputs) {
 			if(i.UTXO == null) continue; //if Transaction can't be found skip it 
 			Blockchain.UTXOs.remove(i.UTXO.id);
 		}
-
-        return true;
+		
+		return true;
         
     }
 }
