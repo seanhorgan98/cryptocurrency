@@ -9,16 +9,15 @@ class Block {
     private String merkleRoot;
     public String previousHash;
     public String hash; //ID
-    private int nonce;
     public List<Transaction> transactions;
 
     public Block(String previousHash){
         this.timeStamp = Instant.now().getEpochSecond();
-        this.hash = calculateHash();
+        
         this.merkleRoot = null;
         this.transactions = new ArrayList<Transaction>();
-        this.nonce = 0;
         this.previousHash = previousHash;
+        this.hash = calculateHash(0);
     }
 
     public static Block buildGenesisBlock(){
@@ -34,11 +33,11 @@ class Block {
             return false;
         }
         transactions.add(t);
-        System.out.println("Transaction successfully added to block.");
+        //System.out.println("Transaction successfully added to block.");
         return true;
     }
 
-    public String calculateHash() {
+    public String calculateHash(int nonce) {
         String calculatedhash = StringUtil.applySha256( 
                 previousHash +
                 Long.toString(timeStamp) +
@@ -48,13 +47,14 @@ class Block {
     }
 
     public void mineBlock(int difficulty) {
-        String target = new String(new char[difficulty]).replace('\0', '0'); 
+        String target = new String(new char[difficulty]).replace('\0', '0');
+        int nonce = 0; 
         String newHash = hash;
 		while(!(newHash.substring( 0, difficulty).equals(target))) {
             nonce ++;
-			newHash = calculateHash();
+			newHash = calculateHash(nonce);
 		}
-		System.out.println("Block Mined!!! : " + newHash);
+		System.out.println("Block Mined: " + newHash);
     }
     
     //Called once all transactions are added
