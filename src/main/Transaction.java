@@ -10,6 +10,7 @@ class Transaction{
     public String transactionId; //Serves as an ID
     public PublicKey sender;
     public PublicKey reciepient;
+    private boolean coinCreationFlag;
 
     public float value;
 
@@ -23,8 +24,12 @@ class Transaction{
 		
 		this.reciepient = reciepient;
         this.value = value;
+        //Check for coin creation
+        if(sender == null){
+            coinCreationFlag = true;
+        }
         this.sender = sender;
-
+       
         //Check if coin creation
         if (inputs == null){
             this.inputs = Collections.emptyList();
@@ -50,8 +55,12 @@ class Transaction{
     //Verifies that the signature is valid for the transaction
     //In future will add in the inputs and outputs
     public boolean verifiySignature() {
-        String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value)	;
-        return StringUtil.verifyECDSASig(sender, data, signature);
+        if(sender == null){
+            return true;
+        }else{
+            String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value)	;
+            return StringUtil.verifyECDSASig(sender, data, signature);
+        }
     }
 
     //Get sum of input values
@@ -95,7 +104,7 @@ class Transaction{
         }
         
         // Check sufficient funds
-        if(inputSum < value){
+        if(inputSum < value && coinCreationFlag == false){
             System.out.println("Insufficient funds, Inputs: " + inputSum + ", Value: " + value);
             return false;
         }

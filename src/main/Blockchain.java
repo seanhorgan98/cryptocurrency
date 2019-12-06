@@ -11,9 +11,10 @@ class Blockchain {
     public static final float MIN_TRANSACTION = 0.1f;
     public static final int DIFFICULTY = 1;
 
-    public Blockchain(Block genisisBlock){
+    public Blockchain(Block genesisBlock){
         //Create genisis block
-        this.blockChain.add(genisisBlock);
+        genesisBlock.mineBlock(DIFFICULTY);
+        this.blockChain.add(genesisBlock);
     }
 
     public void addBlock(Block blockToAdd){

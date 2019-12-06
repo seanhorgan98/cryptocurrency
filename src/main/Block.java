@@ -12,12 +12,17 @@ class Block {
     private int nonce;
     public List<Transaction> transactions;
 
-    public Block(){
+    public Block(String previousHash){
         this.timeStamp = Instant.now().getEpochSecond();
         this.hash = calculateHash();
         this.merkleRoot = null;
         this.transactions = new ArrayList<Transaction>();
         this.nonce = 0;
+        this.previousHash = previousHash;
+    }
+
+    public static Block buildGenesisBlock(){
+        return new Block("0");
     }
 
     public boolean addTransaction(Transaction t){

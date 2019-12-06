@@ -8,10 +8,20 @@ class Node{
     public List<Transaction> allTransactions;
     
     //List of all other nodes
-    public List<Something> allNodes;
+    public List<Node> allNodes;
 
     public Node(String seedNodeID){
+        //Get list of all nodes from seedNode
 
+        //Add itself to the list of nodes
+
+        //Let all the other nodes know that it now exists
+
+    }
+
+    private List<Node> createNodeList(){
+        //newList = getNodeList();
+        return new ArrayList<Node>();
     }
 
 

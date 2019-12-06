@@ -25,7 +25,11 @@ public class StringUtil {
 
 	//Returns a string value from a public or private key
 	public static String getStringFromKey(Key key) {
-		return Base64.getEncoder().encodeToString(key.getEncoded());
+		if (key == null){
+			return "";
+		}else{
+			return Base64.getEncoder().encodeToString(key.getEncoded());
+		}	
 	}
 
 	//Generating the signature for a transaction by applying ECDSA to an input
