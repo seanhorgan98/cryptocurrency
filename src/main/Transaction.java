@@ -10,9 +10,9 @@ class Transaction{
     public String transactionId; //Serves as an ID
     public PublicKey sender;
     public PublicKey reciepient;
-    private boolean coinCreationFlag;
-
     public float value;
+
+    private boolean coinCreationFlag;
 
     public byte[] signature; //Used for verification
 
@@ -39,20 +39,21 @@ class Transaction{
         
     }
 
+    // Creates a String hash of all the variables of the transaction
     private String calulateHash() {
 		return StringUtil.applySha256(StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value));
     }
 
 
-    //Generates a signature for the transaction
-    //In future will add in the inputs and outputs
+    // Generates a signature for the transaction
+    // In future will add in the inputs and outputs
     public void generateSignature(PrivateKey privateKey) {
         String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value)	;
         signature = StringUtil.applyECDSASig(privateKey,data);
     }
 
-    //Verifies that the signature is valid for the transaction
-    //In future will add in the inputs and outputs
+    // Verifies that the signature is valid for the transaction
+    // In future will add in the inputs and outputs
     public boolean verifiySignature() {
         if(sender == null){
             return true;
@@ -62,7 +63,7 @@ class Transaction{
         }
     }
 
-    //Get sum of input values
+    // Get sum of input values
     public float getInputsSum(){
         float inputTotal = 0;
         for (TransactionInput input : inputs){
@@ -74,7 +75,7 @@ class Transaction{
         return inputTotal;
     }
 
-    //Get sum of output values
+    // Get sum of output values
     public float getOutputsSum() {
 		float total = 0;
 		for(TransactionOutput o : outputs) {
@@ -84,6 +85,13 @@ class Transaction{
 	}
 
 
+    /* Processes the transaction
+     * First verifying that the signature is valid
+     * Then gathers all the inputs and performs checks to make sure transaction is valid
+     * Then sends funds from the sender to the recipient using UTXOs
+     * If there is no exact amount of UTXO to fulfill transaction then the overpay will be returned to the sender
+     * Finally it updates the UTXOs
+    */
     public boolean processTransaction(){
         if (verifiySignature() == false){
             System.out.println("Transaction failed to verify.");
@@ -102,7 +110,7 @@ class Transaction{
 			return false;
         }
         
-        // Check sufficient funds
+        // Check sufficient funds. Might be redundant with wallet check as well
         if(inputSum < value && coinCreationFlag == false){
             System.out.println("Insufficient funds, Inputs: " + inputSum + ", Value: " + value);
             return false;

@@ -20,10 +20,12 @@ class Block {
         this.hash = calculateHash(0);
     }
 
+    // Creates the first block in the chain
     public static Block buildGenesisBlock(){
         return new Block("0");
     }
 
+    // Adds a transaction to th block
     public boolean addTransaction(Transaction t){
         if(t == null){return false;}
         if(previousHash == null){return false;}
@@ -33,10 +35,10 @@ class Block {
             return false;
         }
         transactions.add(t);
-        //System.out.println("Transaction successfully added to block.");
         return true;
     }
 
+    // Creates a String hash of all the variables of the block
     public String calculateHash(int nonce) {
         String calculatedhash = StringUtil.applySha256( 
                 previousHash +
@@ -46,6 +48,9 @@ class Block {
         return calculatedhash;
     }
 
+    // Performs calculations on the hash to try match a string starting with
+    // a substring of "0"s equal in length to the difficulty
+    // Done as a proof of work concept in order to select which node mines the block
     public void mineBlock(int difficulty) {
         String target = new String(new char[difficulty]).replace('\0', '0');
         int nonce = 0; 
@@ -57,7 +62,7 @@ class Block {
 		System.out.println("Block Mined: " + newHash);
     }
     
-    //Called once all transactions are added
+    // Builds the merkle tree structure for storing the transactions in the blocks
     public void buildMerkleTree(){
         List<String> tree = new ArrayList<String>();
 
@@ -74,12 +79,7 @@ class Block {
         this.merkleRoot = newTxList.get(0);
     }
 
-    public boolean merkleTreeTest(){
-
-
-        return true;
-    }
-
+    // Utility function for creating the merkle tree structure
     private List<String> getNewTxList(List<String> tempTxList){
         List<String> newTxList = new ArrayList<String>();
         int index = 0;
@@ -102,6 +102,7 @@ class Block {
 
     }
 
+    // Returns the root of the merkle tree of transactions
     public String getMerkleRoot(){
         return this.merkleRoot;
     }

@@ -4,6 +4,7 @@ import java.security.*;
 import java.util.Base64;
 
 public class StringUtil {
+	
 	//Applies Sha256 to a string and returns the result. 
 	public static String applySha256(String input){		
 		try {
@@ -23,7 +24,7 @@ public class StringUtil {
 		}
 	}
 
-	//Returns a string value from a public or private key
+	// Returns a string value from a public or private key
 	public static String getStringFromKey(Key key) {
 		if (key == null){
 			return "";
@@ -32,7 +33,7 @@ public class StringUtil {
 		}	
 	}
 
-	//Generating the signature for a transaction by applying ECDSA to an input
+	// Generates the signature for a transaction by applying ECDSA to an input
 	public static byte[] applyECDSASig(PrivateKey privateKey, String input) {
 		Signature ecdsa;
 		byte[] output = new byte[0];
@@ -50,7 +51,7 @@ public class StringUtil {
 	}
 
 
-	//Verifies a String signature 
+	// Verifies a String signature 
 	public static boolean verifyECDSASig(PublicKey publicKey, String data, byte[] signature) {
 		try {
 			Signature ecdsaVerify = Signature.getInstance("SHA256withECDSA");

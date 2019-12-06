@@ -19,10 +19,14 @@ public class Wallet {
 		this.balance = 0;
 	}
 
+	// Utility function to return the balance of this wallet
 	public float getBalance(){
 		updateBalance();
 		return balance;
 	}
+
+	// Loops through all the UTXOs and picks out the one addressed to this wallet.
+	// Then returns the sum of the values for these UTXOs
 	public void updateBalance(){
 		float total = 0;	
         for (Map.Entry<String, TransactionOutput> item: Blockchain.UTXOs.entrySet()){
@@ -34,7 +38,8 @@ public class Wallet {
 		}
 		balance = total;
 	}
-		
+	
+	// Generates a public and private key pair for this wallets addresses
 	public void generateKeyPair() {
 		try {
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
@@ -60,6 +65,7 @@ public class Wallet {
 		return true;
 	}
 
+	// Loops through the UTXOs and prints out the value for each
 	public void printUTXOs(){
 		updateBalance();
 		System.out.println("UTXOs size: " + UTXOs.size());
@@ -69,6 +75,8 @@ public class Wallet {
 	}
 
 
+	// Creates a transaction from this wallet to the recipient address of amount 'value'
+	// Checks to make sure the wallet has the sufficient funds to send the coins first
 	public Transaction sendFunds(PublicKey recipient, float value){
 		if(getBalance() < value){
 			System.out.println("Wallet: Not enough funds!");
@@ -95,7 +103,6 @@ public class Wallet {
 		for(TransactionInput input: inputs){
 			UTXOs.remove(input.previousOutId);
 		}
-		//System.out.println("Sent from: " + StringUtil.getStringFromKey(publicKey) + ", to: " + StringUtil.getStringFromKey(recipient));
 		return tx;
 	}
 	
