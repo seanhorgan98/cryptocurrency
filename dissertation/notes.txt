@@ -1,0 +1,2 @@
+
+1. Deciding whether to have blocks created with no parameters or with a String previousHash.
