@@ -40,10 +40,15 @@ class Main{
         //block2.addTransaction(walletB.sendFunds(walletA.publicKey, 100));
         blockchain.addBlock(block2);
         //System.out.println(genesisTransactionA.outputs.get(0).value);
+
+        //Block 3
+        Block block3 = new Block(block2.hash);
+        block3.addTransaction(walletB.sendFunds(walletA.publicKey, 30));
+        blockchain.addBlock(block3);
         
         System.out.println("\n---------BLOCKCHAIN--------");
         System.out.println("Valid Blockchain: " + Boolean.toString(blockchain.validateChain()));
-        blockchain.printBlockchain();
+        blockchain.printBlocks();
 
         
         System.out.println("\n---------BALANCE-----------");
@@ -57,6 +62,8 @@ class Main{
 
         System.out.println("\nWallet B hash: " + StringUtil.getStringFromKey(walletB.publicKey));
         System.out.println("Wallet B UTXOs: "); walletB.printUTXOs();
+
+        blockchain.printTransactions();
 
     }
 }

@@ -25,7 +25,7 @@ class Block {
         return new Block("0");
     }
 
-    // Adds a transaction to th block
+    // Adds a transaction to the block
     public boolean addTransaction(Transaction t){
         if(t == null){return false;}
         if(previousHash == null){return false;}
@@ -48,7 +48,7 @@ class Block {
         return calculatedhash;
     }
 
-    // Performs calculations on the hash to try match a string starting with
+    // Performs proof of work calculations on the hash to try match a string starting with
     // a substring of "0"s equal in length to the difficulty
     // Done as a proof of work concept in order to select which node mines the block
     public void mineBlock(int difficulty) {
