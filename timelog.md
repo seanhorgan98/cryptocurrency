@@ -92,3 +92,23 @@
 * *3 hours* Coin creation changed to be a new transaction in order to be immutable
 
 ### 6 Dec 2019
+
+
+
+
+21/01/20
+Researching consensus 2 hours
+Re-evaluating whole project structure.
+
+Deciding which consensus algorithm to go with (PoW) Raft?
+Is each main a node?
+Add unit test to replace chain function.
+Perform double spend checks at nodes
+perform transaction validation checks on new blocks
+wallet must be linked to node when created
+
+Notes for future work:
+    - Nodes expiring, going offline.
+
+Notes for evaluation:
+    - Running with transactions added in main class works but future work could involve an environment to add in transactions while running
