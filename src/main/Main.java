@@ -4,8 +4,18 @@ class Main{
     public static void main(String[] args) {
         System.out.println("\n---------OUTPUT------------");
 
-        Wallet walletA = new Wallet();
-        Wallet walletB = new Wallet();
+        //Create Genesis Block
+        Block genesisBlock = Block.buildGenesisBlock();
+
+        //Create blockchain
+        Blockchain blockchain = new Blockchain(genesisBlock);
+
+        //Create Genesis Node
+        Node genesisNode = new Node(null, blockchain, 0);
+
+        //Create wallets
+        Wallet walletA = new Wallet(genesisNode);
+        Wallet walletB = new Wallet(genesisNode);
         
         // Transactions should always be wallet to wallet
         // But coin creation can just be a new transaction created with no sender or inputs
@@ -24,8 +34,7 @@ class Main{
         //System.out.println(genesisTransaction.outputs.get(0).value);
 
         //Transaction genesisTransactionB = new Transaction(null, walletB.publicKey, 500, null);
-        Block genesisBlock = Block.buildGenesisBlock();
-        Blockchain blockchain = new Blockchain(genesisBlock);
+        
         
 
         //Block 1

@@ -11,10 +11,12 @@ public class Wallet {
 	public PrivateKey privateKey;
 	public PublicKey publicKey;
 	private float balance;
+	private Node parentNode;
 
 	public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
 	
-	public Wallet(){
+	public Wallet(Node node){
+		this.parentNode = node;
 		generateKeyPair();
 		this.balance = 0;
 	}
@@ -74,6 +76,11 @@ public class Wallet {
 		}
 	}
 
+	//Update the parent node to start flooding the transaction to other nodes
+	private void updateNode(Transaction tx){
+		parentNode.floodTransaction(tx);
+	}
+
 
 	// Creates a transaction from this wallet to the recipient address of amount 'value'
 	// Checks to make sure the wallet has the sufficient funds to send the coins first
@@ -103,6 +110,7 @@ public class Wallet {
 		for(TransactionInput input: inputs){
 			UTXOs.remove(input.previousOutId);
 		}
+		updateNode(tx);
 		return tx;
 	}
 	
