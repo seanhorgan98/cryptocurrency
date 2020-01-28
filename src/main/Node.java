@@ -70,6 +70,40 @@ class Node{
             currentBlockchain = newChain;
         }
     }
+
+    //When transaction is recieved from wallet, send to nearbyNodes
+    public void floodTransaction(Transaction tx){
+        //Perform checks
+        if(isTransactionValid(tx)){
+            if(areOutputsSpent(tx)){
+                if(!isTransactionAlreadySeen(tx)){
+                    //Add to this nodes transactions
+                    allTransactions.add(tx);
+                    //Relay to other nodes
+                    for (Node node : nearbyNodes) {
+                        node.floodTransaction(tx);
+                    }
+                }
+            }
+        }
+    }
+
+    //Check if transaction is valid by looking at inputs and outputs
+    private boolean isTransactionValid(Transaction tx){
+        //TODO: add transaction check
+        return false;
+    }
+
+    //Check if transaction outputs have already been spent
+    private boolean areOutputsSpent(Transaction tx){
+        //TODO: add transaction output spent check
+        return false;
+    }
+
+    //Check if transaction has already been seen by this node
+    private boolean isTransactionAlreadySeen(Transaction tx){
+        return allTransactions.contains(tx);
+    }
     
 
 
