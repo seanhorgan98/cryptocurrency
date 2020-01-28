@@ -1,0 +1,9 @@
+Meeting 11
+Date: 12/12/19
+
+This week I tested the full process and fixed a lot of bugs. We had the
+main project lecture so I spent time thinking about evaluation and reread
+some of the HoF dissertations.
+
+Plan is to decide exactly on how to evaluate the project and to also make 
+progress woking on nodes and the consensus algorithm implementation.
