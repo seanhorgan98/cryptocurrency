@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +22,20 @@ class Node{
     //Main Constructor
     public Node(Node seedNode, Blockchain blockchain, int index){
         this.nearbyNodes = new ArrayList<Node>();
+        this.allTransactions = new ArrayList<Transaction>();
         this.currentBlockchain = blockchain;
 
         //If not genesis node
         if(seedNode != null){
-            //Get list of all nearby nodes from seedNode
-            for (Node node : seedNode.getNearbyNodes()) {
-                if(nearbyNodes.size() <= NEARBY_NODE_SIZE){
-                    nearbyNodes.add(node);
+            //Get list of all nearby nodes from seedNode. Need to request random assortment of nodes.
+            while(nearbyNodes.size() < NEARBY_NODE_SIZE){
+                Node nodeToAdd = getRandomNearbyNode(seedNode);
+                if(!nearbyNodes.contains(nodeToAdd)){
+                    nearbyNodes.add(nodeToAdd);
                 }
             }
         }
+        
         //Add itself to the nearby nodes list
         nearbyNodes.add(this);
 
@@ -50,15 +54,14 @@ class Node{
         return calculatedhash;
     }
 
+    public Node getRandomNearbyNode(Node seedNode){
+        Random r = new Random();
+        if(seedNode.nearbyNodes.size() == 1){ //if genesis node or only 1 adjacent node for some reason
+            return seedNode.nearbyNodes.get(0);
+        }
 
-    private List<Node> createNodeList(){
-        //newList = getNodeList();
-        return new ArrayList<Node>();
-    }
-
-
-    public List<Node> getNearbyNodes(){
-        return nearbyNodes;
+        //Return random node from seedNode nearby nodes
+        return seedNode.nearbyNodes.get(r.nextInt(seedNode.nearbyNodes.size()));
     }
 
     //public void switchBlockchain
