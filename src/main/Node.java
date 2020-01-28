@@ -4,28 +4,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Node{
+    //Id of this node
+    public String id;
+    public final int NEARBY_NODE_SIZE = 10;
+
     //List of all transactions not in the blockchain
-    public List<Transaction> allTransactions;
+    private List<Transaction> allTransactions;
     
     //List of all other nodes
-    public List<Node> allNodes;
+    private List<Node> nearbyNodes;
 
     //Copy of the current blockchain to use
+    private Blockchain currentBlockchain;
 
-    public Node(String seedNodeID, Blockchain blockchain){
-        //getNodeList(seedNode)
-        //Get list of all nodes from seedNode
-        //repeat a few times with new nodes
 
-        //Add itself to the list of nodes
+    //Main Constructor
+    public Node(Node seedNode, Blockchain blockchain, int index){
+        this.nearbyNodes = new ArrayList<Node>();
+        this.currentBlockchain = blockchain;
 
-        //Let all the other nodes know that it now exists
+        //If not genesis node
+        if(seedNode != null){
+            //Get list of all nearby nodes from seedNode
+            for (Node node : seedNode.getNearbyNodes()) {
+                if(nearbyNodes.size() <= NEARBY_NODE_SIZE){
+                    nearbyNodes.add(node);
+                }
+            }
+        }
+        //Add itself to the nearby nodes list
+        nearbyNodes.add(this);
+
+        //Assign node ID
+        this.id = calculateHash(0, seedNode.id, index);
 
     }
+
+    // Creates a String hash of all the variables of the node
+    public String calculateHash(int nonce, String seedNodeID, int index) {
+        String calculatedhash = StringUtil.applySha256( 
+                seedNodeID +
+                Integer.toString(index) +
+                Integer.toString(nonce)
+                );
+        return calculatedhash;
+    }
+
 
     private List<Node> createNodeList(){
         //newList = getNodeList();
         return new ArrayList<Node>();
+    }
+
+
+    public List<Node> getNearbyNodes(){
+        return nearbyNodes;
     }
 
     //public void switchBlockchain
