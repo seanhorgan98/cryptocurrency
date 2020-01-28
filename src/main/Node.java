@@ -8,6 +8,7 @@ class Node{
     //Id of this node
     public String id;
     public final int NEARBY_NODE_SIZE = 10;
+    public final int BLOCK_SIZE = 5; //Number of transactions in a block
 
     //List of all transactions not in the blockchain
     private List<Transaction> allTransactions;
@@ -64,8 +65,8 @@ class Node{
         return seedNode.nearbyNodes.get(r.nextInt(seedNode.nearbyNodes.size()));
     }
 
+    //When new blockchain is longer than current, and valid, switch to new blockchain
     public void switchBlockchain(Blockchain newChain){
-        //When new blockchain is longer than current, and valid, switch to new blockchain
         if(newChain.validateChain() && newChain.blockChain.size() > currentBlockchain.blockChain.size()){
             currentBlockchain = newChain;
         }
@@ -79,6 +80,22 @@ class Node{
                 if(!isTransactionAlreadySeen(tx)){
                     //Add to this nodes transactions
                     allTransactions.add(tx);
+
+                    //If enough transaction are present to mine a block do so
+                    if(allTransactions.size() == BLOCK_SIZE){
+                        //Create a new block using the hash from the last block on the current blockchain
+                        Block blockToAdd = new Block(currentBlockchain.blockChain.get(currentBlockchain.blockChain.size()-1).hash);
+
+                        //For each transaction this node has seen, add it to the block
+                        for (Transaction transaction : allTransactions) {
+                            blockToAdd.addTransaction(transaction);
+                        }
+
+                        //Mine the block and add it to the current blockchain
+                        blockToAdd.mineBlock(Blockchain.DIFFICULTY);
+                        currentBlockchain.blockChain.add(blockToAdd);
+                    }
+
                     //Relay to other nodes
                     for (Node node : nearbyNodes) {
                         node.floodTransaction(tx);
@@ -104,14 +121,4 @@ class Node{
     private boolean isTransactionAlreadySeen(Transaction tx){
         return allTransactions.contains(tx);
     }
-    
-
-
-    /* When transaction recieved
-     * 1. Check not already seen using transactionID
-     * 2. Check is valid on current blockchain
-     * 3. Check outputs haven't already been spent
-     * 
-     * Then relay transaction to all other nodes
-     */
 }
