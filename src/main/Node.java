@@ -35,7 +35,7 @@ class Node{
                 }
             }
         }
-        
+
         //Add itself to the nearby nodes list
         nearbyNodes.add(this);
 
@@ -64,9 +64,13 @@ class Node{
         return seedNode.nearbyNodes.get(r.nextInt(seedNode.nearbyNodes.size()));
     }
 
-    //public void switchBlockchain
-    //When new blockchain is longer than current, and valid
-    //switch to new blockchain
+    public void switchBlockchain(Blockchain newChain){
+        //When new blockchain is longer than current, and valid, switch to new blockchain
+        if(newChain.validateChain() && newChain.blockChain.size() > currentBlockchain.blockChain.size()){
+            currentBlockchain = newChain;
+        }
+    }
+    
 
 
     /* When transaction recieved
