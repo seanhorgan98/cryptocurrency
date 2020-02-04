@@ -17,6 +17,7 @@ class Blockchain {
         this.blockChain.add(genesisBlock);
     }
 
+    //WILL BE DEPRECIATED
     // Adds a block to the blockchain by setting it's previous hash to the hash of the
     // current tail of the blockchain and then mining the block
     public void addBlock(Block blockToAdd){        

@@ -1,0 +1,9 @@
+Meeting 14
+Date: 30/01/20
+
+Got a good amount of work done and finished of the node and consensus mechanisms.
+This leaves only tidying up code and finishing off bug fixes to complete.
+
+Plan for next week is to try to finish off the main coding of the project. Getting
+the main class to start running a test harness and maybe adding in some unit tests
+or dissertation work if I have time.
