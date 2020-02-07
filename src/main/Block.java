@@ -51,15 +51,16 @@ class Block {
     // Performs proof of work calculations on the hash to try match a string starting with
     // a substring of "0"s equal in length to the difficulty
     // Done as a proof of work concept in order to select which node mines the block
-    public void mineBlock(int difficulty) {
+    public boolean mineBlock(int difficulty) {
         String target = new String(new char[difficulty]).replace('\0', '0');
         int nonce = 0; 
         String newHash = hash;
 		while(!(newHash.substring( 0, difficulty).equals(target))) {
             nonce ++;
 			newHash = calculateHash(nonce);
-		}
-		System.out.println("Block Mined: " + newHash);
+        }
+        System.out.println("Block Mined: " + newHash);
+        return true;
     }
     
     // Builds the merkle tree structure for storing the transactions in the blocks

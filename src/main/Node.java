@@ -35,13 +35,17 @@ class Node{
                     nearbyNodes.add(nodeToAdd);
                 }
             }
+
+            //Assign node ID
+            this.id = calculateHash(0, seedNode.id, index);
+        }else{
+            this.id = calculateHash(0, "", index);
         }
 
         //Add itself to the nearby nodes list
         nearbyNodes.add(this);
 
-        //Assign node ID
-        this.id = calculateHash(0, seedNode.id, index);
+        
 
     }
 
@@ -76,7 +80,7 @@ class Node{
     public void floodTransaction(Transaction tx){
         //Perform checks
         if(isTransactionValid(tx)){
-            if(areOutputsSpent(tx)){
+            if(!areOutputsSpent(tx)){
                 if(!isTransactionAlreadySeen(tx)){
                     //Add to this nodes transactions
                     allTransactions.add(tx);
@@ -90,10 +94,15 @@ class Node{
                         for (Transaction transaction : allTransactions) {
                             blockToAdd.addTransaction(transaction);
                         }
+                        
 
                         //Mine the block and add it to the current blockchain
-                        blockToAdd.mineBlock(Blockchain.DIFFICULTY);
-                        currentBlockchain.blockChain.add(blockToAdd);
+                        if (blockToAdd.mineBlock(Blockchain.DIFFICULTY)){
+                            currentBlockchain.blockChain.add(blockToAdd);
+                        }
+                        
+
+                        //TODO: Need other nodes to remove these transactions
                     }
 
                     //Relay to other nodes
@@ -108,7 +117,7 @@ class Node{
     //Check if transaction is valid by looking at inputs and outputs
     private boolean isTransactionValid(Transaction tx){
         //TODO: add transaction check
-        return false;
+        return true;
     }
 
     //Check if transaction outputs have already been spent

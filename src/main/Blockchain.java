@@ -22,8 +22,9 @@ class Blockchain {
     // current tail of the blockchain and then mining the block
     public void addBlock(Block blockToAdd){        
         blockToAdd.previousHash = blockChain.get(blockChain.size()-1).hash;
-        blockToAdd.mineBlock(DIFFICULTY);
-        blockChain.add(blockToAdd);
+        if(blockToAdd.mineBlock(DIFFICULTY)){
+            blockChain.add(blockToAdd);
+        }
     }
 
     // Print out the hashs for every block in the blockchain
