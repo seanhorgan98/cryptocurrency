@@ -12,6 +12,8 @@ class Transaction{
     public PublicKey reciepient;
     public float value;
 
+    private Blockchain currentBlockchain;
+
     private boolean coinCreationFlag;
 
     public byte[] signature; //Used for verification
@@ -20,8 +22,8 @@ class Transaction{
     public List<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
     
     
-    public Transaction(PublicKey sender, PublicKey reciepient, float value,  List<TransactionInput> inputs) {
-		
+    public Transaction(PublicKey sender, PublicKey reciepient, float value,  List<TransactionInput> inputs, Blockchain blockchain) {
+		this.currentBlockchain = blockchain;
 		this.reciepient = reciepient;
         this.value = value;
         
@@ -100,7 +102,7 @@ class Transaction{
 
         // Get transaction inputs
         for (TransactionInput i : inputs){
-            i.UTXO = Blockchain.UTXOs.get(i.previousOutId);
+            i.UTXO = currentBlockchain.UTXOs.get(i.previousOutId);
         }
         float inputSum = getInputsSum();
 
@@ -129,13 +131,13 @@ class Transaction{
 
         //Add outputs to Unspent list
 		for(TransactionOutput o : outputs) {
-			Blockchain.UTXOs.put(o.id , o);
+			currentBlockchain.UTXOs.put(o.id , o);
 		}
 		
 		//Remove transaction inputs from UTXO lists as spent:
 		for(TransactionInput i : inputs) {
 			if(i.UTXO == null) continue; //if Transaction can't be found skip it 
-			Blockchain.UTXOs.remove(i.UTXO.id);
+			currentBlockchain.UTXOs.remove(i.UTXO.id);
 		}
 		
 		return true;

@@ -14,14 +14,14 @@ class Main{
         Node genesisNode = new Node(null, blockchain, 0);
 
         //Create wallets
-        Wallet walletA = new Wallet(genesisNode);
-        Wallet walletB = new Wallet(genesisNode);
+        Wallet walletA = new Wallet(genesisNode, blockchain);
+        Wallet walletB = new Wallet(genesisNode, blockchain);
         
 
         //Genesis (Initialise both wallets with 500)
-        Transaction genesisTransactionA = new Transaction(null, walletA.publicKey, 500, null);	
+        Transaction genesisTransactionA = new Transaction(null, walletA.publicKey, 500, null, blockchain);	
         genesisTransactionA.transactionId = "0"; //manually set the transaction id
-        Transaction genesisTransactionB = new Transaction(null, walletB.publicKey, 500, null);
+        Transaction genesisTransactionB = new Transaction(null, walletB.publicKey, 500, null, blockchain);
         genesisTransactionB.transactionId = "1"; //manually set the transaction id	
                 
 
@@ -72,7 +72,9 @@ class Main{
         System.out.println("\nWallet B hash: " + StringUtil.getStringFromKey(walletB.publicKey));
         System.out.println("Wallet B UTXOs: "); walletB.printUTXOs();
 
-        //blockchain.printTransactions();
+
+        System.out.println("\n---------BLOCKCHAIN TRANSACTIONS--------");
+        blockchain.printTransactions();
 
     }
 }

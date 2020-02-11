@@ -7,7 +7,7 @@ class Blockchain {
     public ArrayList<Block> blockChain = new ArrayList<Block>(1);
 
     //List of all unspent transactions in a Map<TransactionOutput.id, TransactionOutput>
-    public static Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
+    public Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
     
     public static final float MIN_TRANSACTION = 0.1f;
     public static final int DIFFICULTY = 2;

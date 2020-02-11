@@ -13,9 +13,12 @@ public class Wallet {
 	private float balance;
 	private Node parentNode;
 
+	private Blockchain currentBlockchain;
+
 	public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
 	
-	public Wallet(Node node){
+	public Wallet(Node node, Blockchain blockchain){
+		this.currentBlockchain = blockchain;
 		this.parentNode = node;
 		generateKeyPair();
 		this.balance = 0;
@@ -31,7 +34,7 @@ public class Wallet {
 	// Then returns the sum of the values for these UTXOs
 	public void updateBalance(){
 		float total = 0;	
-        for (Map.Entry<String, TransactionOutput> item: Blockchain.UTXOs.entrySet()){
+        for (Map.Entry<String, TransactionOutput> item: currentBlockchain.UTXOs.entrySet()){
         	TransactionOutput UTXO = item.getValue();
             if(UTXO.isMine(publicKey)) { //if output belongs to me ( if coins belong to me )
             	UTXOs.put(UTXO.id,UTXO); //add it to our list of unspent transactions.
@@ -103,7 +106,7 @@ public class Wallet {
 		}
 	
 		
-		Transaction tx = new Transaction(publicKey, recipient, value, inputs);
+		Transaction tx = new Transaction(publicKey, recipient, value, inputs, currentBlockchain);
 		tx.outputs.add(new TransactionOutput(tx.reciepient, tx.value, tx.transactionId));
 		tx.generateSignature(privateKey);
 
