@@ -122,7 +122,19 @@ class Node{
 
     //Check if transaction outputs have already been spent
     private boolean areOutputsSpent(Transaction tx){
-        //TODO: add transaction output spent check
+
+        //Need to see if tx inputs are contained in the blockchain UTXOs
+
+        // UTXOs = Map<String output.id, TransactionOutput object>
+
+        //Loop through tx inputs
+        for(int i = 0; i < tx.inputs.size();i++){
+            //if TXi input is not contained in the UTXO return true
+            if(currentBlockchain.UTXOs.containsKey(tx.inputs.get(i).previousOutId)){
+                System.out.println("TRANSACTION OUTPUTS ARE ALREADY SPENT: " + tx.value);
+                return true;
+            }
+        }
         return false;
     }
 
