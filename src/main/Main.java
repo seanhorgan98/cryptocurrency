@@ -31,21 +31,23 @@ class Main{
         block1.addTransaction(genesisTransactionB);
         blockchain.addBlock(block1);
 
-
+        //blockchain.printUTXOs();
 
         //Block 2
         walletA.sendFunds(walletB.publicKey, 10);
-        //Block block2 = new Block(block1.hash);
-        //block2.addTransaction(walletA.sendFunds(walletB.publicKey, 10));
-        //block2.addTransaction(walletB.sendFunds(walletA.publicKey, 100));
-        //blockchain.addBlock(block2);
-        //System.out.println(genesisTransactionA.outputs.get(0).value);
+        walletB.sendFunds(walletA.publicKey, 0);
+        walletB.sendFunds(walletA.publicKey, 0);
+        walletB.sendFunds(walletA.publicKey, 1);
+        walletB.sendFunds(walletA.publicKey, 0); 
 
         //Block 3
         walletB.sendFunds(walletA.publicKey, 1);
-        walletB.sendFunds(walletA.publicKey, 1);
-        walletB.sendFunds(walletA.publicKey, 1);
-        walletB.sendFunds(walletA.publicKey, 1);
+        walletB.sendFunds(walletA.publicKey, 0);
+        walletB.sendFunds(walletA.publicKey, 0);
+        walletB.sendFunds(walletA.publicKey, 0);
+        walletB.sendFunds(walletA.publicKey, 0);
+
+        
 
         // Block block3 = new Block(block2.hash);
         // block3.addTransaction(walletB.sendFunds(walletA.publicKey, 30));
@@ -75,6 +77,12 @@ class Main{
 
         System.out.println("\n---------BLOCKCHAIN TRANSACTIONS--------");
         blockchain.printTransactions();
+
+        System.out.println("Wallet A balance: " + walletA.getBalance());
+        System.out.println("Wallet B balance: " + walletB.getBalance());
+
+        System.out.println("Blockchain UTXOs: ");
+        blockchain.printUTXOs();
 
     }
 }

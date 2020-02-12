@@ -94,26 +94,28 @@ public class Wallet {
 
 		ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
 		
+		//TODO: change how the inputs are chosen. Make sure it is choosing the smallest inputs greater than the value
 		float total = 0;
 		for (Map.Entry<String, TransactionOutput> item: walletUTXOs.entrySet()){
 			TransactionOutput UTXO = item.getValue();
-			total += UTXO.value;
-			//System.out.println("UTXO value: " + UTXO.value);
-			inputs.add(new TransactionInput(UTXO.id, UTXO.value));
+			if(UTXO.value >= value){
+				inputs.add(new TransactionInput(UTXO.id, UTXO.value));
+				break;
+			}else{
+				total += UTXO.value;
+				//System.out.println("UTXO value: " + UTXO.value);
+				inputs.add(new TransactionInput(UTXO.id, UTXO.value));
 
-			if(total > value) break;
+				if(total > value) break;
+			}
 		}
-		
 		
 		Transaction tx = new Transaction(publicKey, recipient, value, inputs, currentBlockchain);
 		tx.outputs.add(new TransactionOutput(tx.reciepient, tx.value, tx.transactionId));
 		tx.generateSignature(privateKey);
 
-		for(TransactionInput input: inputs){
-			walletUTXOs.remove(input.previousOutId);
-		}
+		updateBalance();
 		updateNode(tx);
 		return tx;
-	}
-	
+	}	
 }

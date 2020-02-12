@@ -145,7 +145,7 @@ class Transaction{
         //Add outputs to Unspent list
 		for(TransactionOutput o : outputs) {
             currentBlockchain.UTXOs.put(o.id , o);
-           // System.out.println("o.value: " + o.value);
+            System.out.println("o.value: " + o.value);
 		}
 		
 		//Remove transaction inputs from UTXO lists as spent:

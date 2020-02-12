@@ -21,7 +21,7 @@ class Blockchain {
 	public void printUTXOs(){
 		System.out.println("UTXOs size: " + UTXOs.size());
 		for (Map.Entry<String, TransactionOutput> item: UTXOs.entrySet()){
-			System.out.println("UTXO value: " + item.getValue().value);
+			System.out.println("UTXO value: " + item.getValue().value + ", To: " + StringUtil.getStringFromKey(item.getValue().reciepient));
 		}
 	}
 
