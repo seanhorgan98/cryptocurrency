@@ -34,6 +34,7 @@ class Transaction{
         }else{
             coinCreationFlag = false;
             this.inputs = inputs;
+            
         }
         this.sender = sender;
         
@@ -69,6 +70,7 @@ class Transaction{
     public float getInputsSum(){
         float inputTotal = 0;
         for (TransactionInput input : inputs){
+            //System.out.println("Inputs: " + input.value);
             float inputValue = input.value;
             if (inputValue != 0){
                 inputTotal += inputValue;
@@ -136,7 +138,8 @@ class Transaction{
 		
 		//Remove transaction inputs from UTXO lists as spent:
 		for(TransactionInput i : inputs) {
-			if(i.UTXO == null) continue; //if Transaction can't be found skip it 
+            if(i.UTXO == null) continue; //if Transaction can't be found skip it 
+            System.out.println("Here");
 			currentBlockchain.UTXOs.remove(i.UTXO.id);
 		}
 		

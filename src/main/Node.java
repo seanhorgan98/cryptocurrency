@@ -128,9 +128,9 @@ class Node{
         // UTXOs = Map<String output.id, TransactionOutput object>
 
         //Loop through tx inputs
-        for(int i = 0; i < tx.inputs.size();i++){
+        for(int i = 0; i < tx.inputs.size()-1;i++){
             //if TXi input is not contained in the UTXO return true
-            if(currentBlockchain.UTXOs.containsKey(tx.inputs.get(i).previousOutId)){
+            if(!currentBlockchain.UTXOs.containsKey(tx.inputs.get(i).previousOutId)){
                 System.out.println("TRANSACTION OUTPUTS ARE ALREADY SPENT: " + tx.value);
                 return true;
             }
