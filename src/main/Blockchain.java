@@ -17,6 +17,18 @@ class Blockchain {
         this.blockChain.add(genesisBlock);
     }
 
+    // Loops through the UTXOs and prints out the value for each
+	public void printUTXOs(){
+		System.out.println("UTXOs size: " + UTXOs.size());
+		for (Map.Entry<String, TransactionOutput> item: UTXOs.entrySet()){
+			System.out.println("UTXO value: " + item.getValue().value);
+		}
+	}
+
+    // public boolean checkTxIDsMatch(TransactionInput in, TransactionOutput out){
+    //     if(in.signature.equals(out.))
+    // }
+
     //WILL BE DEPRECIATED
     // Adds a block to the blockchain by setting it's previous hash to the hash of the
     // current tail of the blockchain and then mining the block
@@ -44,6 +56,15 @@ class Blockchain {
                 System.out.println("Value: " + t.value);
             }
         }
+    }
+
+    public boolean containsTransaction(Transaction tx){
+        for(Block block : blockChain){
+            if(block.transactions.contains(tx)){
+                return true;
+            }
+        }
+        return false;
     }
 
     // Loops through each block and makes sure it's previousHash matches with the previous

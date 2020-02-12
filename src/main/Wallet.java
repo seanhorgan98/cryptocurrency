@@ -71,7 +71,6 @@ public class Wallet {
 
 	// Loops through the UTXOs and prints out the value for each
 	public void printUTXOs(){
-		updateBalance();
 		System.out.println("UTXOs size: " + walletUTXOs.size());
 		for (Map.Entry<String, TransactionOutput> item: walletUTXOs.entrySet()){
 			System.out.println(item.getValue().value);

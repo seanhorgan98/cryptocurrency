@@ -2,6 +2,7 @@ package main;
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 class Node{
@@ -79,7 +80,7 @@ class Node{
     //When transaction is recieved from wallet, send to nearbyNodes
     public void floodTransaction(Transaction tx){
         //Perform checks
-        if(isTransactionValid(tx)){
+        if(!isTransactionOnBlockchain(tx)){
             if(!areOutputsSpent(tx)){
                 if(!isTransactionAlreadySeen(tx)){
                     //Add to this nodes transactions
@@ -101,8 +102,13 @@ class Node{
                             currentBlockchain.blockChain.add(blockToAdd);
                         }
                         
-
-                        //TODO: Need other nodes to remove these transactions
+                        //Remove transactions in block from other nodes transaction list
+                        for(Iterator<Transaction> iterator = allTransactions.iterator();iterator.hasNext();){
+                            Transaction t = iterator.next();
+                            iterator.remove();
+                        }
+                        
+                            
                     }
 
                     //Relay to other nodes
@@ -115,23 +121,18 @@ class Node{
     }
 
     //Check if transaction is valid by looking at inputs and outputs
-    private boolean isTransactionValid(Transaction tx){
-        //TODO: add transaction check
-        return true;
+    private boolean isTransactionOnBlockchain(Transaction tx){
+        if(currentBlockchain.containsTransaction(tx)){
+            return true;
+        }
+        return false;
     }
 
     //Check if transaction outputs have already been spent
     private boolean areOutputsSpent(Transaction tx){
-
         //Need to see if tx inputs are contained in the blockchain UTXOs
-
-        // UTXOs = Map<String output.id, TransactionOutput object>
-
-        //Loop through tx inputs
-        for(int i = 0; i < tx.inputs.size()-1;i++){
-            //if TXi input is not contained in the UTXO return true
-            if(!currentBlockchain.UTXOs.containsKey(tx.inputs.get(i).previousOutId)){
-                System.out.println("TRANSACTION OUTPUTS ARE ALREADY SPENT: " + tx.value);
+        for(TransactionInput i : tx.inputs){
+            if(!currentBlockchain.UTXOs.containsKey(i.previousOutId)){
                 return true;
             }
         }

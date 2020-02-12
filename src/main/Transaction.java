@@ -119,6 +119,13 @@ class Transaction{
             System.out.println("Insufficient funds, Inputs: " + inputSum + ", Value: " + value);
             return false;
         }
+
+        //Don't allow sends of 0
+        if(value == 0){
+            System.out.println("Cannot send 0.");
+            return false;
+        }
+
         float overPay = inputSum - value;
         if(inputSum == 0){
             overPay = 0;
@@ -127,22 +134,28 @@ class Transaction{
         System.out.println("Value: " + value + ", Inputsum: " + inputSum + ", Overpay: " + overPay);
         transactionId = calulateHash();
         outputs.add(new TransactionOutput(this.reciepient, value, transactionId)); //Send value to reciepient
-        outputs.add(new TransactionOutput( this.sender, overPay, transactionId)); //Send Left over back to sender
+
+        if(overPay != 0){
+            outputs.add(new TransactionOutput( this.sender, overPay, transactionId)); //Send Left over back to sender
+        }
+        
         
         //UTXo key cannot be address as it will overwrite previous transactions. Needs to be transaction ID
 
         //Add outputs to Unspent list
 		for(TransactionOutput o : outputs) {
-			currentBlockchain.UTXOs.put(o.id , o);
+            currentBlockchain.UTXOs.put(o.id , o);
+           // System.out.println("o.value: " + o.value);
 		}
 		
 		//Remove transaction inputs from UTXO lists as spent:
 		for(TransactionInput i : inputs) {
             if(i.UTXO == null) continue; //if Transaction can't be found skip it 
-            System.out.println("Here");
-			currentBlockchain.UTXOs.remove(i.UTXO.id);
+            //System.out.println("i.value: " + i.UTXO.value);
+            currentBlockchain.UTXOs.remove(i.UTXO.id);
+            
 		}
-		
+		currentBlockchain.printUTXOs();
 		return true;
         
     }
