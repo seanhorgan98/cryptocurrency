@@ -84,36 +84,40 @@
 \section{Motivation}
 
 The concept of cryptocurrency has only emerged in the past 15 years as an alternative to the regular
-centralised FIAT currencies backed by governments around the world. In 2008 Satoshi Nakamoto, the 
+centralised Fiat currencies backed by governments around the world. In 2008 Satoshi Nakamoto, the 
 brainchild* of Bitcoin, invented the worlds first cryptocurrency providing a peer-to-peer currency
 not bound to a central bank. This new currency, secured by modern cryptographic methods was a way in
 which people around the world could trade without having to send the funds via a financial institution (Bitcoin white paper).
 
-This new currency ensured security to its users by implementing a distrobuted ledger of transactions. Bitcoin
+This new currency ensured security to its users by implementing a distributed ledger of transactions. Bitcoin
 ensured that the ledger was immutable by ensuring proof of work was given before transactions would be
 added to this ledger. This invention, known as the Blockchain, maintained security and prevented malicious
-users from altering the system. The blockchain has become more than just a measure for MAINTAINING security
+users from altering the system. The blockchain has become more than just a measure for ensuring security
 in cryptocurrencies now though as it has become useful to thousands of companies around the world, being used
 in hundereds of different contexts.
 
-Talk about monitary value compared to FIAT currencies. Maybe inflation and how it is not tied to a physical
-object.
+Bitcoin and other cryptocurrencies are much different to current fiat currencies as it is not tied to a physical
+object like a note or coin. It is also immune to inflation as the value of currency in the system is dictated
+by the proof of work system. This rewards nodes for mining blocks of transactions with a small amount of the 
+currency. As the currency ages this reward is reduced until eventually there won't be any more given. This places
+a limit on the total amount of the currency available.
 
 \section{Goals}
-The goal of this project is to create a secure and ** cryptocurrency from scratch.
-Explain features listed in abstract.
+The goal of this project is to create a secure and robust cryptocurrency from scratch. The currency will be based around
+a distrobuted ledger that is resistant to malicious retroactive changes. It will use a concept know as proof of work,
+similar to the way that Bitcoin works where nodes have to solve difficult hashing calculations in order
+to add transactions to the ledger. This concept is known as mining and is a way to make sure that transactions
+are added at a steady rate while providing compensation to the node as an incentive to verify the transactions the node
+is trying to add are valid and acceptable.
 
-Peer-based
+This cryptocurrency will include wallets with addresses allowing users to send any of their currency to another
+wallet using its public key address. This will be shown in the test harness where a number of nodes and wallets 
+will be created to simulate a populated network of users. A large number of emulated users will be required as on
+smaller scales cryptocurrencies do not work perfectly and are succeptable to double-spending attacks where users
+can spend more money than they own. The test harness should simulate a large active network by randomly creating
+transactions from user to user to then be added on to the blockchain once the nodes have shown proof of work using 
+the mining mechanism.
 
-Tamper-proof ledger
-
-Distributed consensus mechanism
-
-Mining
-
-Wallets
-
-Test harness
 
 \begin{itemize}
     \item
