@@ -190,31 +190,57 @@ If you are unsure about how to cite online sources, please see this guide: \url{
 \chapter{Background}
 In this chapter we will discuss the background of the project. This will be presented by looking at the relevant research done by 
 others that has similar goals to this project. We will also examine other cryptocurrencies created in the past that have aided 
-in this projects completion.
+in the completion of this project.
 
 \section{Bitcoin and Cryptocurrency technologies}
 
 
 \section{Bitcoin white paper}
 The first cryptocurrency to be created was Bitcoin. It was first presented in 2008 by Satoshi Nakamoto in the Bitcoin White Paper
-titled "Bitcoin: A Peer-to-Peer Electronic Cash System". The short 9 page article defines Nakamoto's method of preventing
-double-spending attacks in a peer-to-peer currency without the need for a third party to act as a middle man. This is
-achieved using modern cryptographic methods.
+titled "Bitcoin: A Peer-to-Peer Electronic Cash System". The concise 9 page article defines Nakamoto's method of preventing
+double-spending attacks in a peer-to-peer currency without the need for a third party to act as a middle man. The creater
+of Bitcoin wanted to avoid the use of a centralised mint as it can be seen as a single point of failure where every transaction
+must be routed through. This places the whole trust of the network on the middle man and the company running this mint. 
+Bitcoin avoids the need for a centralised middleman utilising modern cryptographic methods and technologies. This paper 
+outlines the requirements for a functional cryptocurrency and as such was instrumental in guiding this project.
+
+Below we describe the main funtionality presented in the Bitcoin white paper.
+
 
 \subsection{Transactions}
-Digital signatures
+The primary component of a cryptocurrency is a transaction between two users. In bitcoin this is described as being "a
+chain of digital signatures". In this sense, a transaction is just a way of showing that ownership of the coin has
+passed from the sender's address to the recipient's address. Bitcoin ensures the immutability of these transactions
+by making the sender generate a hash of the previous transaction combined with the public key, equivalent to the address,
+of the recipient. This means that the recipient can then verify the transaction using their own key and the transaction
+is confirmed as valid.
 
-\subsection{Blocks}
-Merkle trees
+One issue with this method is that the recipient can validate that the transaction is correct but it cannot ensure
+that the sender is double-spending the coin. Meaning the recipient cannot prevent the sender from also sending the 
+same coin to another user. As Bitcoin was inteded to be a peer-to-peer currency with no centralised mint validating
+all transactions and making sure there are no double spends, it is vital that there be some cryptographic method of
+preventing these exploits.
+
 
 \subsection{Blockchain}
-Hashing
+The way Bitcoin achieves this validation without the need for a middleman is through the invention of the Blockchain.
+The blockchain is described as a timestamp server which works by taking the hash of a block of data and publically
+announcing this hash. This proves that the data exists at that time. Then the next block of data can include the
+previous block's hash in it's own hash proving that both of these blocks of data existed at that time. This creates 
+a chain of blocks which prove the order and time of creation.
+
+This chain of blocks is extremely secure as it also protects against retroactive attacks. If a malicious user tries
+to go back and alter a transaction in the blockchain then this would alter the hash of that block rendering it invalid
+this would then alter the next block's hash as each block's hash is a calculation using the hash of the previous block.
+This would cascade through the whole blockchain invalidating every block from the point of the malicious change. The 
+network would then recognise this chain is invalid and switch to a valid chain rendering the action of the malicious
+user pointless.
 
 \subsection{Consensus}
 Mining and longest chain stuff
 
-
-This paper outlines the requirements for a functional cryptocurrency and as such was instrumental in guiding this projects.
+\subsection{Blocks}
+Merkle trees
 
 
 
