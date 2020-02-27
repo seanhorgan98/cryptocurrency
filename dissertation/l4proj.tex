@@ -134,57 +134,6 @@ the mining mechanism.
 Can add a dissertation outline once completed.
 
 
-\begin{itemize}
-    \item
-    is a trained computer scientist: \emph{don't explain basics}.
-    \item
-    has limited time: \emph{keep on topic}.
-    \item
-    has no idea why anyone would want to do this: \emph{motivate clearly}
-    \item
-    might not know \emph{anything} about your project in particular:
-    \emph{explain your project}.
-    \item
-    but might know precise details and check them: \emph{be precise and
-    strive for accuracy.}
-    \item
-    doesn't know or care about you: \emph{personal discussions are
-    irrelevant}.
-\end{itemize}
-
-Remember, you will be marked by your supervisor and one or more members
-of staff. You might also have your project read by a prize-awarding
-committee or possibly a future employer. Bear that in mind.
-
-\subsection{References and style guides}
-There are many style guides on good English writing. You don't need to
-read these, but they will improve how you write.
-
-\begin{itemize}
-    \item
-    \emph{How to write a great research paper} \cite{Pey17} (\textbf{recommended}, even though you aren't writing a research paper)
-    \item
-    \emph{How to Write with Style} \cite{Von80}. Short and easy to read. Available online.
-    \item
-    \emph{Style: The Basics of Clarity and Grace} \cite{Wil09} A very popular modern English style guide.
-    \item
-    \emph{Politics and the English Language} \cite{Orw68}  A famous essay on effective, clear writing in English.
-    \item
-    \emph{The Elements of Style} \cite{StrWhi07} Outdated, and American, but a classic.
-    \item
-    \emph{The Sense of Style} \cite{Pin15} Excellent, though quite in-depth.
-\end{itemize}
-
-\subsubsection{Citation styles}
-
-\begin{itemize}
-\item If you are referring to a reference as a noun, then cite it as: ``\citet{Orw68} discusses the role of language in political thought.''
-\item If you are referring implicitly to references, use: ``There are many good books on writing \citep{Orw68, Wil09, Pin15}.''
-\end{itemize}
-
-There is a complete guide on good citation practice by Peter Coxhead available here: \url{http://www.cs.bham.ac.uk/~pxc/refs/index.html}. 
-If you are unsure about how to cite online sources, please see this guide: \url{https://student.unsw.edu.au/how-do-i-cite-electronic-sources}.
-
 
 %==================================================================================================================================
 \chapter{Background}
@@ -193,7 +142,11 @@ others that has similar goals to this project. We will also examine other crypto
 in the completion of this project.
 
 \section{Bitcoin and Cryptocurrency technologies}
-
+Flooding
+different methods of proof of work (consensus)
+why I chose proof of work
+how the difficulty of mining is changed over time
+overpay
 
 \section{Bitcoin white paper}
 The first cryptocurrency to be created was Bitcoin. It was first presented in 2008 by Satoshi Nakamoto in the Bitcoin White Paper
@@ -230,17 +183,49 @@ previous block's hash in it's own hash proving that both of these blocks of data
 a chain of blocks which prove the order and time of creation.
 
 This chain of blocks is extremely secure as it also protects against retroactive attacks. If a malicious user tries
-to go back and alter a transaction in the blockchain then this would alter the hash of that block rendering it invalid
+to go back and alter a transaction in the blockchain then this would alter the hash of that block rendering it invalid,
 this would then alter the next block's hash as each block's hash is a calculation using the hash of the previous block.
 This would cascade through the whole blockchain invalidating every block from the point of the malicious change. The 
 network would then recognise this chain is invalid and switch to a valid chain rendering the action of the malicious
 user pointless.
 
 \subsection{Consensus}
-Mining and longest chain stuff
+In order for the whole system of users to work, all nodes must agree on what is the correct blockchain to be using and
+which blocks of transactions are to be added to the blockchain every time. This implemented in Bitcoin using a proof of
+work mechanism. This system, also known as mining, means that in order for a node to add a block to the blockchain it
+must find a value that, after being hashed, results in a number starting with a certain amount of '0's. This is 
+effectivly setting a computational barrier to appending a block to the blockchain. This means that a certain amount of
+CPU power is neseccary to append to the blockchain. This adds security to the system as it prevents singular malicious
+users from hording IP addresses in order to take control of the network as theoretically the majority of computational
+power in the network will be from benevolent users.
+
+Because of this implementation of CPU power determining which blocks are added to the blockchain. It is easy for the
+nodes to decide which blockchain to add their blocks to. They simply choose the longest blockchain as this will be
+the blockchain with the most CPU power invested in it. This is secure as if an attacker were trying to alter a 
+previous block they would also have to redo all the proof of work completed for every block after that in the chain.
+It is infeasable as the attacker would have to complete the proof of work for these blocks extremely quickly in order
+to outpace the community and become the longest chain before other nodes would start to use that blockchain.
+
 
 \subsection{Blocks}
-Merkle trees
+The final point relevent to this project mentioned in the Bitcoin white paper is the way that Bitcoin aimed to store
+the transactions within the blocks in the blockchain. A simple method of storing these transactions in the block may
+just be an unordered list. This would work as each transaction is unrelated to the other transactions in the block in
+every way except perhaps the time it took place. This storage solution can be improved though by using a data structure
+known as a merkle tree (REFERENCE). This data structure is a way in which to make the process of checking block validity
+more efficient. The way Merkle trees work is by having every leaf node be the hash of the transaction it represents 
+and every branch node is the hash of its two child nodes. This builds up a chain of hashes similar to the blockchain.
+This means that in order for a node to check that a block is valid it only needs to check the root hash of the block as
+if there were any altered transactions within the block that would have an avalanche effect up through the hashes
+ultimately changing the root hash of the whole block.
+
+[DIAGRAM]
+
+Another benifit that the paper mentions of storing the transaction within the block this way is that it can lessen
+the storage space needed to store each block. As the blocks can be validated using only their main hash. Nodes do 
+not need to store every single transaction in the blockchain in order to confirm transactions relevent to itself.
+Instead it can just store the main block hashes and save a large amount of storage. As Bitcoin becomes more and
+more popular this is a big saving as the number of transactions grows larger and larger.
 
 
 
@@ -261,6 +246,9 @@ Merkle trees
 %==================================================================================================================================
 \chapter{Analysis/Requirements}
 What is the problem that you want to solve, and how did you arrive at it?
+
+Could: Incentive for nodes, proper merkle trees, increasing mining difficulty.
+
 \section{Guidance}
 Make it clear how you derived the constrained form of your problem via a clear and logical process. 
 
@@ -565,5 +553,10 @@ submitted separately.
 \bibliographystyle{abbrvnat}
 
 \bibliography{l4proj}
+Merkle trees
+
+Bitcoin white paper
+
+Bitcoin and cryptocurrency technologies
 
 \end{document}
