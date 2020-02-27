@@ -141,12 +141,6 @@ In this chapter we will discuss the background of the project. This will be pres
 others that has similar goals to this project. We will also examine other cryptocurrencies created in the past that have aided 
 in the completion of this project.
 
-\section{Bitcoin and Cryptocurrency technologies}
-Flooding
-different methods of proof of work (consensus)
-why I chose proof of work
-how the difficulty of mining is changed over time
-overpay
 
 \section{Bitcoin white paper}
 The first cryptocurrency to be created was Bitcoin. It was first presented in 2008 by Satoshi Nakamoto in the Bitcoin White Paper
@@ -227,25 +221,59 @@ not need to store every single transaction in the blockchain in order to confirm
 Instead it can just store the main block hashes and save a large amount of storage. As Bitcoin becomes more and
 more popular this is a big saving as the number of transactions grows larger and larger.
 
+\section{Bitcoin and Cryptocurrency technologies}
+A large source of the information used to plan this project and choose the relevant technologies to include was the
+book \emph{Bitcoin and Cryptocurrency Technologies} by Narayanan et al. This provided a more in depth disscussion
+about the intricacies of the structures needed for the project. The book also gives good information about cryptocurrencies
+that were not Bitcoin which gave a bigger picture and provided options for doing things differently or ways to 
+exclude areas of bitcoin that would not be relevant in the project.
 
+\subsection{Flooding}
+One of the key topics described in the book was ways for the nodes in the network to reach a consensus. This happens
+multiple times during the running of a network. Once when nodes must identify and decide on which blockchain to use when
+alternates appear. This is described by the Bitcoin white paper by picking the longest chain and distrobuting this to 
+other nodes. It also happens when a new transaction occurs between two wallets, the transaction must be sent to all
+nodes in order for the nodes to include it in their blocks so they can start mining the blocks to validate the transaction 
+on the blockchain.
 
-\section{Guidance}
-\begin{itemize}    
-    \item
-      Don't give a laundry list of references.
-    \item
-      Tie everything you say to your problem.
-    \item
-      Present an argument.
-    \item Think critically; weigh up the contribution of the background and put it in context.    
-    \item
-      \textbf{Don't write a tutorial}; provide background and cite
-      references for further information.
-\end{itemize}
+This method of flooding is explained in the book by showing that every node has a list of nearby nodes that is created
+when it joins the network. Whenever a node recieves a transaction it first performs some checks and if it passes the 
+checks, the transaction is propogated to all nodes on its nearby nodes list. First, the node checks if the transaction is
+valid. It runs through the blockchain and checks that the funds the sender is trying to send actually belong to the sender.
+Next, the node checks that the coins are not being double-spent, meaning the same funds have not already been sent to another
+address perviously. Finally, the node checks if it has already seen the transaction, if it has it just disgards this new
+transaction as the node will already have added it to a block. If the transaction passes all these test it is send to the
+nearby nodes where it is put through the same tests until eventually it is spread to every node in the network or included
+in a block on the blockchain.
+
+\subsection{Consensus}
+different methods of proof of work (consensus)
+
+\subsection{Mining}
+One functionality described in the book is how mining changes over time. When a node mines a block that is included in the
+blockchain they recieve a small reward which is an incentive to keep the blockchain updated. As explained perviously,
+mining is the process of solving a hash calculation to result in a number starting with a certain number of '0's. The number
+of 0s or target range, is changed over time. In Bitcoin, every 2016 blocks that are mined the difficulty of mining will be
+altered. The way that this difficulty is altered depends on how quickly blocks were mined in the previous 2016 blocks. This
+is done in order to maintain a consistant mining speed. The faster the nodes are mining blocks, the harder the difficulty
+will subsequently become. As the network of users increases, the processing power increases and so the mining will happen
+faster. This is also offset as over time the size of the incentive reward for successfully mining a block is lowered.
+This reward system is the only way new coins are created and because of this there is a maximum to the total amount of coins
+that will be in the system. This effectivly makes Bitcoin immune to inflation.
+
+The way bitcoin automatically responds to changes in the amount of processing power and size of the network is impressive,
+however will not be a useful addition to the project. As this project will run at a relativly small scale over a small
+time span, it would not be utilised and would be unnecessary to include this feature.
+
+\subsection{OverPay?/Bitcoin Scripting?}
+overpay
+
 
 %==================================================================================================================================
 \chapter{Analysis/Requirements}
 What is the problem that you want to solve, and how did you arrive at it?
+
+MoSCow
 
 Could: Incentive for nodes, proper merkle trees, increasing mining difficulty.
 
