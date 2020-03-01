@@ -83,11 +83,11 @@
 
 \section{Motivation}
 
-The concept of cryptocurrency has only emerged in the past 15 years as an alternative to the regular
+The concept of cryptocurrency has only emerged in the past 15 years as an alternative to the regular,
 centralised Fiat currencies backed by governments around the world. In 2008 Satoshi Nakamoto, the 
-brainchild* of Bitcoin, invented the worlds first cryptocurrency providing a peer-to-peer currency
-not bound to a central bank. This new currency, secured by modern cryptographic methods was a way in
-which people around the world could trade without having to send the funds via a financial institution (Bitcoin white paper).
+founder of Bitcoin, invented the worlds first cryptocurrency providing a peer-to-peer currency
+not bound to a central bank. This new currency, secured by modern cryptographic methods, was a way in
+which people around the world could trade without having to send the funds via a financial institution. (REFERENCE).
 
 This new currency ensured security to its users by implementing a distributed ledger of transactions. Bitcoin
 ensured that the ledger was immutable by ensuring proof of work was given before transactions would be
@@ -106,16 +106,6 @@ a limit on the total amount of the currency available.
 The goal of this project is to create a secure and robust cryptocurrency from scratch. There are several key aspects
 to the project that must be met in order to demonstrate a woking cryptocurrency.
 
-\textbf{A distrobuted and tamper-proof ledger}
-
-\textbf{Proof of work function}
-
-\textbf{User wallets}
-
-\textbf{Test harness}
-
-\textbf{Consesus mechanism}
-
 The currency will be based around
 a distrobuted ledger that is resistant to malicious retroactive changes. It will use a concept know as proof of work,
 similar to the way that Bitcoin works where nodes have to solve difficult hashing calculations in order
@@ -131,8 +121,28 @@ can spend more money than they own. The test harness should simulate a large act
 transactions from user to user to then be added on to the blockchain once the nodes have shown proof of work using 
 the mining mechanism.
 
-Can add a dissertation outline once completed.
-
+\section{Dissertation Outline}
+The following dissertaiton is split into seven chapters as described below:
+\begin{itemize}
+    \item
+        \textbf{Chapter 2} gives insight into the original Bitcoin paper and other features of cryptocurrencies
+        created in the past.
+    \item
+        \textbf{Chapter 3} discusses the requirements gathering and analysis stage where the functionality
+        of the project was decided.
+    \item
+        \textbf{Chapter 4} presents the way in which the cryptocurrency was designed, from the architecture of the blocks
+        to the verification of transactions.
+    \item
+        \textbf{Chapter 5} highlights the way in which the projects was implemented, discussing the specific tools and 
+        technologies used to create a secure cryptocurrency.
+    \item
+        \textbf{Chapter 6} discusses the evaluation of the projects. This shows how well the requirements were met, the
+        performance of the system, and unit testing.
+    \item
+        \textbf{Chapter 7} concludes the project, summarising the project and reflecting on its execution. Here we also
+        outline any future work that could be accomplished.
+\end{itemize}
 
 
 %==================================================================================================================================
@@ -213,15 +223,26 @@ This means that in order for a node to check that a block is valid it only needs
 if there were any altered transactions within the block that would have an avalanche effect up through the hashes
 ultimately changing the root hash of the whole block.
 
-[MERKLE TREE DIAGRAM]
-
 Another benifit that the paper mentions of storing the transaction within the block this way is that it can lessen
 the storage space needed to store each block. As the blocks can be validated using only their main hash. Nodes do 
 not need to store every single transaction in the blockchain in order to confirm transactions relevent to itself.
 Instead it can just store the main block hashes and save a large amount of storage. As Bitcoin becomes more and
 more popular this is a big saving as the number of transactions grows larger and larger.
 
-\section{Bitcoin and Cryptocurrency technologies}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{images/merkle-tree.png}    
+
+    \caption{
+        The Merkle tree structure within a block of transactions. Transactions are hashed together as leaf nodes
+        and repeated all the way up the tree to the main hash of the block, known as the Merkle root.
+    }
+
+    % use the notation fig:name to cross reference a figure
+    \label{fig:relu} 
+\end{figure}
+
+\section{Bitcoin and Cryptocurrency Technologies}
 A large source of the information used to plan this project and choose the relevant technologies to include was the
 book \emph{Bitcoin and Cryptocurrency Technologies} by Narayanan et al. This provided a more in depth disscussion
 about the intricacies of the structures needed for the project. The book also gives good information about cryptocurrencies
@@ -604,5 +625,8 @@ Merkle trees
 Bitcoin white paper
 
 Bitcoin and cryptocurrency technologies
+
+https://hackernoon.com/merkle-trees-181cb4bc30b4
+[IMAGE OF MERKLE TREE] 
 
 \end{document}
