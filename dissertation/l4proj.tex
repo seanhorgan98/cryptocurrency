@@ -213,7 +213,7 @@ This means that in order for a node to check that a block is valid it only needs
 if there were any altered transactions within the block that would have an avalanche effect up through the hashes
 ultimately changing the root hash of the whole block.
 
-[DIAGRAM]
+[MERKLE TREE DIAGRAM]
 
 Another benifit that the paper mentions of storing the transaction within the block this way is that it can lessen
 the storage space needed to store each block. As the blocks can be validated using only their main hash. Nodes do 
@@ -246,9 +246,6 @@ transaction as the node will already have added it to a block. If the transactio
 nearby nodes where it is put through the same tests until eventually it is spread to every node in the network or included
 in a block on the blockchain.
 
-\subsection{Consensus}
-different methods of proof of work (consensus)
-
 \subsection{Mining}
 One functionality described in the book is how mining changes over time. When a node mines a block that is included in the
 blockchain they recieve a small reward which is an incentive to keep the blockchain updated. As explained perviously,
@@ -265,8 +262,15 @@ The way bitcoin automatically responds to changes in the amount of processing po
 however will not be a useful addition to the project. As this project will run at a relativly small scale over a small
 time span, it would not be utilised and would be unnecessary to include this feature.
 
-\subsection{OverPay?/Bitcoin Scripting?}
-overpay
+\subsection{Bitcoin scripting}
+Another major part of blockchain that the book describes is the small scripting languague that was invented specifically for
+transactions which helps with the verification of transfers. This simple bitcoin scripting language is used
+by nodes when mining blocks to verify that all transactions in the block are valid. Every transaction in Bitcoin is
+sent with a script, most often instructing the node to compute the inputs of this transaction and the specified outputs of
+previous transactions to make sure they match up correctly. Bitcoin also utilises this scripting language to inform the node
+what the output should equal when the receiver tries to verify the transaction signature using their key. The book goes
+into detail the intricacies of the language but this is out of scope for this project as including this scripting language
+in the project would be unnecessary as there would only be one script needed and this can be implemented without the script.
 
 
 %==================================================================================================================================
@@ -291,8 +295,8 @@ Whate are non-functional requirements in this context
 \subsection{Should have}
 \subsection{Could have}
 
-\section{Guidance}
-Make it clear how you derived the constrained form of your problem via a clear and logical process. 
+\section{Chosen Limitaions}
+
 
 %==================================================================================================================================
 \chapter{Design}
