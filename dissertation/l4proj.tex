@@ -310,15 +310,33 @@ useable cryptocurrency to be created. Without these requirements being met it wo
 useful form of evaluation.
 
 \subsection{Must have}
-Tamper proof ledger
-Consensus mechanism
-Mining
+\begin{itemize}
+    \item As described in the goals for the project, it would not constitute a cryptocurrency if it did not include a tamper-proof
+        ledger for keeping track of all transactions between users. This must be resistant to malicious retroactive alterations
+        and transactions that are invalid. This means that it must also have a feature so that nodes can run through the 
+        whole chain and check all transactions are valid and each block links to the previous block.
 
+    \item The cryptocurrency must also include some form of consensus mechanism where nodes can agree upon the blockchain
+        and decide which transactions to include on the blockchain. They must be able to circulate each transaction once
+        it occurs and flood it to other nodes on the network.
+    
+    \item Before blocks can be added to the blockchain it is important to inculde proof of work so that the integrity of the 
+        networks blockchain can be maintained and guided by the processing power of the whole network and not a small minority
+        of harmful nodes trying to take over.
+\end{itemize}
 
 \subsection{Should have}
-Incentive for nodes
+
+A feature that can help with the smooth running of the network is an incentive for nodes to mine blocks. Without this there
+is no reason for nodes to mine blocks and add to the blockchain. This is necessary as there needs to be a majority of 
+honest nodes othewise it is easy for malicious nodes to take control of the blockchain and can then add any blocks with
+which ever transactions they would like to the blockchain wether they are valid or not.
+
 \subsection{Could have}
-increasing mining difficulty
+In Bitcoin, every 2016 blocks that are mined the difficulty of mining is changed in order to maintain the same average time
+to mine a block. This difficulty is either made harder or easier based on how quickly the nodes mined the previous blocks.
+This is not a high priority in this project as all the mining is taking place on the same computer and each node will have
+the same computational power. In theory this means that the average time for mining blocks shouldn't change.
 
 \section{Non-Functional Requirements}
 Non-functional requiremnts are features that if included will improve the way the cryptocurrency operates by increasing
@@ -326,13 +344,28 @@ speed or lowering the storage space required. These features are not imperative 
 but would bring the project closer to what might be used in current cryptocurrencies in the world at the moment.
 
 \subsection{Must have}
-Wallet balance testing
+It is important that the way in which the transactions within blocks is efficient. The must be stored using the Merkle
+tree structure (REFERENCE). This way each transaction is a leaf node and every branch node is a hash of its two children.
+This makes it extremely efficient for checking the validity of each block as you only have to check the hash of the root
+hash.
+
 \subsection{Should have}
-Ability for mining difficulty to be changed
+The cryptocurrency should have the ability to split the balance of wallets such that if you send an amount but you only
+have an increment of the currency larger than that amount then you should be sent back the value that you overpaid by.
+For example if you start with 10 coins and you want to send 3 to another wallet you should be able to send your 10 coins
+and recieve 7 back as overpay.
+
 \subsection{Could have}
-proper merkle trees disgarding hashes once in the chain
+One feature that would save storage space would be the way in which transactions are stored in blocks. In the merkle tree
+structure the transactions are hashed in order to speed up validation for nodes. This could be improved even more for 
+nodes. It is possible that nodes only need to store the root hash of each block in order to do their validation as the
+block hash is sufficient to check for incorrect transactions. This means each node can save a huge amount of storage space
+by only storing each blocks root hash.
 
 \section{Chosen Limitaions}
+No bitcoin scripting
+Nodes Expiring after a while. 
+
 
 
 %==================================================================================================================================
