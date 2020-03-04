@@ -363,10 +363,21 @@ block hash is sufficient to check for incorrect transactions. This means each no
 by only storing each blocks root hash.
 
 \section{Chosen Limitaions}
-No bitcoin scripting
-Nodes Expiring after a while. 
-
-
+In this section we list some of the limitations we have placed on the project as they would not help demonstrate the 
+primary purpose of the project.
+\begin{itemize}
+    \item One feature we have chosen to leave out is the concept of scripting. In Bitcoin, every transaction is sent
+        with a short piece of code writen in the Bitcoin scripting language. This serves the function of allowing 
+        different forms of transactions like ESCROW or multi user transactions. While useful in the functionality of
+        Bitcoin, this feature is not necessary in our implemtation of a cryptocurrency as there will only be a need
+        for one type of transaction.
+    \item Another aspect we have chosen to exclude is the way in which nodes work. In real cryptocurrencies if a node
+        has not been active in mining or creating transactions, after a specified amount of time the node will expire
+        meaning other nearby nodes will cease to send transactions to this node and effectivly removing the node from
+        the network. This functionality is useful in keeping the list of nodes exclusive to active nodes and saves
+        collective processing power for the whole network. In our implementation this would be unnecessary as a fixed
+        number of nodes will be created for demonstration perposes.
+\end{itemize}
 
 %==================================================================================================================================
 \chapter{Design}
