@@ -1,0 +1,15 @@
+Meeting 18
+Date: 05/03/20
+
+Disscussed how I completed the introduction, background research
+and analysis/requirements sections on the dissertation. Talked about changing
+the title to "Demonstrating the security of a basic cryptocurrency" in order
+to make the evaluation section easier to frame. How I should try my best to not
+repeat myself and to mention some other cryptocurrencies (like ethereum contracts)
+in the background research section. Should also maybe mention proof of steak as 
+well as proof of work. Also talked about how the amount of time spent shouldn't 
+really matter that much as long as the content I provide is adequate.
+
+Plan for next week is to make a solid start on the design section.
+
+Next meeting is same time next week.
