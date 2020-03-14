@@ -384,18 +384,64 @@ primary purpose of the project.
 In this section we discuss the decisions that were made when designing the project in order to meet the requirements
 that have been laid out in the previous section. We will also talk about how decisions were approached when
 choosing one particular design instead of another any why those choices were made.
+
 \section{Overview}
+The main aspects of the design process that needed to be addressed were surrounding transactions, the blockchain, and
+the consensus mechanism. It was also necessary to decide how all of these data structures will be linked together and
+how the overall process of sending currency from one wallet to another would work between these structures.
 
-\section{UTXOs}
-
-\section{Proof of Work vs Proof of Stake}
-
-\section{Merkle Trees}
-
-\section{Blockchain}
+%Maybe a system diagram showing how the structures interact
 
 \section{Transactions}
+%Structure and values
+A transaction object is the basic building block of the whole cryptocurrency. This means that it must be designed 
+to be secure and robust. Transactions should contain metadata that is able to identify and validate itself when
+recieved and also contain the necessary information like the value of currency that transaction is sending.
+
+%signatures
+One of the key functionality of a transaction would be it's ability to generate a signature for itself using the values
+from the various metadata it contained and then it also has to be able to vefify that this signature is valid. This
+is a basic building block for what makes a cryptocurrency secure.
+
 \subsection{Inputs and Outputs}
+In order for a user to send some currency to another user they first have to have a sufficient amount themselves. The
+way we decided to enforce this condition was through the use of Transaction inputs and outputs. When a transaction is
+sent, the value of that transaction (amount of currency it is trying to send), is a collection of inputs. These inputs
+are made up of the outputs of previous transactions that have been addresed to the user. This means that to check the 
+balance of a user would be the process of going through the blockchain and adding up all the transaction outputs that
+are addressed to that particular user. This concept will be explained in more detail in the Blockchain section.
+
+\subsection{Process and Checks}
+%Process transaction
+When a transaction is sent it has to be processed before it is considered valid and added to a block and subsequently
+the blockchain.
+
+%Coin creation
+When is created it can be one of two types. The first type is that of a normal transaction which would take place
+between one wallet and another. The second type is that of coin creation. A transaction can be created with the 
+coin creation flag which means that the inputs to the transaction would not contain anything but the transaction
+would still be considered valid. This would only occur in the scenario like the very first transaction for the entire
+cryptocurrency or the more frequent scenario which happens when a block is mined. To keep the system of consensus 
+running there has to be an insentive for mining blocks. When a node mines a block they are rewarded with a small
+amount of the currency which does not come from any particular user, instead this comes from a transaction with the
+coin creation flag. After the initial creation of the network this is the only case where new currency will be
+minted.
+
+%Diagram of a transaction
+
+\section{Blockchain}
+%Blockchain diagram
+\subsection{UTXOs}
+\subsection{Merkle Trees}
+%reference the previous diagram
+
+\section{Consensus}
+\subsection{Proof of Work vs Proof of Stake}
+\subsection{Nodes and Wallets}
+
+
+
+
 
 %==================================================================================================================================
 \chapter{Implementation}
