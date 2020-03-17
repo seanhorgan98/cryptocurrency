@@ -425,6 +425,7 @@ that the previous transaction inputs are then removed as otherwise they would st
 running the risk of double spend attacks. This is covered in more detail in the Blockchain section.
 
 %Overpay
+\subsection{Overpay}
 In a real environment it is common that the ammount a user is trying to send is not equal to the value of one of
 the transactions they have recieved in the past. For example, if a user recieves a transaction of 10 it is likely
 that the next time they want to pay someone they may want to only send 5. This issue is solved by the concept of
@@ -436,6 +437,7 @@ back to the sender. This ensures that the transaction input is used up but the s
 
 
 %Coin creation
+\subsection{Coin Creation}
 When a transaction is created it can be one of two types. The first type is that of a normal transaction which would take place
 between one wallet and another. The second type is that of coin creation. A transaction can be created with the 
 coin creation flag which means that the inputs to the transaction would not contain anything but the transaction
@@ -455,14 +457,38 @@ also be an accurate ledger containing every transaction exchanged to date. The w
 by first collating a group of transactions into blocks. Then each block would create a signature hash which would
 be a combination of all the transactions in the block. Then, in order to create an irreversible and immutable chain
 of these blocks, the hash of each block is concatenated with the hash of the previous block in the chain. Meaning
-any change to a transaction would cascade through
+any change to a transaction would cascade through each hash in each block and ultimately affect everything in the
+chain. This means that it is easy for any node to check that the blockchain is valid using a simple and fast check.
+
 %Blockchain diagram
+
+
 \subsection{UTXOs}
+The strategy of utilising Transaction inputs and transaction Outputs means that it is vital that the Blockchain
+keeps track of the transaction outputs. When a user send currency to another user it is vital that the previous 
+transaction output that the user has now spent as an input is removed. This is necessary for a few reasons, 
+firstly if a user wants to find out how much currency they own they need to sum all the transaction outputs that 
+are addressed to them. If we do not keep track of the transaction and removing ones already spent this would
+allow the user to spend more than they own using double spending attacks.
+
+This leads to the concept of an Unspent Transaction Output list (UTXO). This list is a structure tied to the blockchain
+that stores all the transaction outputs that have not been spent as inputs by a tranasction. When they are used.
+The transaction processing stage removes that output from the UTXO list and adds the new output to the list.
+It is important to note that this is not a list of new transaction ouputs as that would not be secure outside the
+blockchain and would be vulnerable to attack. It is simply a way of listing the transactions already added to the
+blockchain. When a transaction is processed it goes through the new block and updates the UTXO list by recreating 
+it. This maintains security and prevents malicious users from attacking the system this way.
+
 \subsection{Merkle Trees}
 %reference the previous diagram
 
 \section{Consensus}
+This final section discussed the way in which the system for making sure all nodes communicate correctly and
+that they all maintain an up-to-date copy of the blockchain was designed. It also explains the decision to 
+use one particular method of mining instead of alternatives.
+
 \subsection{Proof of Work vs Proof of Stake}
+
 \subsection{Nodes and Wallets}
 
 
