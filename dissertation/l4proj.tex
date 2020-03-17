@@ -481,15 +481,25 @@ it. This maintains security and prevents malicious users from attacking the syst
 
 \subsection{Merkle Trees}
 %reference the previous diagram
+The way the storage of transactions inside blocks was decided was using the same method utilised in Bitcoin using
+Merkle trees. As mentioned earlier in this paper, a Merkle tree is a type of binary tree where each leaf node
+is a transaction and each branch node is a hash of its two children. It was decided this would be the most effective
+way of storing the transaction for this method as it would allow efficient and cheap validity checks for nodes
+when testing the correctness of the blockchain. As this project is being designed to run on a test harness on one
+machine it is important that the nodes be able to perform checks as quickly as possible.
 
 \section{Consensus}
 This final section discussed the way in which the system for making sure all nodes communicate correctly and
 that they all maintain an up-to-date copy of the blockchain was designed. It also explains the decision to 
 use one particular method of mining instead of alternatives.
 
-\subsection{Proof of Work vs Proof of Stake}
+\subsection{Mining}
 
 \subsection{Nodes and Wallets}
+
+
+\subsection{Proof of Work vs Proof of Stake}
+
 
 
 
