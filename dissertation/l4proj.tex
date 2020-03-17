@@ -383,10 +383,10 @@ primary purpose of the project.
 \chapter{Design}
 In this section we discuss the decisions that were made when designing the project in order to meet the requirements
 that have been laid out in the previous section. We will also talk about how decisions were approached when
-choosing one particular design instead of another any why those choices were made.
+choosing one particular design instead of another and why those choices were made.
 
 \section{Overview}
-The main aspects of the design process that needed to be addressed were surrounding transactions, the blockchain, and
+The main aspects of the design process that needed to be addressed are transactions, the blockchain, and
 the consensus mechanism. It was also necessary to decide how all of these data structures will be linked together and
 how the overall process of sending currency from one wallet to another would work between these structures.
 
@@ -396,28 +396,47 @@ how the overall process of sending currency from one wallet to another would wor
 %Structure and values
 A transaction object is the basic building block of the whole cryptocurrency. This means that it must be designed 
 to be secure and robust. Transactions should contain metadata that is able to identify and validate itself when
-recieved and also contain the necessary information like the value of currency that transaction is sending.
-
-%signatures
-One of the key functionality of a transaction would be it's ability to generate a signature for itself using the values
-from the various metadata it contained and then it also has to be able to vefify that this signature is valid. This
-is a basic building block for what makes a cryptocurrency secure.
+recieved and also contain the necessary information like the amount of currency that transaction is sending.
 
 \subsection{Inputs and Outputs}
 In order for a user to send some currency to another user they first have to have a sufficient amount themselves. The
-way we decided to enforce this condition was through the use of Transaction inputs and outputs. When a transaction is
-sent, the value of that transaction (amount of currency it is trying to send), is a collection of inputs. These inputs
+way this condition was enforced was through the use of Transaction Inputs and Outputs. When a transaction is
+sent, the value of that transaction (amount of currency it is attempting to send), is a collection of inputs. These inputs
 are made up of the outputs of previous transactions that have been addresed to the user. This means that to check the 
 balance of a user would be the process of going through the blockchain and adding up all the transaction outputs that
-are addressed to that particular user. This concept will be explained in more detail in the Blockchain section.
+are addressed to that particular user and not already spent. This concept will be explained in more detail in the Blockchain section.
 
 \subsection{Process and Checks}
+%signatures
+One of the key functionality of a transaction is it's ability to generate a signature for itself using the values
+from the various metadata it contains and then it also has to be able to vefify that this signature is valid.
+
 %Process transaction
-When a transaction is sent it has to be processed before it is considered valid and added to a block and subsequently
-the blockchain.
+When a transaction is created it has to be processed before it is considered valid and added to a block and subsequently
+the blockchain. This is done using a series of checks. The first check that the transaction makes is that the
+signature is valid. This is paramount as it is one of the base functions that maintain the security of the 
+cryptocurrency. Without this signature check it may be possible for one user to spoof the origin of a transaction
+and send someone else's currency to themselves. Then next step is to add up the sums of all the transaction inputs
+and make sure that this is greater than or equal to the value the transaction is trying to send.
+
+Once these checks have been completed it is time to execute the transaction. The way this is achieved is by
+creating a new Transaction Output addressed to the recipient using the value of the transaction. It is important
+that the previous transaction inputs are then removed as otherwise they would still be valid for the user to send
+running the risk of double spend attacks. This is covered in more detail in the Blockchain section.
+
+%Overpay
+In a real environment it is common that the ammount a user is trying to send is not equal to the value of one of
+the transactions they have recieved in the past. For example, if a user recieves a transaction of 10 it is likely
+that the next time they want to pay someone they may want to only send 5. This issue is solved by the concept of
+overpay. In this design, when a user is sending a value to a recipient which is not equal to the transaction
+input they are expending, the transaction processing creates two transaction outputs. The first sends the value
+of the transaction to the recipient and the second sends the transaction input value minus the transaction value
+back to the sender. This ensures that the transaction input is used up but the sender is not out of pocket.
+
+
 
 %Coin creation
-When is created it can be one of two types. The first type is that of a normal transaction which would take place
+When a transaction is created it can be one of two types. The first type is that of a normal transaction which would take place
 between one wallet and another. The second type is that of coin creation. A transaction can be created with the 
 coin creation flag which means that the inputs to the transaction would not contain anything but the transaction
 would still be considered valid. This would only occur in the scenario like the very first transaction for the entire
@@ -430,6 +449,13 @@ minted.
 %Diagram of a transaction
 
 \section{Blockchain}
+The second major feature of the project to design is the Blockchain. This chain of blocks needs to be robust in
+the sense that a malicious user cannot alter any previous transactions in the ledger for their benefit. It must
+also be an accurate ledger containing every transaction exchanged to date. The way this blockchain was created was
+by first collating a group of transactions into blocks. Then each block would create a signature hash which would
+be a combination of all the transactions in the block. Then, in order to create an irreversible and immutable chain
+of these blocks, the hash of each block is concatenated with the hash of the previous block in the chain. Meaning
+any change to a transaction would cascade through
 %Blockchain diagram
 \subsection{UTXOs}
 \subsection{Merkle Trees}

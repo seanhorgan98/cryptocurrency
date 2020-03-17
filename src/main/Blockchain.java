@@ -1,7 +1,6 @@
 package main;
 
 import java.util.*;
-import main.TransactionOutput;
 
 class Blockchain {
     public ArrayList<Block> blockChain = new ArrayList<Block>(1);
