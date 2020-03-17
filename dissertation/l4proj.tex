@@ -479,7 +479,7 @@ blockchain and would be vulnerable to attack. It is simply a way of listing the 
 blockchain. When a transaction is processed it goes through the new block and updates the UTXO list by recreating 
 it. This maintains security and prevents malicious users from attacking the system this way.
 
-\subsection{Merkle Trees}
+\subsection{Block Structure}
 %reference the previous diagram
 The way the storage of transactions inside blocks was decided was using the same method utilised in Bitcoin using
 Merkle trees. As mentioned earlier in this paper, a Merkle tree is a type of binary tree where each leaf node
@@ -488,17 +488,46 @@ way of storing the transaction for this method as it would allow efficient and c
 when testing the correctness of the blockchain. As this project is being designed to run on a test harness on one
 machine it is important that the nodes be able to perform checks as quickly as possible.
 
+%block size
+Another important factor was the number of transactions to include in a block. The larger this number is, the
+longer it will take to fill up with transactions and so the longer it will take for each block to start being
+mined by nodes. As the aim of this project is to demonstrate security features we have decided to keep the 
+number of transactions in blocks relativly small in order to progress through the cryptocurrency lifecycle
+more quickly and demonstrate all features.
+
 \section{Consensus}
 This final section discussed the way in which the system for making sure all nodes communicate correctly and
 that they all maintain an up-to-date copy of the blockchain was designed. It also explains the decision to 
 use one particular method of mining instead of alternatives.
 
+\subsection{Proof of Work vs Proof of Stake}
+In order for the network to function correctly, a consensus must be achieved by all the nodes. They need to agree
+on what the correct blockchain is so they can add to it and they must also keep a consistant list of all the 
+transactions yet to be included on the chain. It is vital that this consensus is achieved by nodes that are not
+malicious or compromised and that the consensus they come to is proposed by an honest node to avoid attackers
+taking over the blockchain. 
+
+There are two common methods of distributed consensus methods. Proof of Work and Proof of Stake. These methods
+are a way for nodes to prove that they are not malicious and are simply trying to honestly contribute to the
+network. These concepts are not limited to cryptocurrencies and have many other applications in the world that 
+have been researched by others [1,2]. The main idea behind these methods is tying the task of adding blocks to the 
+blockchain to a reasouce that cannot be monopolised and as such the whole network cannot be controlled by a 
+singular entity. Each method aims to achieve this using different resources.
+
+\subsubsection{Proof of Stake}
+This method works by 
+
+\subsubsection{Proof of Work}
+This approach is the method that Bitcoin and most other cryptocurrencies use today. The resource it uses to 
+ensure honesty is computational power. This means that in order to create a new block, a node has to demonstrate
+that it has expended a certain amount of computational power. The way this will be achieved in this project is
+the same implementation that bitcoin uses of hashing values into a target area.
+
 \subsection{Mining}
+
 
 \subsection{Nodes and Wallets}
 
-
-\subsection{Proof of Work vs Proof of Stake}
 
 
 
