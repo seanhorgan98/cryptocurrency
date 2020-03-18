@@ -552,12 +552,40 @@ or decreasing the number of 0s in the target range. The more 0s required means t
 specific and as such will take longer to find. We have decided for this cryptocurrency the difficulty of mining
 will remain low as processing power comes at a premium for one computer running multiple nodes.
 
-\subsection{Nodes and Wallets}
+\subsection{Nodes}
 %Nearby nodes
+In order for nodes to be able to communicate the details of transactions and the correct blockchain to use,
+they first have to be able to identify and keep a list of nodes that are nearbu in the network. This does not
+necessarily mean geograpihcally nearby but instead in practice it is most likely nodes created most recently.
+The way nodes are designed in this project is that a node is created with a seed node. Upon creation, nodes
+query the seed node in order to obtain a list of nearby nodes, these nodes are selected randomly in order
+to avoid every node's nearby list containing the same subset of the network.
 
 %Transaction Flooding
+\subsubsection{Transaction Flooding}
+In order for nodes to mine blocks, they first have to know what transactions to include in the blocks. To do
+this they need to know what transactions have occurred that are not currently included on the blockchain. This
+is achieved by transaction flooding. When a transaction is created by a wallet it is sent to the node that the
+wallet is associated with. This node then performs some checks on the transaction. The initial check is to make
+sure that the transaction fits with the blockchain. It runs through all the inputs that the transaction claims
+to be spending and makes sure that they line up with transaction outputs listed on the UTXO to make sure they
+exist and haven't already been spent. The second check is to see if the transaction has already been seen by
+the node if so it moves on without adding it to the block it is trying to create. If the transaction passes
+these tests then the node adds it to the block it is plannig to mine and then sends the transactions on to all
+other nodes on its list of nearby node. Nodes recieving transactions like this from other nodes will perform the
+same checks and then decide whether to pass on the transaction again. This way the transaction should be flooded
+through the whole network and be eligable to be added to any block.
 
+\subsection{Wallets}
 %Something about wallets, maybe the overall process of sending coins
+The design for wallets in this project is that every transaction must be tied to a wallet and every wallet
+must be created from a node. This way, when a wallet creates a transaction it is automatically sent to the
+associated node and can be flooded to the network. Each wallet has a public key which is used as the address
+for which currency can be sent to and a private key which is used to verify each transaction. The wallets 
+keep track of their own currency by running through the blockchain and adding up every transaction output
+that is addressed to themselves. Even if a wallet spends some currency and then tries to spend the same
+currency before the previous transaction is added to the blockchain it will be caught by the nodes before the
+transaction will be flooded to prevent double spending attacks.
 
 
 %==================================================================================================================================
