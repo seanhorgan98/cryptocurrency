@@ -512,26 +512,52 @@ are a way for nodes to prove that they are not malicious and are simply trying t
 network. These concepts are not limited to cryptocurrencies and have many other applications in the world that 
 have been researched by others [1,2]. The main idea behind these methods is tying the task of adding blocks to the 
 blockchain to a reasouce that cannot be monopolised and as such the whole network cannot be controlled by a 
-singular entity. Each method aims to achieve this using different resources.
-
-\subsubsection{Proof of Stake}
-This method works by 
+singular entity. Each method aims to achieve this in a different way by using different resources.
 
 \subsubsection{Proof of Work}
 This approach is the method that Bitcoin and most other cryptocurrencies use today. The resource it uses to 
 ensure honesty is computational power. This means that in order to create a new block, a node has to demonstrate
-that it has expended a certain amount of computational power. The way this will be achieved in this project is
-the same implementation that bitcoin uses of hashing values into a target area.
+that it has expended a certain amount of computational power. The way this is achieved is using hash calculations. 
+This works by having a node take the previous block's
+hash and the hash of the current block concatenated together with a number known as a nonce, resulting in a number
+that falls within a specific target range. Nodes must go through incrementing the nonce in order to find the 
+correct value that will satisfy the requirement. The size of the target range influences how hard and so how long
+it will take for nodes to find. Once a node has found a nonce that results in a value inside the target range
+they have proven that they have used compuational power and are entitled to add to the blockchain.
 
-\subsection{Mining}
+\subsubsection{Proof of Stake}
+Much like the proof of work method, proof of stake is essentially assinging nodes the power to vote on what the
+blockchain should be. The more of a resouce a node has, the more voting power it has. Proof of Stake is different
+to Proof of Work as instead of tying voting power to computational power, it ties voting power to the amount
+of currency a node holds. This means that the nodes with the most currency hold the most power to decide what the
+blockchain will look like. In practice this means that these rich nodes will more often be selected to add a new
+block to the chain. This methods has many advantages over the proof of work concept. Firstly this would significantly
+reduce the environmental impact of the whole currency as there would be little to no mining taking place and so
+there would be no groups of computers left on indefinitely solving calculations. This has the added benifit that
+it would lower the chance that the network would become more centralised by mining companies. This method also
+avoids the risk of a majority of malicious nodes aiming to destroy the currency. As any user holding any amount
+of the currency is essentially a stakeholder in the network, any node that achieves a majority of the currency 
+would have the ability to alter the course of the blockchain. With this method however, it would be in the best
+interest of the makority stakeholder of the currency to perform honest actions as that would increase the value
+of their currency.
 
+In this project we have chosen to use the Proof of Work system as despite the real world benifits, like environmental
+welfare, the proof of stake method does not present benifits when using a scale like the one being implemented
+in this project. It would be more benificial to show the proof of work system as mining would demonstrate the
+functionality of the system better.
+
+In this cryptocurrency the target range will be a number that begins with a certain
+ammount of 0s. This means we have the easy ability to adjust the difficulty of the mining process by increasing
+or decreasing the number of 0s in the target range. The more 0s required means that the final value must be more
+specific and as such will take longer to find. We have decided for this cryptocurrency the difficulty of mining
+will remain low as processing power comes at a premium for one computer running multiple nodes.
 
 \subsection{Nodes and Wallets}
+%Nearby nodes
 
+%Transaction Flooding
 
-
-
-
+%Something about wallets, maybe the overall process of sending coins
 
 
 %==================================================================================================================================
