@@ -590,37 +590,99 @@ transaction will be flooded to prevent double spending attacks.
 \section{Test Harness}
 %Describing how the whole process works together
 %Can include diagram showing main program flow
+The final stage to designing the project was deciding how all of these features of the currency could be shown
+and how the security could be effectivly presented. To meet the requiremnets specification it would mean developing
+a test harness that could generate multiple nodes and simulate a real network of sending transactions back and 
+forth between wallets in order to demonstrate the building of blocks and the blockchain. All while Demonstrating
+the prevention of doubling spending and other attacks. 
 
-\section{Why Java}
+\section{Chosing a Programming Language}
 %Explain why object oriented programming was necessary 
 %Explain why java for security packages etc
+In order to decide what language we would use for this project it was best to look at how the project was designed
+and then narrow it down to the most suitable contenders. The way in which this cryptocurrency was designed was 
+utilising many different objects and structures, transactions, blocks, and the blockchain. This made it clear that 
+the best choice of language for the project would be an object-oriented programming language. This narrowed down
+the playing field to \textit{Java} or \textit{C\#}. From this it was decided that \textit{Java} would be the best 
+option as it includes security packages which would be invaluble for implementing core features like signatures and 
+public/private key verification.
 
-%Maybe summary section
+\section{Summary}
 
 
 %==================================================================================================================================
 \chapter{Implementation}
 This section of the paper will go in depth into the technical construction and implementation of the cryptocurrency.
+This will start with describing the software development process used during construction and then how the different
+aspects of the project were created and joined to deliver the finished product. This section will also examine the 
+technical achievements made and how any problems that came to light were tackled.
 
-Software engineering practices/process?
-Challanges and how they were overcome
-Show hashing equation
-String Util class
-How project was separated into classes
-Block mining specifics
-How the merkle trees worked
-UTXO hashmap
-Why blockchain is an arraylist
-Genesis blocks
-Finding nearby nodes
+%Challanges and how they were overcome
+%Show hashing equation
+%String Util class
+%How project was separated into classes
+%Block mining specifics
+%How the merkle trees worked
+%UTXO hashmap
+%Why blockchain is an arraylist
+%Genesis blocks
+%Finding nearby nodes
+%What did you do to implement this idea, and what technical achievements did you make?
+%You can't talk about everything. Cover the high level first, then cover important, relevant or impressive details.
 
-\section{Object oriented}
+\section{Software Engineering Practices}
+In order to create this cryptocurrencies it was important to have a solid software development process and an
+aim to stick to the different practices.
+%Process using Github, Milestones, Issues, Branching
+\subsection{Version Control}
+%Github and the decision for no continuous integration (no point updating master as it wouldn't work until near end)
+It was decided that the method of version control to be used would be Git. Making use of the GitHub website to 
+host the project repository online. This allowed for the addition of code from different computers during the
+development stages. This project made use of the branching feature of git in order to keep the project organised.
+Every new feature/element that was added was designated a new branch and once complete was merged back into the
+main development branch. Only at the end of the project was everything merged back into the master branch. This
+was decided as the master branch is always supposed to keep a working copy of the software but this working copy
+would not exist until the very end of the project as all the features had to be completed in order to work together
+correctly. This was also the reason why the decision to not make use of continuous integration was made. It was
+much faster and easier to run small tests and log outputs locally rather than make use of \textit{TravisCI} or an 
+alternative.
 
-\section{Version Control}
-%Github and decision not to use continuous integration
-%branching
-%issues and milestones
-%images
+GitHub was an incredibly important website to the construction of this project as it allowed the ability to keep
+track of the completion of each feature using issues and milestones. Each feature and even small bugs were assigned
+an issue and then those issues were assigned to one of the milestones. This made it easy to prioritise each feature
+and keep on track with what needed to be done.
+
+% Issues Screenshot
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{images/issues.png}    
+
+    \caption{
+        A view of the main issue tracking board on GitHub. Making it easy to keep track of state of the project
+        and what is still left to be completed.
+    }
+
+    % use the notation fig:name to cross reference a figure
+    \label{fig:issues} 
+\end{figure}
+
+% Milestones screenshot
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{images/milestones.png}    
+
+    \caption{
+        The main milestone board on GitHub showing the dates that each feature need to be completed by and
+        allows for easy prioritisation of issues.
+    }
+
+    % use the notation fig:name to cross reference a figure
+    \label{fig:milestones} 
+\end{figure}
+
+%Include images of issue boards and milestones etc
+
+\section{Project Strucutre}
 
 \section{Java security (String Util)}
 %Signatures
@@ -628,18 +690,6 @@ Finding nearby nodes
 \section{Maintanence}
 %Documentation
 %Code cleanliness?
-
-
-What did you do to implement this idea, and what technical achievements did you make?
-\section{Guidance}
-You can't talk about everything. Cover the high level first, then cover important, relevant or impressive details.
-
-
-
-\section{General points}
-
-These points apply to the whole dissertation, not just this chapter.
-
 
 
 \subsection{Figures}
