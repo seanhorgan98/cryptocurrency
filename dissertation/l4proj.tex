@@ -218,7 +218,7 @@ just be an unordered list. This would work as each transaction is unrelated to t
 every way except perhaps the time it took place. This storage solution can be improved though by using a data structure
 known as a merkle tree (REFERENCE). This data structure is a way in which to make the process of checking block validity
 more efficient. The way Merkle trees work is by having every leaf node be the hash of the transaction it represents 
-and every branch node is the hash of its two child nodes. This builds up a chain of hashes similar to the blockchain.
+and every branch node is the hash of its two child nodes [\ref{fig:merkle}]. This builds up a chain of hashes similar to the blockchain.
 This means that in order for a node to check that a block is valid it only needs to check the root hash of the block as
 if there were any altered transactions within the block that would have an avalanche effect up through the hashes
 ultimately changing the root hash of the whole block.
@@ -239,7 +239,7 @@ more popular this is a big saving as the number of transactions grows larger and
     }
 
     % use the notation fig:name to cross reference a figure
-    \label{fig:relu} 
+    \label{fig:merkle} 
 \end{figure}
 
 \section{Bitcoin and Cryptocurrency Technologies}
@@ -617,25 +617,23 @@ This will start with describing the software development process used during con
 aspects of the project were created and joined to deliver the finished product. This section will also examine the 
 technical achievements made and how any problems that came to light were tackled.
 
-%Challanges and how they were overcome
 %Show hashing equation
-%String Util class
-%How project was separated into classes
 %Block mining specifics
 %How the merkle trees worked
 %UTXO hashmap
 %Why blockchain is an arraylist
 %Genesis blocks
 %Finding nearby nodes
+
+%Challanges and how they were overcome
 %What did you do to implement this idea, and what technical achievements did you make?
 %You can't talk about everything. Cover the high level first, then cover important, relevant or impressive details.
 
 \section{Software Engineering Practices}
 In order to create this cryptocurrencies it was important to have a solid software development process and an
 aim to stick to the different practices.
-%Process using Github, Milestones, Issues, Branching
+
 \subsection{Version Control}
-%Github and the decision for no continuous integration (no point updating master as it wouldn't work until near end)
 It was decided that the method of version control to be used would be Git. Making use of the GitHub website to 
 host the project repository online. This allowed for the addition of code from different computers during the
 development stages. This project made use of the branching feature of git in order to keep the project organised.
@@ -649,11 +647,13 @@ alternative.
 
 GitHub was an incredibly important website to the construction of this project as it allowed the ability to keep
 track of the completion of each feature using issues and milestones. Each feature and even small bugs were assigned
-an issue and then those issues were assigned to one of the milestones. This made it easy to prioritise each feature
-and keep on track with what needed to be done.
+an issue [\ref{fig:issues}] and then those issues were assigned to one of the milestones [\ref{fig:milestones}]. 
+This made it easy to prioritise each feature and keep on track with what needed to be done. The ritual of creating
+an issue when a feature or problem is identified and then closing the issue when it is dealt with was important to 
+the smooth development process.
 
 % Issues Screenshot
-\begin{figure}
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=1\linewidth]{images/issues.png}    
 
@@ -665,9 +665,10 @@ and keep on track with what needed to be done.
     % use the notation fig:name to cross reference a figure
     \label{fig:issues} 
 \end{figure}
+\vspace{10cm}
 
 % Milestones screenshot
-\begin{figure}
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=1\linewidth]{images/milestones.png}    
 
@@ -683,6 +684,7 @@ and keep on track with what needed to be done.
 %Include images of issue boards and milestones etc
 
 \section{Project Strucutre}
+%Separation into classes and the string util class(will be talked about later), main
 
 \section{Java security (String Util)}
 %Signatures
@@ -695,46 +697,6 @@ and keep on track with what needed to be done.
 \subsection{Figures}
 \emph{Always} refer to figures included, like Figure \ref{fig:relu}, in the body of the text. Include full, explanatory captions and make sure the figures look good on the page.
 You may include multiple figures in one float, as in Figure \ref{fig:synthetic}, using \texttt{subcaption}, which is enabled in the template.
-
-
-
-% Figures are important. Use them well.
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{images/relu.pdf}    
-
-    \caption{In figure captions, explain what the reader is looking at: ``A schematic of the rectifying linear unit, where $a$ is the output amplitude,
-    $d$ is a configurable dead-zone, and $Z_j$ is the input signal'', as well as why the reader is looking at this: 
-    ``It is notable that there is no activation \emph{at all} below 0, which explains our initial results.'' 
-    \textbf{Use vector image formats (.pdf) where possible}. Size figures appropriately, and do not make them over-large or too small to read.
-    }
-
-    % use the notation fig:name to cross reference a figure
-    \label{fig:relu} 
-\end{figure}
-
-
-\begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        \includegraphics[width=\textwidth]{images/synthetic.png}
-        \caption{Synthetic image, black on white.}
-        \label{fig:syn1}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.45\textwidth}
-        \includegraphics[width=\textwidth]{images/synthetic_2.png}
-        \caption{Synthetic image, white on black.}
-        \label{fig:syn2}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)    
-    \caption{Synthetic test images for edge detection algorithms. \subref{fig:syn1} shows various gray levels that require an adaptive algorithm. \subref{fig:syn2}
-    shows more challenging edge detection tests that have crossing lines. Fusing these into full segments typically requires algorithms like the Hough transform.
-    This is an example of using subfigures, with \texttt{subref}s in the caption.
-    }\label{fig:synthetic}
-\end{figure}
 
 \clearpage
 
