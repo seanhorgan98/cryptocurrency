@@ -647,6 +647,8 @@ This made it easy to prioritise each feature and keep on track with what needed 
 an issue when a feature or problem is identified and then closing the issue when it is dealt with was important to 
 the smooth development process.
 
+%Maybe include committing and pushing.
+
 % Issues Screenshot
 \begin{figure}[!ht]
     \centering
@@ -774,7 +776,7 @@ hash of the block. This would result in a structure identical to the one describ
 The Block class also contained a function dedicated to returning the Merkle root of the block which saves 
 significant time when nodes are traversing the blockchain to make sure it is valid.
 
-\section{Mining}
+%\section{Mining}
 
 
 %Show hashing equation
@@ -787,6 +789,18 @@ significant time when nodes are traversing the blockchain to make sure it is val
 
 \section{Testing}
 %How the unit tests work
+As one of the main aspects of this project is the security of the cryptocurrency, it is important to include
+thourough unit tests throughout the project to make sure that the features they are testing are working correctly.
+It is not only the unit tests that matter however, there are also tests that are run during normal functionality
+like the tests that are run when nodes are deciding how to handle incomming transactions from other nodes in the
+network. This section covers how these tests were constructed and any challanges that had to be overcome in order
+to keep the network running.
+
+\subsection{Blockchain Tests}
+%Checking the blockchain is valid by going through each block hash by hash
+
+\subsection{Node Test}
+%Add more depth to the transaction validation parts
 
 \section{Maintanence}
 %Documentation
