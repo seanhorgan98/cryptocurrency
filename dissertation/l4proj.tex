@@ -688,9 +688,49 @@ the smooth development process.
 
 \section{Project Strucutre}
 %Separation into classes and the string util class(will be talked about later), main
+As this project lended itself to using an object oriented approach it made sense to separate the project into
+Java class filed for each object. These object would then be able to interact together by calling functions
+of other classes throughout the process. This left the main class which was used to host the test harness by
+instantiating all the objects and simulating many nodes and transactions.
+
+%Project structure diagram
 
 \section{Java security (String Util)}
 %Signatures
+As described before, one of the reasons for choosing Java as a programming language was so that I could make use
+of the security packages that are included in the language. These packages were utilised mainly in a class created
+called StringUtil.java. The purpose of this class was to provide three functions that would be used in other aspects
+of the program. 
+\subsubsection{ApplySha256}
+The first function applySha256() takes in a string input and apply the SHA256 encryption
+algorithm to that string and return the result. This function was used all throughout the program for generating
+the hash values for objects. When an object like a transaction or a block is created, it takes all the metadata that
+it is created with and feeds them into this StringUtil function which returns the hash value. This essentially gives
+a unique identifier to every instance of each object. This function is the core of what keeps each block from being
+tampered with retroactivly as the hash identifier created by this function would change if any of the metadata from
+the block would change.
+
+\subsubsection{ApplyECDSASig}
+The second function, called applyECDSASig(), is a function that takes in a key and a string as inputs and
+applies the Elliptic Curve Digital Signature Algorithm (ECDSA) to the string using the key. This is used to encrypt a string
+of data using a private key so that it may only be unencrypted using the public key that is associated with the private
+key. This function is another cornerstone of the security for the project as it used in this project when generating
+a digital signature for each transaction. When a transaction is created by a wallet it generates a signature for
+itself using the private key of the sender and data which consists of the metadata of the transaction like its value
+and the wallets involved. 
+
+\subsubsection{VerifyECDSASig}
+The third function of this class is the counterpart to the applyECDSASig() function called verifyECDSASig(). This 
+function takes in a public key, a string of data, and a digital signature. It takes these inputs and using the Java
+security packages verifies that the signature is valid for the data using the public key. This function is used
+when recipients of a transaction are trying to redeem the value sent to them. When a transaction is being processed
+by a node to put into a block it attempts to verify the signature that was created by the sender. It feed the metadata
+of the transaction, the public key of the recipient, and the digital signature of the transaction into the verifyECDSASig()
+function and if it does not return true then the transaction does not process and is disregarded.
+
+These functions utilise a clever part of cryptography where transactions that are signed by the private key of the
+sender can be verified by anyone that they come from that specific user by using their public key. This means that 
+transactions cannot pretend to be sent by anyone as each user should only have access to their own private key.
 
 \section{Maintanence}
 %Documentation
