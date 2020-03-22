@@ -620,14 +620,6 @@ This will start with describing the software development process used during con
 aspects of the project were created and joined to deliver the finished product. This section will also examine the 
 technical achievements made and how any problems that came to light were tackled.
 
-%Show hashing equation
-%Block mining specifics
-%How the merkle trees worked
-%UTXO hashmap
-%Why blockchain is an arraylist
-%Genesis blocks
-%Finding nearby nodes
-
 %Challanges and how they were overcome
 %What did you do to implement this idea, and what technical achievements did you make?
 %You can't talk about everything. Cover the high level first, then cover important, relevant or impressive details.
@@ -684,8 +676,6 @@ the smooth development process.
     \label{fig:milestones} 
 \end{figure}
 
-%Include images of issue boards and milestones etc
-
 \section{Project Strucutre}
 %Separation into classes and the string util class(will be talked about later), main
 As this project lended itself to using an object oriented approach it made sense to separate the project into
@@ -698,9 +688,10 @@ instantiating all the objects and simulating many nodes and transactions.
 \section{Java security (String Util)}
 %Signatures
 As described before, one of the reasons for choosing Java as a programming language was so that I could make use
-of the security packages that are included in the language. These packages were utilised mainly in a class created
+of the security packages that are included in the language. These packages were utilised mainly in a utility class created
 called StringUtil.java. The purpose of this class was to provide three functions that would be used in other aspects
 of the program. 
+%Maybe describe hashing more in depth to emphasise security
 \subsubsection{ApplySha256}
 The first function applySha256() takes in a string input and apply the SHA256 encryption
 algorithm to that string and return the result. This function was used all throughout the program for generating
@@ -724,7 +715,7 @@ The third function of this class is the counterpart to the applyECDSASig() funct
 function takes in a public key, a string of data, and a digital signature. It takes these inputs and using the Java
 security packages verifies that the signature is valid for the data using the public key. This function is used
 when recipients of a transaction are trying to redeem the value sent to them. When a transaction is being processed
-by a node to put into a block it attempts to verify the signature that was created by the sender. It feed the metadata
+by a node to be put into a block it attempts to verify the signature that was created by the sender. It feeds the metadata
 of the transaction, the public key of the recipient, and the digital signature of the transaction into the verifyECDSASig()
 function and if it does not return true then the transaction does not process and is disregarded.
 
@@ -732,14 +723,75 @@ These functions utilise a clever part of cryptography where transactions that ar
 sender can be verified by anyone that they come from that specific user by using their public key. This means that 
 transactions cannot pretend to be sent by anyone as each user should only have access to their own private key.
 
+\section{Data Structures}
+One of the main challanges with this project was deciding what data stuctures should be used for each object and
+how all of these objects were able to interact. These decisions were vital to being able to correctly implement
+all of the requirements. This section goes into detail which structures were chosen and why these were the best
+choices.
+
+\subsection{The blockchain}
+%Why blockchain is an arraylist
+In this implementation of a cryptocurrency the blockchain is represented with an ArrayList data structure cointaining
+all of the blocks [\ref{fig:blockchainDefinition}]. This was a simple and easy way to store the blocks as the actual data structure did not need to
+have any specific security. All the security is created around this structure so all that was needed was a simple 
+strucutre to store a list of blocks that was easy to work with. 
+
+\subsection{The UTXOs}
+%UTXO hashmap
+In order to store the UTXOs it was important that a data structure was used such that the actual transaction
+object could be tied to the transaction that created that output. This meant making use of one of Java's HashMaps
+[\ref{fig:blockchainDefinition}]. Every time a transaction is processed by a node the outputs that are created 
+along with the ID of the transaction are appended to the UTXO map. After this the process transaction function 
+removes any transaction inputs that have been consumed in the process of the transaction.
+
+% Milestones screenshot
+\begin{figure}[!ht]
+    \centering
+    \hfill\includegraphics[width=1\linewidth]{images/blockchainDefinition.png}    
+
+    \caption{
+        This figure shows the definitions for the blockchain and also the UTXO maps. The blockchain is an ArrayList
+        created with one starting block acting as a genesis block. The UTXO map is a HashMap mapping the transaction
+        id to the transaction output created from each transaction.
+    }
+
+    % use the notation fig:name to cross reference a figure
+    \label{fig:blockchainDefinition} 
+\end{figure}
+
+\subsection{Blocks}
+Similar to the way the blockchain stores all of the blocks, the blocks store their respective transactions 
+using an ArrayList as well. This allowed for easy manipulation of the transactions within to help the process of
+building the Merkle tree structure.
+
+One technical challange that needed to be overcome was how the Block class would organise all its transactions
+into the Merkle tree structure. This was implemented by first taking a copy of the list of transactions in the
+block to work on. Then, using a utility function, it would loop through the list and every two transactions it 
+adds the combined hash to a new list. This is repeated until only one hash is left which is known as the root 
+hash of the block. This would result in a structure identical to the one described previously in this paper
+[\ref{fig:merkle}].
+
+The Block class also contained a function dedicated to returning the Merkle root of the block which saves 
+significant time when nodes are traversing the blockchain to make sure it is valid.
+
+\section{Mining}
+
+
+%Show hashing equation
+%Block mining specifics
+%How the merkle trees worked
+
+%Genesis blocks
+
+%Nearby Nodes algorithm
+
+\section{Testing}
+%How the unit tests work
+
 \section{Maintanence}
 %Documentation
 %Code cleanliness?
 
-
-\subsection{Figures}
-\emph{Always} refer to figures included, like Figure \ref{fig:relu}, in the body of the text. Include full, explanatory captions and make sure the figures look good on the page.
-You may include multiple figures in one float, as in Figure \ref{fig:synthetic}, using \texttt{subcaption}, which is enabled in the template.
 
 \clearpage
 
