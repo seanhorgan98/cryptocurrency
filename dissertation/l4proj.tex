@@ -395,6 +395,7 @@ the consensus mechanism. It was also necessary to decide how all of these data s
 how the overall process of sending currency from one wallet to another would work between these structures.
 
 %Maybe a system diagram showing how the structures interact
+%Mention how there can be multiple blockchains
 
 \section{Transactions}
 %Structure and values
@@ -703,6 +704,9 @@ a unique identifier to every instance of each object. This function is the core 
 tampered with retroactivly as the hash identifier created by this function would change if any of the metadata from
 the block would change.
 
+%Show hashing equation
+%Explain more indepth how this was used for almost everything to hash stuff
+
 \subsubsection{ApplyECDSASig}
 The second function, called applyECDSASig(), is a function that takes in a key and a string as inputs and
 applies the Elliptic Curve Digital Signature Algorithm (ECDSA) to the string using the key. This is used to encrypt a string
@@ -773,19 +777,10 @@ adds the combined hash to a new list. This is repeated until only one hash is le
 hash of the block. This would result in a structure identical to the one described previously in this paper
 [\ref{fig:merkle}].
 
+%Maybe add more depth to explain this better.
+
 The Block class also contained a function dedicated to returning the Merkle root of the block which saves 
 significant time when nodes are traversing the blockchain to make sure it is valid.
-
-%\section{Mining}
-
-
-%Show hashing equation
-%Block mining specifics
-%How the merkle trees worked
-
-%Genesis blocks
-
-%Nearby Nodes algorithm
 
 \section{Testing}
 %How the unit tests work
@@ -798,13 +793,46 @@ to keep the network running.
 
 \subsection{Blockchain Tests}
 %Checking the blockchain is valid by going through each block hash by hash
+The main test used on the blockchain had the goal of making sure that the whole blockchain was valid. This meant
+ensuring every block in this particular blockchain had the correct hash and linked to the correct hash after it.
+This was achieved in practive by looping over the whole blockchain and first calculating a new hash using the 
+transactions within for the current block and checking that it was equal to the hash that is saved in the 
+blockchain. This test would also run through and make sure that each block in the chain has the correct hash
+stored of the previous block in the chain ensuring continuity.
+
+This test is vital to the security of the whole network and is run by every node when joining the network,
+mining for a new block, or when switching from one blockchain to another longer blockchain.
 
 \subsection{Node Test}
 %Add more depth to the transaction validation parts
+The tests that each node would run are in relation to dealing with new transactions when they are flooded through
+the network from other nodes. This is covered breifly in previous sections but here I will present more depth
+on the implementation of these tests.
+
+\subsubsection{Valid Transaction}
+
+\subsubsection{Are Outputs Spent?}
+
+\subsubsection{Has Transaction already been seen?}
+
+\section{Nearby Nodes Algorithm}
+%Nearby Nodes algorithm
+
+\section{Full Process}
+%Genesis blocks
+%Test Harness node generation
+%Wallets being created from nodes
+%Transaction generation
+%Mining
+%Block mining specifics
 
 \section{Maintanence}
 %Documentation
-%Code cleanliness?
+This section will present how the codebase was kept clean and how the documentation was maintained. The nature of
+this project meant it was easy to get confused as there were many similar objects and functions that executed 
+unrelated tasks. This created a need for clean code and well documented classes to stay on top of things.
+
+Each class...
 
 
 \clearpage
