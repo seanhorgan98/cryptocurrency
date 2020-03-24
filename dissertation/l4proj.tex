@@ -742,28 +742,22 @@ all of the blocks [\ref{fig:blockchainDefinition}]. This was a simple and easy w
 have any specific security. All the security is created around this structure so all that was needed was a simple 
 strucutre to store a list of blocks that was easy to work with. 
 
+
+
 \subsection{The UTXOs}
 %UTXO hashmap
 In order to store the UTXOs it was important that a data structure was used such that the actual transaction
 object could be tied to the transaction that created that output. This meant making use of one of Java's HashMaps
-[\ref{fig:blockchainDefinition}]. Every time a transaction is processed by a node the outputs that are created 
+[\ref{lst:blockchainDefinition}]. Every time a transaction is processed by a node the outputs that are created 
 along with the ID of the transaction are appended to the UTXO map. After this the process transaction function 
 removes any transaction inputs that have been consumed in the process of the transaction.
 
-% Milestones screenshot
-\begin{figure}[!ht]
-    \centering
-    \hfill\includegraphics[width=1\linewidth]{images/blockchainDefinition.png}    
-
-    \caption{
-        This figure shows the definitions for the blockchain and also the UTXO maps. The blockchain is an ArrayList
-        created with one starting block acting as a genesis block. The UTXO map is a HashMap mapping the transaction
-        id to the transaction output created from each transaction.
-    }
-
-    % use the notation fig:name to cross reference a figure
-    \label{fig:blockchainDefinition} 
-\end{figure}
+\begin{lstlisting}[language=java, float, caption={This figure shows the definitions for the blockchain and also 
+    the UTXO maps. The blockchain is an ArrayList created with one starting block acting as a genesis block. The 
+    UTXO map is a HashMap mapping the transaction id to the transaction output created from each transaction.}, label=lst:blockchainDefinition]
+    public ArrayList<Block> blockChain = new ArrayList<Block>(1);
+    public static Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
+\end{lstlisting}
 
 \subsection{Blocks}
 Similar to the way the blockchain stores all of the blocks, the blocks store their respective transactions 
@@ -818,7 +812,11 @@ then the transaction is disregarded from the block the node is building and not 
 carried out across the network stops the transaction from entering the blockchain.
 
 \subsubsection{Are Outputs Spent?}
-
+The second test is to remove the chance of users committing a double spending attack. This is done by checking
+that the outputs that are being consumed for this transaction have not already been spent. The test achieves this
+by running throught the the blockchain and checking if any transactions are using the same transaction outputs 
+as the current transaction is trying to use. If so the transaction is removed and not spread further through
+the network.
 
 \subsubsection{Has Transaction already been seen?}
 This one is simple as it simply runs through the exsisting transactions in the block it is building up and
@@ -867,12 +865,52 @@ future nodes to be able to select that node to be part of their lists.
 \end{algorithm}
 
 \section{Full Process}
+This section will demonstrate the full process of the project from the creation of a blockchain to transactions
+being sent between wallets. The main.java class is the driver for the whole project and is responsible for
+initialising all the relevant objects and running the test harness to specification.
+
+\subsubsection{Blocks}
+The process starts off with the creation of the blockchain. In order for the chain to be created there needs to be
+a block. This first block is known as a genesis block and it is different to all other blocks. This genesis block
+is created with a dedicated constructor that generates a block with no transactions and does not point to a previous
+block's hash. This block will not be mined and cointains no transactions so therefore can be kept relativly simple
+in design without consideration for security. 
+
+\subsubsection{Blockchain}
+Now that the genesis block has been created the first blockchain can be created. The constructor for the blockchain
+initialises the object with the genesis block. For this project this initial blockchain is the starting point for
+all transactions however much like all real world cryptocurrencies, this project containes the framework for 
+nodes to switch from using one blockchain to another given the correct circumstances. This topic is explained further
+in a later section.
+
+\subsubsection{Nodes}
+Next the program can create nodes. There is no limit to the number of nodes that can be created the only 
+requirement is that nodes must be created with a seed node. This means that in order for the first node to be created
+a special exception must be made. When creating the genesis node from the main class it the seed node parameter
+is left as null and the Node class handles this with a separate constructor. This special constructor simply
+does not execute the nearby nodes algorithm as there are no other nodes in the network. Then the hash for the 
+node is created. 
+%More detail on how many nodes are created for hte test harness
+
+\subsubsection{Wallets}
+Once the nodes are created the wallet objects can be created. This order is important as each wallet must be tied to
+a node. This is because once a transaction is created by a wallet in order for it to be included in the blockchain
+and recognised by others it must first be spread through the network via nodes. The way this is handled in this 
+project is by having each wallet tied to a node upon creation. Then when a transaction is created it is automatically
+sent to the node that the wallet is tied to and from there can be flooded through the whole network. When the wallet
+is initialised in the main class, the constructor in the Wallet.java class assigns the parent node, initialises the
+funds balance for that node to 0, and finally generates the key pair. This key pair is essential to the security 
+of the currency. The public key is used by other wallets in the network as an address for which they they can send
+currency to. The private key is used as a way of verifying transactions that have been sent to the wallet.
+
+%Listing for generic transaction creation with explanation
 %Genesis blocks
 %Test Harness node generation
 %Wallets being created from nodes
 %Transaction generation
 %Mining
 %Block mining specifics
+%Specifics of calling each object like transaction etc.
 
 %Maybe show more code snippets
 %Switching blockchains
@@ -898,39 +936,6 @@ For example, we might define:
     \hat{f}(\xi) = \frac{1}{2}\left[ \int_{-\infty}^{\infty} f(x) e^{2\pi i x \xi} \right],
 \end{equation}    
 where $\hat{f}(\xi)$ is the Fourier transform of the time domain signal $f(x)$.
-
-\subsection{Algorithms}
-Algorithms can be set using \texttt{algorithm2e}, as in Algorithm \ref{alg:metropolis}.
-
-% NOTE: line ends are denoted by \; in algorithm2e
-\begin{algorithm}
-    \DontPrintSemicolon
-    \KwData{$f_X(x)$, a probability density function returing the density at $x$.\; $\sigma$ a standard deviation specifying the spread of the proposal distribution.\;
-    $x_0$, an initial starting condition.}
-    \KwResult{$s=[x_1, x_2, \dots, x_n]$, $n$ samples approximately drawn from a distribution with PDF $f_X(x)$.}
-    \Begin{
-        $s \longleftarrow []$\;
-        $p \longleftarrow f_X(x)$\;
-        $i \longleftarrow 0$\;
-        \While{$i < n$}
-        {
-            $x^\prime \longleftarrow \mathcal{N}(x, \sigma^2)$\;
-            $p^\prime \longleftarrow f_X(x^\prime)$\;
-            $a \longleftarrow \frac{p^\prime}{p}$\;
-            $r \longleftarrow U(0,1)$\;
-            \If{$r<a$}
-            {
-                $x \longleftarrow x^\prime$\;
-                $p \longleftarrow f_X(x)$\;
-                $i \longleftarrow i+1$\;
-                append $x$ to $s$\;
-            }
-        }
-    }
-    
-\caption{The Metropolis-Hastings MCMC algorithm for drawing samples from arbitrary probability distributions, 
-specialised for normal proposal distributions $q(x^\prime|x) = \mathcal{N}(x, \sigma^2)$. The symmetry of the normal distribution means the acceptance rule takes the simplified form.}\label{alg:metropolis}
-\end{algorithm}
 
 \subsection{Tables}
 
