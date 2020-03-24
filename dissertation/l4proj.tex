@@ -805,18 +805,66 @@ mining for a new block, or when switching from one blockchain to another longer 
 
 \subsection{Node Test}
 %Add more depth to the transaction validation parts
-The tests that each node would run are in relation to dealing with new transactions when they are flooded through
+The tests that each node run are in relation to dealing with new transactions when they are flooded through
 the network from other nodes. This is covered breifly in previous sections but here I will present more depth
 on the implementation of these tests.
 
 \subsubsection{Valid Transaction}
+This test checks whether the transaction is a valid construction. This is essentially checking that all the inputs
+correctly match up to previous outputs on the blockchain. This test achieves this by looping through each transaction
+input for this transaction and checking the parent transaction ID attribute for that input matches with a transaction
+on the current blockchain that produces a transaction output that matches. If no matching transaction is found
+then the transaction is disregarded from the block the node is building and not sent to any other nodes. This test
+carried out across the network stops the transaction from entering the blockchain.
 
 \subsubsection{Are Outputs Spent?}
 
+
 \subsubsection{Has Transaction already been seen?}
+This one is simple as it simply runs through the exsisting transactions in the block it is building up and
+checks if the current transaction matches any of them. If they do then the transaction is disregarded from the
+block and not sent to any other nodes.
 
 \section{Nearby Nodes Algorithm}
 %Nearby Nodes algorithm
+One key aspect to the network is the process of node creation. As briefly discussed earlier in the paper, nodes
+do not carry an up to date list of all nodes in the network at all times. This would be bloated and unnecessary.
+Instead, nodes keep a small list of nodes that are topographically nearby on the network. In practice these nearby
+nodes tend to be nodes that are created within similar time frames as each other. When a node is created it is
+paired with an already existing node called a seed node. This way, every time a new node is created it can query
+its seed node to find new nodes on the network. This algorithm for building a nodes nearby nodes list is important
+as if a node were to simply copy the nearby nodes list of its seed node then all nodes would be created with the
+same list and it would be impossible for transactions being flooded through the network to reach every node. Instead
+a recursive method is used. The algorithm sets up a loop to run until the node's nearby nodes list is full
+[\ref{alg:nearbyNodes}]. Each iteration it gets a random node in the seed node's nearby nodes list and checks if 
+the current node already contains that node in its list. If so it ignores it and moves on. If it has not seen 
+that node then it is added to the list and the loop moves on to the next iteration. At the end it is important 
+that the node adds itself to its list of nearby nodes. This seems redundant but it is necessary in order for 
+future nodes to be able to select that node to be part of their lists.
+
+%Nearby Nodes algorithm
+\begin{algorithm}
+    \DontPrintSemicolon
+    \Begin{
+        nodeToQuery = seed node\;
+        \While{nearbyNodes list not full}
+        {
+            NodeToAdd = getRandomNearByNode(nodeToQuery)\;
+            \If{nearbyNodes list dees not contain NodeToAdd}
+            {
+                nodeToQuery = node\;
+                append node to nearbyNodes list\;
+            }
+        }
+    }
+    
+\caption{
+    The Algoritm used when nodes are created in order to get a good sample of nodes that are topographically nearby
+    in the network. This recursive algorithm selects a random node from the seed node and adds it to its list. Then
+    selecting a random node from that list in order to prevent the whole network having similar nearby nodes lists.
+}
+\label{alg:nearbyNodes}
+\end{algorithm}
 
 \section{Full Process}
 %Genesis blocks
@@ -825,6 +873,9 @@ on the implementation of these tests.
 %Transaction generation
 %Mining
 %Block mining specifics
+
+%Maybe show more code snippets
+%Switching blockchains
 
 \section{Maintanence}
 %Documentation
