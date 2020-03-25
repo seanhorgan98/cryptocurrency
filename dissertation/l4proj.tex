@@ -840,6 +840,44 @@ that node then it is added to the list and the loop moves on to the next iterati
 that the node adds itself to its list of nearby nodes. This seems redundant but it is necessary in order for 
 future nodes to be able to select that node to be part of their lists.
 
+\section{Switching Blockchains}
+Another technical challange that had to be achieved was the ability for nodes to switch from one blockchain
+to another. In real world cryptocurrencies this happens mainly when one blockchain is longer than another or
+when one blockchain becomes invalid. A blockchain could become invalid if a transaction of block is changed 
+causing the 
+
+\section{Sending currency}
+The process of sending currency from one wallet to another is more complicated than just creating a new transaction
+object. In this project, transactions are created by a wallet object by calling its sendFunds() method with
+the public key of the recipient and the value of currency you wish to send. This function then has the job of
+creating the new transaction object and sending that transaction to the network of nodes.
+
+The method achieves this by first checking the wallet has enough currency to be able to send the desired value.
+This is done by scanning through the blockchain and matching any transaction outputs that are addressed to this 
+wallet. These are then added up to find the total balance of the wallet. These transaction outputs are saved to a
+local hashmap variable to be used in the next step.
+
+The next step is to create a list of transaction inputs that will be used to generate the transaction object.
+This list is populated by running through all the UTXOs that are address to this user which were discovered in 
+the previous step. Each iteration the values of these transaction outputs are added to a total and a new 
+transaction input object is created with the same value as the output object. This new input object is added
+to the arraylist created earlier. When the total value is greater than or equal to the value the main transaction
+is trying to send the loop stops. This means only enough transaction outputs are consumed in order to create the
+transaction.
+
+Now that all of the inputs have been collated, the transaction object can be created. The new transaction 
+object is created using the public key of the wallet for the sender parameter, the reciever public key as the
+reciever, the value as the value, and the newly created list of transaction inputs as the inputs. After this 
+object is created a signature can be created for the transcation. This is called by the wallet using its private
+key to sign the object. This proves that the transaction came from this wallet and nowhere else which can be 
+verified by anyone using the wallets public key.
+
+The final step in the process is for the transaction outputs that were consumed in the transaction to be removed.
+The transaction process function handles removing the outputs from the blockchain so all this method has to do
+is remove the outputs from its own list of UTXOs. Finally the wallet updates its parent node with the creation
+of a new transaction. This starts the process of transaction flooding through the network and allows nodes to 
+add it to their blocks which they will mine, eventually adding the transaction to the blockchain.
+
 %Nearby Nodes algorithm
 \begin{algorithm}
     \DontPrintSemicolon
@@ -950,10 +988,11 @@ be flooded through the network and nodes will begin mining blocks that they will
 demonstrate the security of the currency by showing how all the transactions created by the test harness will
 be included on the blockchain and as such are immutable.
 
+
+
 Then the transactions were...
 %Show how transactions were sent using the test harness (How wallets handle the transaction creation.)
 
-%Listing for generic transaction creation with explanation
 %Genesis blocks
 %Test Harness node generation
 %Wallets being created from nodes
@@ -967,11 +1006,15 @@ Then the transactions were...
 
 \section{Maintanence}
 %Documentation
-This section will present how the codebase was kept clean and how the documentation was maintained. The nature of
-this project meant it was easy to get confused as there were many similar objects and functions that executed 
-unrelated tasks. This created a need for clean code and well documented classes to stay on top of things.
+The nature of this project meant it was easy to get confused as there were many similar objects and functions 
+that executed unrelated tasks. This created a need for clean code and well documented classes to stay on top 
+of things.
 
-Each class...
+This maintanence of this project was mainly focused on the needs of myself rather than leaving the project open
+to other programmers to add on to as this was mainly a demonstration of features rather than a product that will
+be released to the public. Regardless, it was important to keep the project easy to update as it is good practice
+and also helped make the project easier to develop. As such, each class and all functions were labeled clearly
+and laid out in logical order to make navigation around the project easy.
 
 
 \clearpage
