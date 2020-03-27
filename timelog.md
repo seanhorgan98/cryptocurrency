@@ -100,15 +100,109 @@
 Researching consensus 2 hours
 Re-evaluating whole project structure.
 
+28/01/20
+Updated documentation
+Created data structure for storing node network
+Cleaned up code
+Improved network generation
+
+
 Deciding which consensus algorithm to go with (PoW) Raft?
 Is each main a node?
 Add unit test to replace chain function.
 Perform double spend checks at nodes
 perform transaction validation checks on new blocks
 wallet must be linked to node when created
+fixing double (quadrouple) spending problem
+number of double spends for evaluation
+inputs for transactions are not updating correctly
+always staying the same. Before it even reaches Transaction.java so must occur in wallet
+Block sending 0 earlier on in the process. (Currently blocked in processTransaction
+Might actually have been a feature not a bug lol.
 
 Notes for future work:
     - Nodes expiring, going offline.
+    - bitcoin scripts
 
 Notes for evaluation:
     - Running with transactions added in main class works but future work could involve an environment to add in transactions while running
+
+    - Decided not to add incentive as all nodes will always be honest
+    - Nodes currently do store every single transaction not just block hashs
+
+Notes for background work/design
+    - Mention what a node is
+    - Mention sybil attacks
+    - Maybe mention that it is all command line not GUI
+
+18/02
+4 hours finished writing abstract. planned and started introduction. Read HoF
+
+20/02
+2 hours reading HoF, started introduction
+
+22/02
+3 hours writing introduction
+
+25/02
+2 hours starting writing the background section
+
+26/02
+2 hours writing bitcoin white paper part of background.
+
+27/02
+1 hour finishing bitcoin white paper background section.
+2 hours writing book background section and creating analysis structure.
+
+1/03
+2 hours tidying up intro and background
+
+2/03
+3 hour completing requirements section
+
+3/03
+1 hour finishing requirements and planning design section
+
+4/03
+1 hour updating documentation
+
+11/03
+1 hour planning design
+
+14/03
+1 hour starting design section (transactions and overview)
+
+16/03
+1 hour working on the design section
+
+17/03
+2 hour design section
+
+18/03
+3 hours working on design section
+
+19/03
+1 hour implementation planning
+1 hour planning extra sections for design
+
+20/03
+1 hour more implementation planning
+
+21/03
+30 mins adding section to design
+1 hour starting implementation section (Software development process)
+
+22/03
+2 hours proof reading work done so far
+1 hour writing StringUtil implementation section
+1 hour writing blockchain implementation section
+
+23/03
+1 hour added testing section for implementation
+
+24/03
+1 hour adding nearby nodes section and some writing on tests
+2 hours filling out more sections in implementation (Full process)
+
+27/03
+1 hour planning evaluation section
