@@ -842,9 +842,19 @@ future nodes to be able to select that node to be part of their lists.
 
 \section{Switching Blockchains}
 Another technical challange that had to be achieved was the ability for nodes to switch from one blockchain
-to another. In real world cryptocurrencies this happens mainly when one blockchain is longer than another or
+to another. In real world cryptocurrencies this mainly happens when one blockchain is longer than another or
 when one blockchain becomes invalid. A blockchain could become invalid if a transaction of block is changed 
-causing the 
+causing the chain of hashs to become invalid. In the case of this blockchain this should not happen as we can
+control whether nodes are honest and not trying to alter previous transactions in the blockchain.
+
+Nodes in this project are able to decide which blockchain to use. They hold a variable called currentblockchain
+which they perform all their functions on like mining blocks. If they are notified about a blockchain that is
+longer than their current blockchain, they are able to switch to that blockchain. Before they switch they must 
+make sure that the blockchain is valid however, this is done by calling the validateChain test described previously
+on the new chain. This switching feature ensures that all nodes are currently working on the longest available
+valid blockchain. Any transactions that have been added to a blockchain that is no longer being used by the network
+will not be counted until it is added to the new chain. This means people will not be able to double spend currency
+that is sent on two different blockchains.
 
 \section{Sending currency}
 The process of sending currency from one wallet to another is more complicated than just creating a new transaction
@@ -993,13 +1003,9 @@ be included on the blockchain and as such are immutable.
 Then the transactions were...
 %Show how transactions were sent using the test harness (How wallets handle the transaction creation.)
 
-%Genesis blocks
-%Test Harness node generation
-%Wallets being created from nodes
-%Transaction generation
+
 %Mining
 %Block mining specifics
-%Specifics of calling each object like transaction etc.
 
 %Maybe show more code snippets
 %Switching blockchains
@@ -1047,81 +1053,26 @@ extremely tedious otherwise.
     Concatenation         & \texttt{seq1 + seq2}                    & \texttt{concat(seq1, seq2)}                           \\
     Containment Test      & \texttt{obj in seq}                     & \texttt{contains(seq, obj)}                           \\
     Division              & \texttt{a / b}                          & \texttt{div(a, b) }  \\
-    Division              & \texttt{a / b}                          & \texttt{truediv(a, b) } \\
-    Division              & \texttt{a // b}                         & \texttt{floordiv(a, b)}                               \\
-    Bitwise And           & \texttt{a \& b}                         & \texttt{and\_(a, b)}                                  \\
-    Bitwise Exclusive Or  & \texttt{a \textasciicircum b}           & \texttt{xor(a, b)}                                    \\
-    Bitwise Inversion     & \texttt{$\sim$a}                        & \texttt{invert(a)}                                    \\
-    Bitwise Or            & \texttt{a | b}                          & \texttt{or\_(a, b)}                                   \\
-    Exponentiation        & \texttt{a ** b}                         & \texttt{pow(a, b)}                                    \\
-    Identity              & \texttt{a is b}                         & \texttt{is\_(a, b)}                                   \\
-    Identity              & \texttt{a is not b}                     & \texttt{is\_not(a, b)}                                \\
-    Indexed Assignment    & \texttt{obj{[}k{]} = v}                 & \texttt{setitem(obj, k, v)}                           \\
-    Indexed Deletion      & \texttt{del obj{[}k{]}}                 & \texttt{delitem(obj, k)}                              \\
-    Indexing              & \texttt{obj{[}k{]}}                     & \texttt{getitem(obj, k)}                              \\
-    Left Shift            & \texttt{a \textless{}\textless b}       & \texttt{lshift(a, b)}                                 \\
-    Modulo                & \texttt{a \% b}                         & \texttt{mod(a, b)}                                    \\
-    Multiplication        & \texttt{a * b}                          & \texttt{mul(a, b)}                                    \\
-    Negation (Arithmetic) & \texttt{- a}                            & \texttt{neg(a)}                                       \\
-    Negation (Logical)    & \texttt{not a}                          & \texttt{not\_(a)}                                     \\
-    Positive              & \texttt{+ a}                            & \texttt{pos(a)}                                       \\
-    Right Shift           & \texttt{a \textgreater{}\textgreater b} & \texttt{rshift(a, b)}                                 \\
-    Sequence Repetition   & \texttt{seq * i}                        & \texttt{repeat(seq, i)}                               \\
-    Slice Assignment      & \texttt{seq{[}i:j{]} = values}          & \texttt{setitem(seq, slice(i, j), values)}            \\
-    Slice Deletion        & \texttt{del seq{[}i:j{]}}               & \texttt{delitem(seq, slice(i, j))}                    \\
-    Slicing               & \texttt{seq{[}i:j{]}}                   & \texttt{getitem(seq, slice(i, j))}                    \\
-    String Formatting     & \texttt{s \% obj}                       & \texttt{mod(s, obj)}                                  \\
-    Subtraction           & \texttt{a - b}                          & \texttt{sub(a, b)}                                    \\
-    Truth Test            & \texttt{obj}                            & \texttt{truth(obj)}                                   \\
-    Ordering              & \texttt{a \textless b}                  & \texttt{lt(a, b)}                                     \\
-    Ordering              & \texttt{a \textless{}= b}               & \texttt{le(a, b)}                                     \\
     % \bottomrule
     \end{tabular}
     \end{table}
 \subsection{Code}
 
-Avoid putting large blocks of code in the report (more than a page in one block, for example). Use syntax highlighting if possible, as in Listing \ref{lst:callahan}.
-
-\begin{lstlisting}[language=python, float, caption={The algorithm for packing the $3\times 3$ outer-totalistic binary CA successor rule into a 
-    $16\times 16\times 16\times 16$ 4 bit lookup table, running an equivalent, notionally 16-state $2\times 2$ CA.}, label=lst:callahan]
-    def create_callahan_table(rule="b3s23"):
-        """Generate the lookup table for the cells."""        
-        s_table = np.zeros((16, 16, 16, 16), dtype=np.uint8)
-        birth, survive = parse_rule(rule)
-
-        # generate all 16 bit strings
-        for iv in range(65536):
-            bv = [(iv >> z) & 1 for z in range(16)]
-            a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p = bv
-
-            # compute next state of the inner 2x2
-            nw = apply_rule(f, a, b, c, e, g, i, j, k)
-            ne = apply_rule(g, b, c, d, f, h, j, k, l)
-            sw = apply_rule(j, e, f, g, i, k, m, n, o)
-            se = apply_rule(k, f, g, h, j, l, n, o, p)
-
-            # compute the index of this 4x4
-            nw_code = a | (b << 1) | (e << 2) | (f << 3)
-            ne_code = c | (d << 1) | (g << 2) | (h << 3)
-            sw_code = i | (j << 1) | (m << 2) | (n << 3)
-            se_code = k | (l << 1) | (o << 2) | (p << 3)
-
-            # compute the state for the 2x2
-            next_code = nw | (ne << 1) | (sw << 2) | (se << 3)
-
-            # get the 4x4 index, and write into the table
-            s_table[nw_code, ne_code, sw_code, se_code] = next_code
-
-        return s_table
-
-\end{lstlisting}
-
 %==================================================================================================================================
 \chapter{Evaluation} 
+This section
 %Results tables for different sized blocks
 %Number of nodes changes
 %Unit tests results using program
-%Why a user study would not be useful maybe? (Ask Ron)
+%Why a user study was not utilised
+%Is it secure against double spending attacks?
+%Is it secure against sybil attacks? (Large number of pseudonyms)
+
+%Ask specific questions that address the general problem.
+%Answer them with precise evidence (graphs, numbers, statistical analysis, qualitative analysis).
+%Be fair and be scientific.
+%The key thing is to show that you know how to evaluate your work, not
+%that your work is the most amazing product ever.
 
 \section{Aims}
 \begin{itemize}
@@ -1129,6 +1080,8 @@ Avoid putting large blocks of code in the report (more than a page in one block,
     \item Aims
     \item Aims
 \end{itemize}
+
+\section{Evaluation design}
 
 \section{Unit tests}
 
@@ -1138,48 +1091,14 @@ Avoid putting large blocks of code in the report (more than a page in one block,
 
 \section{Limitaitons}
 
-How good is your solution? How well did you solve the general problem, and what evidence do you have to support that?
+\subsection{Block Size Problem (Double Spending at low user numbers)}
 
-\section{Guidance}
-\begin{itemize}
-    \item
-        Ask specific questions that address the general problem.
-    \item
-        Answer them with precise evidence (graphs, numbers, statistical
-        analysis, qualitative analysis).
-    \item
-        Be fair and be scientific.
-    \item
-        The key thing is to show that you know how to evaluate your work, not
-        that your work is the most amazing product ever.
-\end{itemize}
+How good is your solution? How well did you solve the general problem, and what evidence do you have to support that?
+\section{Discussion}
+
 
 \section{Evidence}
 Make sure you present your evidence well. Use appropriate visualisations, reporting techniques and statistical analysis, as appropriate.
-
-If you visualise, follow the basic rules, as illustrated in Figure \ref{fig:boxplot}:
-\begin{itemize}
-\item Label everything correctly (axis, title, units).
-\item Caption thoroughly.
-\item Reference in text.
-\item \textbf{Include appropriate display of uncertainty (e.g. error bars, Box plot)}
-\item Minimize clutter.
-\end{itemize}
-
-See the file \texttt{guide\_to\_visualising.pdf} for further information and guidance.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1.0\linewidth]{images/boxplot_finger_distance.pdf}    
-
-    \caption{Average number of fingers detected by the touch sensor at different heights above the surface, averaged over all gestures. Dashed lines indicate
-    the true number of fingers present. The Box plots include bootstrapped uncertainty notches for the median. It is clear that the device is biased toward 
-    undercounting fingers, particularly at higher $z$ distances.
-    }
-
-    % use the notation fig:name to cross reference a figure
-    \label{fig:boxplot} 
-\end{figure}
 
 
 %==================================================================================================================================
