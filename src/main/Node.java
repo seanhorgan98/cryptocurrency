@@ -44,9 +44,6 @@ class Node{
 
         //Add itself to the nearby nodes list
         nearbyNodes.add(this);
-
-        
-
     }
 
     // Creates a String hash of all the variables of the node

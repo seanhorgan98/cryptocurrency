@@ -104,6 +104,7 @@ public class Wallet {
 	
 		
 		Transaction tx = new Transaction(publicKey, recipient, value, inputs);
+		//Is this line necessary
 		tx.outputs.add(new TransactionOutput(tx.reciepient, tx.value, tx.transactionId));
 		tx.generateSignature(privateKey);
 
