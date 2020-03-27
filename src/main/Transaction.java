@@ -120,7 +120,7 @@ class Transaction{
             overPay = 0;
         }
         
-        System.out.println("Value: " + value + ", Inputsum: " + inputSum + ", Overpay: " + overPay);
+        System.out.println("Value: " + value + ", Inputsum: " + inputSum + ", Overpay: " + overPay + ", ID: " + transactionId);
         transactionId = calulateHash();
         outputs.add(new TransactionOutput(this.reciepient, value, transactionId)); //Send value to reciepient
         outputs.add(new TransactionOutput( this.sender, overPay, transactionId)); //Send Left over back to sender

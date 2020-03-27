@@ -7,8 +7,8 @@ import java.util.List;
 class Node{
     //Id of this node
     public String id;
-    public final int NEARBY_NODE_SIZE = 10;
-    public final int BLOCK_SIZE = 5; //Number of transactions in a block
+    public final int NEARBY_NODE_SIZE = 5;
+    public final int BLOCK_SIZE = 2; //Number of transactions in a block
 
     //List of all transactions not in the blockchain
     private List<Transaction> allTransactions;
@@ -25,7 +25,8 @@ class Node{
         this.nearbyNodes = new ArrayList<Node>();
         this.allTransactions = new ArrayList<Transaction>();
         this.currentBlockchain = blockchain;
-
+        
+        
         //If not genesis node
         if(seedNode != null){
             //Get list of all nearby nodes from seedNode. Need to request random assortment of nodes.
@@ -33,6 +34,8 @@ class Node{
                 Node nodeToAdd = getRandomNearbyNode(seedNode);
                 if(!nearbyNodes.contains(nodeToAdd)){
                     nearbyNodes.add(nodeToAdd);
+                }else if(seedNode.nearbyNodes.size() < NEARBY_NODE_SIZE){
+                    break;
                 }
             }
 
