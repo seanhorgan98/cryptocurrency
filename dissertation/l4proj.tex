@@ -1087,7 +1087,7 @@ smaller more concrete aims which will be the focus of this evaluation.
     \item Prevention of malicious attack of blockchain
 \end{itemize}
 
-\section{1. Does the cryptocurrency prevent double spending attacks?}
+\section{Does the cryptocurrency prevent double spending attacks?}
 A double spending attack is a scenario when a user is able to spend some amount of their currency more than once. An example
 of this would be if a user has 20 coins and sends all 20 to another user. A double spend attack would mean that user A would
 then be able to spend that same 20 coins that they already send to user B, to send to a third user C. This attack does not have
@@ -1114,9 +1114,9 @@ attacks to test if the blockchain allows the double spend or not.
 %Include design of the unit tests
 %Talk about info from book about timing etc
 \subsection{Results}
-\subsection{Analysis and conclusions}
+\subsection{Analysis and conclusion}
 
-\section{2. Does the cryptocurrency prevent Sybil attacks?}
+\section{Does the cryptocurrency prevent Sybil attacks?}
 A sybil attack is the act of taking over a system by forging multipe identities (REFERENCE). The name comes from a book
 called Sybil by Flora Schreiber about a woman with dissociative identity dissorder. The idea behind a Sybil attack is to 
 generate enough fake pseudonyms to gain control of the system with a majority vote power. The paper by John Douceur 
@@ -1140,7 +1140,10 @@ fill a block [\ref{lst:mining}].
 
 \begin{lstlisting}[language=java, float=h, caption=
     {
-        Test
+        This snippet of code shows the process of finding a hash that fits within a specified target range (hash starting
+        with set number of 0s). Each loop tried a new hash by incrementing the nonce before calculating a hash. This 
+        function proves that a node has expended computational power before appending to the blockchain preventing sybil
+        attacks.
     }
     , label=lst:mining]
     public boolean mineBlock(int difficulty) {
@@ -1162,12 +1165,29 @@ elapsed for each bock to be mined will be taken. This will show how the difficul
 required to mine a block.
 
 \subsection{Results}
-\subsection{Analysis and conclusions}
+\subsection{Analysis and conclusion}
 
-\section{3. Is the blockchain secure?}
+\section{Is the blockchain secure?}
+This final evaulation section is based on is demonstrating whether the blockchain can adapt and resist an attempt to 
+alter previous transactions in the blockchain. The purpose of a blockchain is to have an immutable ledger of all transactions.
+This means that once transactions enter the blockchain they cannot be altered or removed. This attack may be carried out
+by users that wish to profit illegally. If they somehow were able to access and alter the blockchain they could increase
+the value of a transaction sent to them or remove a transaction they made paying for a good or service.
+
+It is not in the scope of this project to prevent any alterations to the blockchain data structure however the way the
+network reacts to any changes is secure. Before mining a block, a node checks the validity of the blockchain and if it
+has been altered in any way it is designed to stop and switch to a different blockchain that is valid. This way, if an
+attacker managed to alter a blockchain it would fall out of use by any nodes that were using the blockchain and would
+not be continued to be appended to thus rendering the attack ineffective.
 \subsection{Design}
+In the normal running of the project the test harness is not designed to perform attacks on the blockchain by altering
+previous transactions. This means the way this evaluation will test the security of the blockchain is by using unit tests.
+These tests will attempt to alter part of the blockchain to see how the network will react to this change. There are also
+unit tests testing the main function that checks the validity of the blockchain. This function is the core functionality
+for maintaining the security of the blockchain and is used by the nodes to check which blockchain to append to.
+
 \subsection{Results}
-\subsection{Analysis and conclusions}
+\subsection{Analysis and conclusion}
 
 \section{Requirements Validation}
 
