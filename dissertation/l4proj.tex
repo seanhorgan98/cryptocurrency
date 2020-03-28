@@ -1060,7 +1060,11 @@ extremely tedious otherwise.
 
 %==================================================================================================================================
 \chapter{Evaluation} 
-This section
+This section presents the methods of evaluation that were conducted on this project. This will show how the effective the
+project was at ensuring the security of the cryptocurrency network along with some of the limitations it may have. 
+This evaluation is carried out by unit tests, performance analysis, and also how well the requirements set out at 
+the beginning of the project were met.
+
 %Results tables for different sized blocks
 %Number of nodes changes
 %Unit tests results using program
@@ -1075,31 +1079,100 @@ This section
 %that your work is the most amazing product ever.
 
 \section{Aims}
+The overal goal of the project was to demonstrate the security of a basic cryptocurrency. This can be broken down into
+smaller more concrete aims which will be the focus of this evaluation.
 \begin{itemize}
-    \item Aims
-    \item Aims
-    \item Aims
+    \item Prevention of double spending attacks
+    \item Prevention of sybil attacks
+    \item Prevention of malicious attack of blockchain
 \end{itemize}
 
-\section{Evaluation design}
+\section{1. Does the cryptocurrency prevent double spending attacks?}
+A double spending attack is a scenario when a user is able to spend some amount of their currency more than once. An example
+of this would be if a user has 20 coins and sends all 20 to another user. A double spend attack would mean that user A would
+then be able to spend that same 20 coins that they already send to user B, to send to a third user C. This attack does not have
+to be on purpose and can occur in many different scenarios which this project tries to nullify the risks of such attacks.
 
-\section{Unit tests}
+\subsection{Design}
+As a double spend attack is a fairly general problem there are many points of failure in a blockchain that if not designed
+correctly could lead to exploitation. In order to mitigate this risk there are several features and test that have been
+implemented which keep the blockchain from allowing such an attack. This evaluation will present the existance and 
+reliability of these tests and features to display the extent to which the cryptocurrency is immune to such an attack.
 
-\section{Performance Evaluation}
+The first test that is in place to prevent a double spend attack is in the Node class. This takes place when then node
+recieves a transaction. It first has to check if a transaction is valid, if its outputs have already been spent, and 
+if the transaction has already been seen. All three of these tests verify that the transaction that is being checked is
+not a double spend attack.
+
+The second way to reduce the likelihood of a transaction being spent more than once is in the Blockchain class. Here the
+use of the UTXO map to keep track of what transaction outputs have not yet been spent allows the blockchain to not allow
+transactions to use outputs that have already been consumed by other transactions.
+
+To evaluate these two types of mitigation I have deisnged two unit tests that generate transactions and double spend 
+attacks to test if the blockchain allows the double spend or not.
+
+%Include design of the unit tests
+%Talk about info from book about timing etc
+\subsection{Results}
+\subsection{Analysis and conclusions}
+
+\section{2. Does the cryptocurrency prevent Sybil attacks?}
+A sybil attack is the act of taking over a system by forging multipe identities (REFERENCE). The name comes from a book
+called Sybil by Flora Schreiber about a woman with dissociative identity dissorder. The idea behind a Sybil attack is to 
+generate enough fake pseudonyms to gain control of the system with a majority vote power. The paper by John Douceur 
+also shows that it is practically impossible to prevent a sybil attack on a peer-to-peer system (REFERENCE?) without some
+form of central third party ensuring trust.
+
+\subsection{Design}
+In all cryptocurrencies this attack is mitigated using the proof system. Either proof of work, proof of stake, or any one
+of the many methods of demonstrating proof. In this system this is implemented by proof of work and more specifically
+the process of mining. This means that the system for voting on the direction of the blockchain is tied to computational 
+power and not simply the existance of nodes. This means that if an attacker were to try to take over the network by 
+forging a majority of nodes they would not be able to without also controlling the majority of computational power.
+
+Bitcoin and other cryptocurrencies like the one created in this project are then able to operate under the assumtion
+that there is not a majority stakeholder in the network that is malicious. This is both because it is unlikely there will
+ever be a majority of computational power held by one user and also because even in there was it would be in the best 
+interest of that user to remain an honest node.
+
+The mining mechanism in this project is executed by nodes on a block when they recieve enough valid transactions to
+fill a block [\ref{lst:mining}].
+
+\begin{lstlisting}[language=java, float=h, caption=
+    {
+        Test
+    }
+    , label=lst:mining]
+    public boolean mineBlock(int difficulty) {
+        String target = new String(new char[difficulty]).replace('\0', '0');
+        int nonce = 0; 
+        String newHash = hash;
+		while(!(newHash.substring( 0, difficulty).equals(target))) {
+            nonce ++;
+			newHash = calculateHash(nonce);
+        }
+        return true;
+    }
+\end{lstlisting}
+
+This evaluation will test this function by showing that this block mining function effectivly finds a hash that fits 
+within a specified range depending on the difficulty. This will demonstrate that a certain amount of computational
+power must be used in order to mine a block. This will be tested using a range of different difficulties and the time
+elapsed for each bock to be mined will be taken. This will show how the difficulty effects how the computational power 
+required to mine a block.
+
+\subsection{Results}
+\subsection{Analysis and conclusions}
+
+\section{3. Is the blockchain secure?}
+\subsection{Design}
+\subsection{Results}
+\subsection{Analysis and conclusions}
 
 \section{Requirements Validation}
 
 \section{Limitaitons}
-
-\subsection{Block Size Problem (Double Spending at low user numbers)}
-
-How good is your solution? How well did you solve the general problem, and what evidence do you have to support that?
-\section{Discussion}
-
-
-\section{Evidence}
-Make sure you present your evidence well. Use appropriate visualisations, reporting techniques and statistical analysis, as appropriate.
-
+%Block Size Problem (Double Spending at low user numbers)
 
 %==================================================================================================================================
 \chapter{Conclusion}    
@@ -1170,5 +1243,9 @@ Bitcoin and cryptocurrency technologies
 
 https://hackernoon.com/merkle-trees-181cb4bc30b4
 [IMAGE OF MERKLE TREE] 
+
+Blockchain technology: Principles and applications Marc Pilkington
+
+The sybil attack John Douceur
 
 \end{document}
