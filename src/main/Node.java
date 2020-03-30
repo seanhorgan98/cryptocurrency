@@ -106,7 +106,7 @@ class Node{
                             }
                         }else{
                             //If current block is not valid then switch to the blockchain used by one of the nearby nodes
-                            System.out.println("Invalid blockchain: Aborting block mining...\nSwitching Blockchain...");
+                            System.out.println("Invalid blockchain: Aborting block mining...\nSwitching Blockchain...\n\n");
                             switchBlockchain(nearbyNodes.get(new Random().nextInt(5)).currentBlockchain);
                             return;
                         }

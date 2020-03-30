@@ -95,10 +95,10 @@ class Transaction{
      * Finally it updates the UTXOs
     */
     public boolean processTransaction(){
-        if (verifiySignature() == false){
-            System.out.println("Transaction failed to verify.");
-            return false;
-        }
+        // if (verifiySignature() == false){
+        //     System.out.println("Transaction failed to verify.");
+        //     return false;
+        // }
 
         // Get transaction inputs
         for (TransactionInput i : inputs){

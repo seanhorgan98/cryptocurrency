@@ -51,14 +51,40 @@ class Main {
         //Necessary as coin creation transactions are deliberately not added to the blockchain automatically
         blockchain.addBlock(block1);
 
+        System.out.println("\n---------TESTING------------");
 
-        walletList.get(1).sendFunds(walletList.get(2).publicKey, 5);
-        walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
 
-        walletList.get(1).sendFunds(walletList.get(3).publicKey, 50);
-        walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
+        //Test 1
+        // Transaction testTransaction = new Transaction(walletList.get(1).publicKey, walletList.get(2).publicKey, 10, null, blockchain);
+        // Block testBlock = new Block(block1.hash);
+        // testTransaction.transactionId = "test";
+        // testBlock.addTransaction(testTransaction);
+        // blockchain.addBlock(testBlock);
 
-        System.out.println("WALLET 3 BALANCE: " + walletList.get(3).getBalance());
+        // nodeList.get(0).floodTransaction(testTransaction);
+
+
+        //Test 3
+        //Creation of first transaction
+        Transaction test3Transaction = new Transaction(walletList.get(1).publicKey, walletList.get(2).publicKey, 10, null, blockchain);
+        Block test3Block = new Block(block1.hash);
+        test3Transaction.transactionId = "test3";
+        test3Block.addTransaction(test3Transaction);
+        blockchain.addBlock(test3Block);
+
+        //Modifying that transactions value
+        test3Block.hash = "this is not a correct hash";
+
+        //Adding new block to see if it rejects the blockchain
+        walletList.get(3).sendFunds(walletList.get(4).publicKey, 6);
+
+        // walletList.get(1).sendFunds(walletList.get(2).publicKey, 5);
+        // walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
+
+        // walletList.get(1).sendFunds(walletList.get(3).publicKey, 50);
+        // walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
+
+        //System.out.println("WALLET 3 BALANCE: " + walletList.get(3).getBalance());
 
 
         
