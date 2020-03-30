@@ -170,7 +170,7 @@ Notes for background work/design
 1 hour planning design
 
 14/03
-1 hour starting design section (transactions and overview)
+/1 hour starting design section (transactions and overview)
 
 16/03
 1 hour working on the design section
@@ -206,3 +206,13 @@ Notes for background work/design
 
 27/03
 1 hour planning evaluation section
+2 hours setting up unit testing
+1 hour working on test harness
+
+28/03
+1 hour starting evaluation section
+2 hours adding two test sections to evaluation (double spending & sybil attacks)
+1 hour adding third test section to evaluation
+
+29/03
+1 hour designing evaluation more
