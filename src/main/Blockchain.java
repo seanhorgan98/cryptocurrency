@@ -1,13 +1,12 @@
 package main;
 
 import java.util.*;
-import main.TransactionOutput;
 
 class Blockchain {
     public ArrayList<Block> blockChain = new ArrayList<Block>(1);
 
     //List of all unspent transactions in a Map<TransactionOutput.id, TransactionOutput>
-    public Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
+    public static Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
     
     public static final float MIN_TRANSACTION = 0.1f;
     public static final int DIFFICULTY = 2;
@@ -16,18 +15,6 @@ class Blockchain {
     public Blockchain(Block genesisBlock){
         this.blockChain.add(genesisBlock);
     }
-
-    // Loops through the UTXOs and prints out the value for each
-	public void printUTXOs(){
-		System.out.println("UTXOs size: " + UTXOs.size());
-		for (Map.Entry<String, TransactionOutput> item: UTXOs.entrySet()){
-			System.out.println("UTXO value: " + item.getValue().value + ", To: " + StringUtil.getStringFromKey(item.getValue().reciepient));
-		}
-	}
-
-    // public boolean checkTxIDsMatch(TransactionInput in, TransactionOutput out){
-    //     if(in.signature.equals(out.))
-    // }
 
     //WILL BE DEPRECIATED
     // Adds a block to the blockchain by setting it's previous hash to the hash of the
@@ -56,15 +43,6 @@ class Blockchain {
                 System.out.println("Value: " + t.value);
             }
         }
-    }
-
-    public boolean containsTransaction(Transaction tx){
-        for(Block block : blockChain){
-            if(block.transactions.contains(tx)){
-                return true;
-            }
-        }
-        return false;
     }
 
     // Loops through each block and makes sure it's previousHash matches with the previous
