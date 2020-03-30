@@ -17,8 +17,8 @@ class Main {
         Node genesisNode = new Node(null, blockchain, 0);
 
         //Create wallets
-        Wallet walletA = new Wallet(genesisNode);
-        Wallet walletB = new Wallet(genesisNode);
+        Wallet walletA = new Wallet(genesisNode, blockchain);
+        Wallet walletB = new Wallet(genesisNode, blockchain);
 
         int NUMBER_OF_NODES = 10;
         List<Wallet> walletList = new ArrayList<Wallet>();
@@ -40,14 +40,14 @@ class Main {
             }
 
             //Create Wallets
-            Wallet newWallet = new Wallet(newNode);
+            Wallet newWallet = new Wallet(newNode, blockchain);
 
             //Store new node and wallet
             nodeList.add(newNode); 
             walletList.add(newWallet);
 
             //Set balance of all nodes to 100
-            Transaction initialBalance = new Transaction(null, newWallet.publicKey, 100, null);
+            Transaction initialBalance = new Transaction(null, newWallet.publicKey, 100, null, blockchain);
             initialBalance.transactionId = Integer.toString(i);
             
             block1.addTransaction(initialBalance);
