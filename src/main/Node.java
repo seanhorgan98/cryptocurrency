@@ -34,6 +34,8 @@ class Node{
                 Node nodeToAdd = getRandomNearbyNode(seedNode);
                 if(!nearbyNodes.contains(nodeToAdd)){
                     nearbyNodes.add(nodeToAdd);
+                }else if(seedNode.nearbyNodes.size() < NEARBY_NODE_SIZE){
+                    break;
                 }
             }
 
