@@ -71,9 +71,11 @@ class Blockchain {
             Block previousBlock = blockChain.get(i-1);
 
             if (currentBlock.hash.equals(currentBlock.calculateHash(0)) == false){
+                System.out.println("BLOCKCHAIN FAILURE: Hash of a block has been changed since inception!");
                 return false;
             }
             if (!currentBlock.previousHash.equals(previousBlock.hash)){
+                System.out.println("BLOCKCHAIN FAILURE: Current block does not link with previous block!");
                 return false;
             }
         }
