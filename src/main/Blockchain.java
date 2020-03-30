@@ -9,7 +9,7 @@ class Blockchain {
     public Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
     
     public static final float MIN_TRANSACTION = 0.1f;
-    public static final int DIFFICULTY = 2;
+    public static final int DIFFICULTY = 1;
 
     // Create blockchain using a genesis block
     public Blockchain(Block genesisBlock){
