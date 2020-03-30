@@ -1006,6 +1006,7 @@ Then the transactions were...
 
 %Mining
 %Block mining specifics
+%Mention git-flow?
 
 %Maybe show more code snippets
 %Switching blockchains
@@ -1072,6 +1073,8 @@ the beginning of the project were met.
 %Is it secure against double spending attacks?
 %Is it secure against sybil attacks? (Large number of pseudonyms)
 
+%Merkle tree test?
+
 %Ask specific questions that address the general problem.
 %Answer them with precise evidence (graphs, numbers, statistical analysis, qualitative analysis).
 %Be fair and be scientific.
@@ -1100,14 +1103,16 @@ implemented which keep the blockchain from allowing such an attack. This evaluat
 reliability of these tests and features to display the extent to which the cryptocurrency is immune to such an attack.
 
 The first test that is in place to prevent a double spend attack is in the Node class. This takes place when then node
-recieves a transaction. It first has to check if a transaction is valid, if its outputs have already been spent, and 
+recieves a transaction. It checks if a transaction is valid, if its outputs have already been spent, and 
 if the transaction has already been seen. All three of these tests verify that the transaction that is being checked is
-not a double spend attack.
+not a double spend attack. This will be presented in this evaluation by providing an incorrect transaction to a node and
+showing how the node responds.
 
-The second way to reduce the likelihood of a transaction being spent more than once is in the Blockchain class. Here the
+The second way to reduce the likelihood of a transaction being spent more than once involves the Blockchain. Here the
 use of the UTXO map to keep track of what transaction outputs have not yet been spent allows the blockchain to not allow
 transactions to use outputs that have already been consumed by other transactions.
 
+%Provide more detail here
 To evaluate these two types of mitigation I have deisnged two unit tests that generate transactions and double spend 
 attacks to test if the blockchain allows the double spend or not.
 
