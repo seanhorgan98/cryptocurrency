@@ -218,5 +218,6 @@ Notes for background work/design
 1 hour designing evaluation more
 
 30/03
-2 hours completing tests for evaluation
+1 hours completing tests for evaluation
 2 hours correcting test harness bug
+1 hour working on evaluation write up
