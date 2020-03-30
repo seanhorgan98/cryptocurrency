@@ -113,7 +113,7 @@ class Node{
                         
                         //Remove transactions in block from other nodes transaction list
                         for(Iterator<Transaction> iterator = allTransactions.iterator();iterator.hasNext();){
-                            Transaction t = iterator.next();
+                            iterator.next();
                             iterator.remove();
                         }   
                     }
