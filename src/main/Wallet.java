@@ -26,13 +26,13 @@ public class Wallet {
 
 	// Utility function to return the balance of this wallet
 	public float getBalance(){
-		updateBalance();
+		balance = updateBalance();
 		return balance;
 	}
 
 	// Loops through all the UTXOs and picks out the one addressed to this wallet.
 	// Then returns the sum of the values for these UTXOs
-	public void updateBalance(){
+	public float updateBalance(){
 		float total = 0;	
         for (Map.Entry<String, TransactionOutput> item: currentBlockchain.UTXOs.entrySet()){
         	TransactionOutput UTXO = item.getValue();
@@ -41,7 +41,7 @@ public class Wallet {
             	total += UTXO.value ; 
             }
 		}
-		balance = total;
+		return total;
 	}
 	
 	// Generates a public and private key pair for this wallets addresses
