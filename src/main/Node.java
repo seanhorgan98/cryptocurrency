@@ -108,9 +108,7 @@ class Node{
                         for(Iterator<Transaction> iterator = allTransactions.iterator();iterator.hasNext();){
                             Transaction t = iterator.next();
                             iterator.remove();
-                        }
-                        
-                            
+                        }   
                     }
 
                     //Relay to other nodes
@@ -122,9 +120,10 @@ class Node{
         }
     }
 
-    //Check if transaction is valid by looking at inputs and outputs
+    //Check if transaction is already registered on the blockchain
     private boolean isTransactionOnBlockchain(Transaction tx){
         if(currentBlockchain.containsTransaction(tx)){
+            System.out.println("TRANSACTION FAILED: This transaction is already included on the blockchain!");
             return true;
         }
         return false;
@@ -135,6 +134,7 @@ class Node{
         //Need to see if tx inputs are contained in the blockchain UTXOs
         for(TransactionInput i : tx.inputs){
             if(!currentBlockchain.UTXOs.containsKey(i.previousOutId)){
+                System.out.println("TRANSACTION FAILED: Transaction inputs have already been spent!");
                 return true;
             }
         }
@@ -143,6 +143,11 @@ class Node{
 
     //Check if transaction has already been seen by this node
     private boolean isTransactionAlreadySeen(Transaction tx){
-        return allTransactions.contains(tx);
+        if(allTransactions.contains(tx)){
+            System.out.println("TRANSACTION FAILED: Transaction already seen by this node!");
+            return true;
+        }else{
+            return false;
+        }
     }
 }
