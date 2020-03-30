@@ -1096,28 +1096,108 @@ to be on purpose and can occur in many different scenarios which this project tr
 
 \subsection{Design}
 As a double spend attack is a fairly general problem there are many points of failure in a blockchain that if not designed
-correctly could lead to exploitation. In order to mitigate this risk there are several features and test that have been
+correctly could lead to exploitation. In order to mitigate this risk there are several features and tests that have been
 implemented which keep the blockchain from allowing such an attack. This evaluation will present the existance and 
 reliability of these tests and features to display the extent to which the cryptocurrency is immune to such an attack.
 
-The first test that is in place to prevent a double spend attack is in the Node class. This takes place when then node
-recieves a transaction. It checks if a transaction is valid, if its outputs have already been spent, and 
-if the transaction has already been seen. All three of these tests verify that the transaction that is being checked is
-not a double spend attack. This will be presented in this evaluation by providing an incorrect transaction to a node and
-showing how the node responds.
+These tests take place within the Node class and are executed whenever a transaction is passed through the network
+between nodes in order to be added to a block. First the node checks if the transaction has already appeared on the
+blockchain [\ref{lst:check1}]. Next the node checks if the transaction outputs have already been spent [\ref{lst:check2}]. 
+Finally it checks if the transaction has already been seen by this node [\ref{lst:check3}]. All three of these tests 
+verify that the transaction that is being checked is not a double spend attack. This will be presented in this 
+evaluation by providing an incorrect transaction to a node and showing how the node responds.
 
-The second way to reduce the likelihood of a transaction being spent more than once involves the Blockchain. Here the
-use of the UTXO map to keep track of what transaction outputs have not yet been spent allows the blockchain to not allow
-transactions to use outputs that have already been consumed by other transactions.
+In order to evaluate how this project copes with double spend attacks transactions that attempt to expoit the system
+will be created and fed to node. Then the ouput of the node will be recorded to show how it responds to the fraudulent
+transacations.
 
-%Provide more detail here
-To evaluate these two types of mitigation I have deisnged two unit tests that generate transactions and double spend 
-attacks to test if the blockchain allows the double spend or not.
+%Show tests
+\begin{lstlisting}[language=java, float=h, caption=
+    {
+        This shows the first check performed by nodes in order to test whether the transaction already exists on the
+        blockchain.
+    }
+    , label=lst:check1]
+    private boolean isTransactionOnBlockchain(Transaction tx){
+        if(currentBlockchain.containsTransaction(tx)){
+            System.out.println("TRANSACTION FAILED: This transaction is already included on the blockchain!");
+            return true;
+        }
+        return false;
+    }
+\end{lstlisting}
 
-%Include design of the unit tests
-%Talk about info from book about timing etc
+\begin{lstlisting}[language=java, float=h, caption=
+    {
+        This shows the second check performed by nodes to verify that the inputs to the transaction being checked
+        have not already been consumed by another transaction.
+    }
+    , label=lst:check2]
+    private boolean areOutputsSpent(Transaction tx){
+        //Need to see if tx inputs are contained in the blockchain UTXOs
+        for(TransactionInput i : tx.inputs){
+            if(!currentBlockchain.UTXOs.containsKey(i.previousOutId)){
+                System.out.println("TRANSACTION FAILED: Transaction inputs have already been spent!");
+                return true;
+            }
+        }
+        return false;
+    }
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, float=h, caption=
+    {
+        This shows the third check performed by nodes to see if the transaction has already been encountered by
+        this node and can therefore be disgarded.
+    }
+    , label=lst:check3]
+    private boolean isTransactionAlreadySeen(Transaction tx){
+        if(allTransactions.contains(tx)){
+            System.out.println("TRANSACTION FAILED: Transaction already seen by this node!");
+            return true;
+        }else{
+            return false;
+        }
+    }
+\end{lstlisting}
+
+
 \subsection{Results}
+%Show invalid transactions
+In order to test the first check the nodes perform a transaction will be created, mined and added to the blockchain.
+Then the exact same transaction will be passed to a node to see if the transaction is rejected. The transaction is
+a valid transaction in every other way.
+
+%Listing of transaction?
+%Image of result
+
+This resulted in the output of "TRANSACTION FAILED: This transaction is already included on the blockchain!" and as
+a result the transaction did not make it through the nodes checks and was not added to the blockchain.
+
+The second test required making specialised transaction output objects to feed first into an honest transaction that
+would be added to the blockchain. Then those same outputs would be fed into a second transaction to emulate a
+transaction attempting to spend outputs that have already been consumed.
+
+%Image of result
+
+This resulted in the program outputting "TRANSACTION FAILED: Transaction inputs have already been spent!" and
+therefor the node disgards the transaction, does not add the transaction to its current block, and does not flood
+the transaction to other nodes.
+
+The final check can be evaluated by first setting the max number of transactions in a block to a number higher than
+1 to make sure that the block will not be mined before the next transaction arrives. Next an honest transaction is 
+created and added to a block by a node. Then we will try to send the same transaction again to the same node. This
+should trigger the test to fail.
+
+%Image of result
+
+This resulted in the output "TRANSACTION FAILED: Transaction already seen by this node!" meaning the duplicate
+transaction was caught and not flooded to any other nodes or added to the block a second time.
+
+%Show log output from tests
 \subsection{Analysis and conclusion}
+%Nature of scope means that double spending may occur as number of transactions are low and so are nodes and blocks
+%This is the same as bitcoin etc though and would be correct on a larger scale.
 
 \section{Does the cryptocurrency prevent Sybil attacks?}
 A sybil attack is the act of taking over a system by forging multipe identities (REFERENCE). The name comes from a book
@@ -1184,10 +1264,11 @@ attacker managed to alter a blockchain it would fall out of use by any nodes tha
 not be continued to be appended to thus rendering the attack ineffective.
 \subsection{Design}
 In the normal running of the project the test harness is not designed to perform attacks on the blockchain by altering
-previous transactions. This means the way this evaluation will test the security of the blockchain is by using unit tests.
-These tests will attempt to alter part of the blockchain to see how the network will react to this change. There are also
-unit tests testing the main function that checks the validity of the blockchain. This function is the core functionality
-for maintaining the security of the blockchain and is used by the nodes to check which blockchain to append to.
+previous transactions. This means that this will be tested instead by the main function. Some transactions will first
+be created between wallets and then added to blocks and mined to then be added to the blockchain. Once this has happened,
+One of the transactions from the blocks will attempt to be altered. This will be implemented using a temporary function
+added to the Transaction class which will allow the changing of the value of a transaction. This should alter the 
+blockchain and so will cause nodes in the future to abandon this blockchchain infavour of a valid chain.
 
 \subsection{Results}
 \subsection{Analysis and conclusion}
