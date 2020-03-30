@@ -100,8 +100,15 @@ class Node{
                         
 
                         //Mine the block and add it to the current blockchain
-                        if (blockToAdd.mineBlock(Blockchain.DIFFICULTY)){
-                            currentBlockchain.blockChain.add(blockToAdd);
+                        if(currentBlockchain.validateChain()){
+                            if (blockToAdd.mineBlock(Blockchain.DIFFICULTY)){
+                                currentBlockchain.blockChain.add(blockToAdd);
+                            }
+                        }else{
+                            //If current block is not valid then switch to the blockchain used by one of the nearby nodes
+                            System.out.println("Invalid blockchain: Aborting block mining...\nSwitching Blockchain...");
+                            switchBlockchain(nearbyNodes.get(new Random().nextInt(5)).currentBlockchain);
+                            return;
                         }
                         
                         //Remove transactions in block from other nodes transaction list
