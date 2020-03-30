@@ -52,6 +52,7 @@ class Block {
     // a substring of "0"s equal in length to the difficulty
     // Done as a proof of work concept in order to select which node mines the block
     public boolean mineBlock(int difficulty) {
+        long startTime = System.nanoTime();
         String target = new String(new char[difficulty]).replace('\0', '0');
         int nonce = 0; 
         String newHash = hash;
@@ -60,6 +61,8 @@ class Block {
 			newHash = calculateHash(nonce);
         }
         System.out.println("Block Mined: " + newHash);
+        long finishTime = System.nanoTime();
+        System.out.println("Time elapsed mining: " + (finishTime - startTime)/10000);
         return true;
     }
     
