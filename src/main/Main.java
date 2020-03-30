@@ -16,10 +16,6 @@ class Main {
         //Create Genesis Node
         Node genesisNode = new Node(null, blockchain, 0);
 
-        //Create wallets
-        Wallet walletA = new Wallet(genesisNode, blockchain);
-        Wallet walletB = new Wallet(genesisNode, blockchain);
-
         int NUMBER_OF_NODES = 10;
         List<Wallet> walletList = new ArrayList<Wallet>();
         List<Node> nodeList = new ArrayList<Node>();
@@ -52,50 +48,17 @@ class Main {
             
             block1.addTransaction(initialBalance);
         }
-        
-        // //Genesis (Initialise both wallets with 500)
-        // Transaction genesisTransactionA = new Transaction(null, walletA.publicKey, 100, null);	
-        // genesisTransactionA.transactionId = "0"; //manually set the transaction id
-        // Transaction genesisTransactionB = new Transaction(null, walletB.publicKey, 100, null);
-        // genesisTransactionB.transactionId = "1"; //manually set the transaction id	
-        
-        //Starting Block
-        // Block block1 = new Block(genesisBlock.hash);
-        // block1.addTransaction(genesisTransactionA);
-        // block1.addTransaction(genesisTransactionB);
+        //Necessary as coin creation transactions are deliberately not added to the blockchain automatically
         blockchain.addBlock(block1);
 
-        //System.out.println("Wallet B balance: " + walletB.getBalance());
 
-        //Block 2
-        // walletA.sendFunds(walletB.publicKey, 10);
-        //Block block2 = new Block(block1.hash);
-        //block2.addTransaction(walletA.sendFunds(walletB.publicKey, 10));
-        //block2.addTransaction(walletB.sendFunds(walletA.publicKey, 100));
-        //blockchain.addBlock(block2);
-        //System.out.println(genesisTransactionA.outputs.get(0).value);
-
-        //Block 3
-        // walletB.sendFunds(walletA.publicKey, 1);
-        // walletB.sendFunds(walletA.publicKey, 1);
-        // walletB.sendFunds(walletA.publicKey, 1);
-        // walletB.sendFunds(walletA.publicKey, 1);
-
-        // Block block3 = new Block(block2.hash);
-        // block3.addTransaction(walletB.sendFunds(walletA.publicKey, 30));
-        // blockchain.addBlock(block3);
-
-        System.out.println("1--5--2");
         walletList.get(1).sendFunds(walletList.get(2).publicKey, 5);
-        System.out.println("2--10--1");
         walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
 
-        System.out.println("1--50--3");
         walletList.get(1).sendFunds(walletList.get(3).publicKey, 50);
-        System.out.println("2--10--1");
         walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
 
-        System.out.println("RANDOM WALLET BALANCE: " + walletList.get(3).getBalance());
+        System.out.println("WALLET 3 BALANCE: " + walletList.get(3).getBalance());
 
 
         

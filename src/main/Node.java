@@ -9,7 +9,7 @@ class Node{
     //Id of this node
     public String id;
     public final int NEARBY_NODE_SIZE = 10;
-    public final int BLOCK_SIZE = 5; //Number of transactions in a block
+    public final int BLOCK_SIZE = 1; //Number of transactions in a block
 
     //List of all transactions not in the blockchain
     private List<Transaction> allTransactions;
