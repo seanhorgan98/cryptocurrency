@@ -13,9 +13,12 @@ public class Wallet {
 	private float balance;
 	private Node parentNode;
 
-	public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
+	private Blockchain currentBlockchain;
+
+	public HashMap<String,TransactionOutput> walletUTXOs = new HashMap<String,TransactionOutput>();
 	
-	public Wallet(Node node){
+	public Wallet(Node node, Blockchain blockchain){
+		this.currentBlockchain = blockchain;
 		this.parentNode = node;
 		generateKeyPair();
 		this.balance = 0;
@@ -23,22 +26,22 @@ public class Wallet {
 
 	// Utility function to return the balance of this wallet
 	public float getBalance(){
-		updateBalance();
+		balance = updateBalance();
 		return balance;
 	}
 
 	// Loops through all the UTXOs and picks out the one addressed to this wallet.
 	// Then returns the sum of the values for these UTXOs
-	public void updateBalance(){
+	public float updateBalance(){
 		float total = 0;	
-        for (Map.Entry<String, TransactionOutput> item: Blockchain.UTXOs.entrySet()){
+        for (Map.Entry<String, TransactionOutput> item: currentBlockchain.UTXOs.entrySet()){
         	TransactionOutput UTXO = item.getValue();
-            if(UTXO.isMine(publicKey)) { //if output belongs to me ( if coins belong to me )
-            	UTXOs.put(UTXO.id,UTXO); //add it to our list of unspent transactions.
+            if(UTXO.isMine(publicKey) && !walletUTXOs.containsKey(UTXO.id)) { //if output belongs to me ( if coins belong to me )
+            	walletUTXOs.put(UTXO.id,UTXO); //add it to our list of unspent transactions.
             	total += UTXO.value ; 
             }
 		}
-		balance = total;
+		return total;
 	}
 	
 	// Generates a public and private key pair for this wallets addresses
@@ -70,8 +73,8 @@ public class Wallet {
 	// Loops through the UTXOs and prints out the value for each
 	public void printUTXOs(){
 		updateBalance();
-		System.out.println("UTXOs size: " + UTXOs.size());
-		for (Map.Entry<String, TransactionOutput> item: UTXOs.entrySet()){
+		System.out.println("UTXOs size: " + walletUTXOs.size());
+		for (Map.Entry<String, TransactionOutput> item: walletUTXOs.entrySet()){
 			System.out.println(item.getValue().value);
 		}
 	}
@@ -86,29 +89,39 @@ public class Wallet {
 	// Checks to make sure the wallet has the sufficient funds to send the coins first
 	public Transaction sendFunds(PublicKey recipient, float value){
 		if(getBalance() < value){
-			System.out.println("Wallet: Not enough funds!");
+			System.out.println("Wallet: Not enough funds! Value: " + value + ", Current Balance: " + balance);
 			return null;
 		}
 
 		ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
 		
+		//TODO: change how the inputs are chosen. Make sure it is choosing the smallest inputs greater than the value
 		float total = 0;
-		for (Map.Entry<String, TransactionOutput> item: UTXOs.entrySet()){
+		for (Map.Entry<String, TransactionOutput> item: walletUTXOs.entrySet()){
 			TransactionOutput UTXO = item.getValue();
-			total += UTXO.value;
-			
-			inputs.add(new TransactionInput(UTXO.id, UTXO.value));
 
-			if(total > value) break;
+			
+			if(UTXO.value >= value){
+				inputs.add(new TransactionInput(UTXO.id, UTXO.value));
+				break;
+			}else{
+				total += UTXO.value;
+				//System.out.println("UTXO value: " + UTXO.value);
+				inputs.add(new TransactionInput(UTXO.id, UTXO.value));
+				if(total > value) break;
+			}
 		}
 	
 		
-		Transaction tx = new Transaction(publicKey, recipient, value, inputs);
+		Transaction tx = new Transaction(publicKey, recipient, value, inputs, currentBlockchain);
+		//Is this line necessary
 		tx.outputs.add(new TransactionOutput(tx.reciepient, tx.value, tx.transactionId));
 		tx.generateSignature(privateKey);
 
+		updateBalance();
+
 		for(TransactionInput input: inputs){
-			UTXOs.remove(input.previousOutId);
+			walletUTXOs.remove(input.previousOutId);
 		}
 		updateNode(tx);
 		return tx;

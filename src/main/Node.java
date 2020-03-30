@@ -2,13 +2,14 @@ package main;
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 class Node{
     //Id of this node
     public String id;
     public final int NEARBY_NODE_SIZE = 10;
-    public final int BLOCK_SIZE = 5; //Number of transactions in a block
+    public final int BLOCK_SIZE = 1; //Number of transactions in a block
 
     //List of all transactions not in the blockchain
     private List<Transaction> allTransactions;
@@ -33,6 +34,8 @@ class Node{
                 Node nodeToAdd = getRandomNearbyNode(seedNode);
                 if(!nearbyNodes.contains(nodeToAdd)){
                     nearbyNodes.add(nodeToAdd);
+                }else if(seedNode.nearbyNodes.size() < NEARBY_NODE_SIZE){
+                    break;
                 }
             }
 
@@ -79,7 +82,7 @@ class Node{
     //When transaction is recieved from wallet, send to nearbyNodes
     public void floodTransaction(Transaction tx){
         //Perform checks
-        if(isTransactionValid(tx)){
+        if(!isTransactionOnBlockchain(tx)){
             if(!areOutputsSpent(tx)){
                 if(!isTransactionAlreadySeen(tx)){
                     //Add to this nodes transactions
@@ -101,8 +104,13 @@ class Node{
                             currentBlockchain.blockChain.add(blockToAdd);
                         }
                         
-
-                        //TODO: Need other nodes to remove these transactions
+                        //Remove transactions in block from other nodes transaction list
+                        for(Iterator<Transaction> iterator = allTransactions.iterator();iterator.hasNext();){
+                            Transaction t = iterator.next();
+                            iterator.remove();
+                        }
+                        
+                            
                     }
 
                     //Relay to other nodes
@@ -115,14 +123,21 @@ class Node{
     }
 
     //Check if transaction is valid by looking at inputs and outputs
-    private boolean isTransactionValid(Transaction tx){
-        //TODO: add transaction check
-        return true;
+    private boolean isTransactionOnBlockchain(Transaction tx){
+        if(currentBlockchain.containsTransaction(tx)){
+            return true;
+        }
+        return false;
     }
 
     //Check if transaction outputs have already been spent
     private boolean areOutputsSpent(Transaction tx){
-        //TODO: add transaction output spent check
+        //Need to see if tx inputs are contained in the blockchain UTXOs
+        for(TransactionInput i : tx.inputs){
+            if(!currentBlockchain.UTXOs.containsKey(i.previousOutId)){
+                return true;
+            }
+        }
         return false;
     }
 
