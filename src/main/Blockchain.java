@@ -6,7 +6,7 @@ class Blockchain {
     public ArrayList<Block> blockChain = new ArrayList<Block>(1);
 
     //List of all unspent transactions in a Map<TransactionOutput.id, TransactionOutput>
-    public static Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
+    public Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
     
     public static final float MIN_TRANSACTION = 0.1f;
     public static final int DIFFICULTY = 2;
@@ -44,6 +44,24 @@ class Blockchain {
             }
         }
     }
+
+    // Report if a transaction is contained on the blockchain
+    public boolean containsTransaction(Transaction tx){
+        for(Block block : blockChain){
+            if(block.transactions.contains(tx)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Loops through the UTXOs and prints out the value for each
+	public void printUTXOs(){
+		System.out.println("UTXOs size: " + UTXOs.size());
+		for (Map.Entry<String, TransactionOutput> item: UTXOs.entrySet()){
+			System.out.println("UTXO value: " + item.getValue().value + ", To: " + StringUtil.getStringFromKey(item.getValue().reciepient));
+		}
+	}
 
     // Loops through each block and makes sure it's previousHash matches with the previous
     // block's hash
