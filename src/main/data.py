@@ -23,28 +23,25 @@ d3 = data[2]
 d4 = data[3]
 d5 = data[4]
 
-print d1
-print ones
-
 # Histogram for averages
-# Scatter graph for full data
-plt.plot(difficulties,averages)
+plt.style.use('seaborn')
+plt.bar(difficulties, averages)
 plt.xlabel("Difficulty")
-plt.ylabel("Milliseconds Elapsed")
-plt.title("How long it took to mine")
-plt.axis([1,5,0,1300])
-plt.xticks(difficulties)
+plt.ylabel("Time Elapsed (milliseconds)")
+plt.title("Average time elapsed mining (ms) at increasing difficulty settings")
 plt.show()
 
-
-plt.axis([1,5,0,5000])
+# Scatter for full data
+plt.yscale('log')
+plt.ylim([10**-3,10**6])
 plt.xlabel('Difficulty')
-plt.ylabel('Milliseconds Elapsed')
-plt.title('scatter plot')
+plt.ylabel('Time Elapsed (milliseconds)')
+plt.title('Time elapsed mining (ms) at increasing difficulty settings')
 plt.xticks(difficulties)
-plt.scatter(ones,d1, color='r')
-plt.scatter(twos,d2, color='r')
-plt.scatter(threes,d3, color='r')
-plt.scatter(fours,d4, color='r')
-plt.scatter(fives,d5, color='r')
+plt.scatter(ones,d1, color='r', alpha=0.3)
+plt.scatter(twos,d2, color='r', alpha=0.3)
+plt.scatter(threes,d3, color='r', alpha=0.3)
+plt.scatter(fours,d4, color='r', alpha=0.3)
+plt.scatter(fives,d5, color='r', alpha=0.3)
+
 plt.show()
