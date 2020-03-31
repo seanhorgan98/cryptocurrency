@@ -221,3 +221,4 @@ Notes for background work/design
 1 hours completing tests for evaluation
 2 hours correcting test harness bug
 1 hour working on evaluation write up
+3 hours creating graphs with matplotlib
