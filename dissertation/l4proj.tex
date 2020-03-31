@@ -1182,18 +1182,27 @@ a valid transaction in every other way.
 \end{figure}
 
 This resulted in the output of "TRANSACTION FAILED: This transaction is already included on the blockchain!" and as
-a result the transaction did not make it through the nodes checks and was not added to the blockchain.
+a result the transaction did not make it through the nodes checks and was not added to the blockchain [\ref{fig:check1}].
 
 The second test required making specialised transaction output objects to feed first into an honest transaction that
 would be added to the blockchain. Then those same outputs would be fed into a second transaction to emulate a
 transaction attempting to spend outputs that have already been consumed.
 
 %Image of result
-
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/inputsspent.png}    
+    \caption
+    {
+.
+    }
+    % use the notation fig:name to cross reference a figure
+    \label{fig:inputsspent}
+\end{figure}
 
 This resulted in the program outputting "TRANSACTION FAILED: Transaction inputs have already been spent!" and
 therefor the node disgards the transaction, does not add the transaction to its current block, and does not flood
-the transaction to other nodes.
+the transaction to other nodes [\ref{fig:inputsspent}].
 
 The final check can be evaluated by first setting the max number of transactions in a block to a number higher than
 1 to make sure that the block will not be mined before the next transaction arrives. Next an honest transaction is 
@@ -1201,9 +1210,19 @@ created and added to a block by a node. Then we will try to send the same transa
 should trigger the test to fail.
 
 %Image of result
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/seenbynode.png}    
+    \caption
+    {
+.
+    }
+    % use the notation fig:name to cross reference a figure
+    \label{fig:seenbynode} 
+\end{figure}
 
 This resulted in the output "TRANSACTION FAILED: Transaction already seen by this node!" meaning the duplicate
-transaction was caught and not flooded to any other nodes or added to the block a second time.
+transaction was caught and not flooded to any other nodes or added to the block a second time [\ref{fig:seenbynode}].
 
 %Show log output from tests
 \subsection{Analysis and conclusion}
@@ -1258,6 +1277,8 @@ power must be used in order to mine a block. This will be tested using a range o
 elapsed for each bock to be mined will be taken. This will show how the difficulty effects how the computational power 
 required to mine a block.
 
+
+
 \subsection{Results}
 
 \begin{figure}[!ht]
@@ -1269,6 +1290,28 @@ required to mine a block.
     }
     % use the notation fig:name to cross reference a figure
     \label{fig:check2} 
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/avgBar.png}    
+    \caption
+    {
+.
+    }
+    % use the notation fig:name to cross reference a figure
+    \label{fig:avgBar} 
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/fulldatascatter.png}    
+    \caption
+    {
+.
+    }
+    % use the notation fig:name to cross reference a figure
+    \label{fig:fulldatascatter} 
 \end{figure}
 
 \subsection{Analysis and conclusion}
