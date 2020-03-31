@@ -1170,6 +1170,16 @@ a valid transaction in every other way.
 
 %Listing of transaction?
 %Image of result
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/check1.png}    
+    \caption
+    {
+.
+    }
+    % use the notation fig:name to cross reference a figure
+    \label{fig:check1} 
+\end{figure}
 
 This resulted in the output of "TRANSACTION FAILED: This transaction is already included on the blockchain!" and as
 a result the transaction did not make it through the nodes checks and was not added to the blockchain.
@@ -1179,6 +1189,7 @@ would be added to the blockchain. Then those same outputs would be fed into a se
 transaction attempting to spend outputs that have already been consumed.
 
 %Image of result
+
 
 This resulted in the program outputting "TRANSACTION FAILED: Transaction inputs have already been spent!" and
 therefor the node disgards the transaction, does not add the transaction to its current block, and does not flood
@@ -1248,6 +1259,18 @@ elapsed for each bock to be mined will be taken. This will show how the difficul
 required to mine a block.
 
 \subsection{Results}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/check2.png}    
+    \caption
+    {
+.
+    }
+    % use the notation fig:name to cross reference a figure
+    \label{fig:check2} 
+\end{figure}
+
 \subsection{Analysis and conclusion}
 
 \section{Is the blockchain secure?}
@@ -1271,6 +1294,18 @@ added to the Transaction class which will allow the changing of the value of a t
 blockchain and so will cause nodes in the future to abandon this blockchchain infavour of a valid chain.
 
 \subsection{Results}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/check3.png}    
+    \caption
+    {
+.
+    }
+    % use the notation fig:name to cross reference a figure
+    \label{fig:check3} 
+\end{figure}
+
 \subsection{Analysis and conclusion}
 
 \section{Requirements Validation}
