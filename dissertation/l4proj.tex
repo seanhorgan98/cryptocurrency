@@ -1,10 +1,4 @@
 \documentclass{l4proj}
-
-    
-%
-% put any additional packages here
-%
-
 \begin{document}
 
 %==============================================================================
@@ -453,17 +447,29 @@ minted.
 
 %Diagram of a transaction
 
+%Blockchain diagram
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/blockchaindiagram.png}    
+
+    \caption{
+        .
+    }
+
+    % use the notation fig:name to cross reference a figure
+    \label{fig:blockchainDiagram} 
+\end{figure}
+
 \section{Blockchain}
 The second major feature of the project to design is the Blockchain. This chain of blocks needs to be robust in
 the sense that a malicious user cannot alter any previous transactions in the ledger for their benefit. It must
 also be an accurate ledger containing every transaction exchanged to date. The way this blockchain was created was
 by first collating a group of transactions into blocks. Then each block would create a signature hash which would
 be a combination of all the transactions in the block. Then, in order to create an irreversible and immutable chain
-of these blocks, the hash of each block is concatenated with the hash of the previous block in the chain. Meaning
+of these blocks, the hash of each block is concatenated with the hash of the previous block in the chain [\ref{fig:blockchainDiagram}]. This means
 any change to a transaction would cascade through each hash in each block and ultimately affect everything in the
 chain. This means that it is easy for any node to check that the blockchain is valid using a simple and fast check.
 
-%Blockchain diagram
 
 
 \subsection{UTXOs}
@@ -610,7 +616,9 @@ option as it includes security packages which would be invaluble for implementin
 public/private key verification.
 
 \section{Summary}
-
+This section outlines the way that the project was designed in order to meet the functional and non-functional 
+requirements set out in the previous section. It also covers why some decisions were made like choosing one design 
+over another.
 
 %==================================================================================================================================
 \chapter{Implementation}
@@ -736,7 +744,7 @@ choices.
 \subsection{The blockchain}
 %Why blockchain is an arraylist
 In this implementation of a cryptocurrency the blockchain is represented with an ArrayList data structure cointaining
-all of the blocks [\ref{fig:blockchainDefinition}]. This was a simple and easy way to store the blocks as the actual data structure did not need to
+all of the blocks [\ref{lst:blockchainDefinition}]. This was a simple and easy way to store the blocks as the actual data structure did not need to
 have any specific security. All the security is created around this structure so all that was needed was a simple 
 strucutre to store a list of blocks that was easy to work with. 
 
@@ -752,7 +760,8 @@ removes any transaction inputs that have been consumed in the process of the tra
 
 \begin{lstlisting}[language=java, float, caption={This figure shows the definitions for the blockchain and also 
     the UTXO maps. The blockchain is an ArrayList created with one starting block acting as a genesis block. The 
-    UTXO map is a HashMap mapping the transaction id to the transaction output created from each transaction.}, label=lst:blockchainDefinition]
+    UTXO map is a HashMap mapping the transaction id to the transaction output created from each transaction.},
+    label=lst:blockchainDefinition]
     public ArrayList<Block> blockChain = new ArrayList<Block>(1);
     public static Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
 \end{lstlisting}
