@@ -996,15 +996,14 @@ be flooded through the network and nodes will begin mining blocks that they will
 demonstrate the security of the currency by showing how all the transactions created by the test harness will
 be included on the blockchain and as such are immutable.
 
-
-
-Then the transactions were...
-%Show how transactions were sent using the test harness (How wallets handle the transaction creation.)
-
+First a loop was created to create the specified number of nodes and wallet. Each wallet is set up with a coin
+creation transaction to give it a starting balance so transactions can take place. Then a second loop is set up
+in order to generate the random transactions. Every iteration of the loop a random wallet sends a random amount
+of currency to a second random wallet. This is designed to simulate a real network where people would be sending
+transactions to others.
 
 %Mining
 %Block mining specifics
-%Mention git-flow?
 
 %Maybe show more code snippets
 %Switching blockchains
@@ -1020,6 +1019,10 @@ to other programmers to add on to as this was mainly a demonstration of features
 be released to the public. Regardless, it was important to keep the project easy to update as it is good practice
 and also helped make the project easier to develop. As such, each class and all functions were labeled clearly
 and laid out in logical order to make navigation around the project easy.
+
+\section{Summary}
+This section discussed the concrete ways in which the design set out in the previous section were implemented.
+It also discusses the technical acomplishments that were overcome in order to create som eof the features.
 
 %==================================================================================================================================
 \chapter{Evaluation} 
@@ -1414,8 +1417,14 @@ of its two children. This provided an easy way for nodes to scan through the blo
 had been altered as if there had been any alterations then the root hash would have to have been changed. This means
 that the requirement of storing transactions within blocks in the Merkle tree structure was satisfied.
 \subsubsection{Currency Splitting}
-
+The project allows for users to send currency that is a smaller demonination that their current transaction inputs. This
+works by sending the full transaction input and then sending the overpay back to the sender. This satisfies the 
+requirement of splitting wallet currency down. 
 \subsubsection{Storage Improvements}
+The final requirement that was set out in the analysis section was the feature of allowing nodes to only store the
+hash values inside blocks in the blockchain. This would allow nodes to save a significant amount of storage space as
+they would not have to store the actual transaction objects. This feature was given a high priority and was a 
+non-functional requirement and as such was not implemented in this project due to time constraints.
 
 \section{Limitaitons}
 A limitation that the project had was the issues with the scale of the project. The nature of cryptocurrencies is
@@ -1425,24 +1434,66 @@ double spending issues when using small amounts of nodes and transaction. This i
 been run on a powerful machine or the test harness being run on a network of machines it would work correctly.
 %Block Size Problem (Double Spending at low user numbers)
 
-%==================================================================================================================================
-\chapter{Conclusion}    
 \section{Summary}
+This section evaluated how well the project satisfied the goal of being secure. The three tests that were carried out
+were demonstrated and the results were shown along with some analysis why the tests prove that the system is secure.
 
+%==================================================================================================================================
+\chapter{Conclusion}
+So far this paper has presented the aims and motivations for the project, how these aims were translated into functional
+and non-functional requiremnets. Then the design of the cryptocurrency was presented showing how key features were examined
+and planned. This section was followed by the concrete implementation methods which demonstrated how the designs were 
+executed and giving light to important technical challanges that were overcome. The evaluation followed giving evidence
+to show if the project was successfull at answering the main goals of the project. To conclude, a summary of the whole 
+project is given.
 
+\section{Summary}
 %Summarise the whole project for a lazy reader who didn't read the rest (e.g. a prize-awarding committee).
 %You should be addressing the general problem you introduced in the
 %Introduction.        
 %Include summary of concrete results (``the new compiler ran 2x
 %faster'')
-%Indicate what future work could be done, but remember: you
-%won't get credit for things you haven't done.
+The overall goal for this project was to demonstrate the security of a basic cryptocurrency. This goal was broken down
+into concrete goals for designing the cryptocurrency. First, a distributed peer-to-peer immutable ledger was created 
+in order to keep a secure method of transaction history. A proof of work system was created in order to have nodes
+demonstrate the expendature of computational power before adding to the blockchain. This is implemented as a mining
+mechanism where node have to hash a block along with a nonce until the result is within a specified target range. A
+consensus mechanism was added so nodes on the network do not have to store the address of every other node in the network
+but transactions can still be flooded throughout the network and added to any blocks. Transactions within blocks are
+stored using the Merkle tree strucutre in order to make the process of verifying a block much faster for nodes as they
+only have to scan the root hash, not each individual transaction.
+
+After the project was created an evauation was performed in order to see how well the cryptocurrency provided an answer
+to the goal of the project. The evaluation was centered on showing that the cryptocurrency is secure and resistant to 
+different types of attack that are likely to occur to a blockchain network. The evaulation consisted of three tests.
+The first test evaluated how well the network resisted double-spend attacks where an attacker could add more than one
+of the same transaction to the blockchain. The tests showed that the project correctly identifies these attacks and
+prevents them from being included on the blockchain. The second test was designed to evaulate how the program might
+deal with a Sybil attack. The project demonstrated the effectiveness of the proof of work mining mechanism. The test 
+showed the time elapsed for mining a block depending on the difficulty setting. This shows how the mining mechanism 
+correctly takes longer as the difficulty increases and makes it clear that nodes have to show proof of work before
+adding to the blockchain. The final test aimed to evaluate how the program deals with an alteration made to a block
+that has already been added to a block. The project effectivly recognised an alteration with the blockchain and 
+nodes did not append to that blockchain but instead looked for a different valid blockchain to continue working on.
+
+The cryptocurrency effectivly and securely met almost all of the requirements set at the begining of the project. It
+satisfied the goals of creating a secure and robust cryptocurrency.
+
 
 \section{Future Work}
+%Indicate what future work could be done, but remember: you
+%won't get credit for things you haven't done.
+There are many different avenues that could be explored for adding to the cryptocurrency created in this project. 
+Largely these improvements would be new features and not additions that would alter or improve the security of the
+network. One example would be the inclusion of scripts within transaction much like Bitcoin (REFERENCE). This would a
+allow for transactions to include more substance and accomplish more complex goals than just sending currency from 
+one wallet to another. This could be incorperating escrow transactions or transactions that are addressed to more than
+one recipient or other smart contracts (REFERENCE book).
 
-%==================================================================================================================================
-%
-% 
+Another place for future work could be in the network set up. Currently when a node is created it is part of the
+network forever. In the real world it is likely that nodes get abandoned or shut down. Future work could allow for 
+nodes to expire and be released from the network if they don't contribute to the network for a specified amount of time.
+
 %==================================================================================================================================
 %  APPENDICES  
 
@@ -1517,5 +1568,7 @@ https://hackernoon.com/merkle-trees-181cb4bc30b4
 Blockchain technology: Principles and applications Marc Pilkington
 
 The sybil attack John Douceur
+
+https://blockchainwolf.net/blockchain-technology/what-is-blockchain-easiest-explanation-ever/ [blockchain diagram]
 
 \end{document}
