@@ -159,7 +159,7 @@ Below the main funtionality described in the Bitcoin white paper will be present
 
 \subsection{Transactions}
 The primary component of a cryptocurrency is a transaction between two users. In bitcoin this is described as being "a
-chain of digital signatures". In this sense, a transaction is just a way of showing that ownership of the coin has
+chain of digital signatures" (REFERENCE). In this sense, a transaction is just a way of showing that ownership of the coin has
 passed from the sender's address to the recipient's address. Bitcoin ensures the immutability of these transactions
 by making the sender generate a hash of the previous transaction combined with the public key, equivalent to the address,
 of the recipient. This means that the recipient can then verify the transaction using their own key and the transaction
@@ -197,8 +197,7 @@ users from hording IP addresses in order to take control of the network as theor
 power in the network will be from benevolent users.
 
 
-%***
-It is easy for the nodes to decide which blockchain to add their blocks to because of this implementation of CPU power
+It is easy for the nodes to decide which blockchain to add their blocks to because of CPU power
 determining which blocks are added to the blockchain. They simply choose the longest blockchain as this will be
 the blockchain with the most CPU power invested in it. This is secure because if an attacker were trying to alter a 
 previous block they would also have to redo all the proof of work completed for every block after that in the chain.
@@ -213,7 +212,7 @@ just be an unordered list. This would work as each transaction is unrelated to t
 every way except perhaps the time it took place. This storage solution can be improved though by using a data structure
 known as a Merkle tree (REFERENCE). This data structure is a way in which to make the process of checking block validity
 more efficient. The way Merkle trees work is by having every leaf node be the hash of the transaction it represents 
-and every branch node is the hash of its two child nodes [\ref{fig:merkle}]. This builds up a chain of hashes similar to the blockchain.
+and every branch node is the hash of its two child nodes . This builds up a chain of hashes similar to the blockchain.
 This means that in order for a node to check that a block is valid it only needs to check the root hash of the block as
 if there were any altered transactions within the block that would have an avalanche effect up through the hashes
 ultimately changing the root hash of the whole block.
@@ -234,7 +233,7 @@ more popular this is a significant storage space saving as the number of transac
     }
 
     % use the notation fig:name to cross reference a figure
-    \label{fig:merkle} 
+    \label{fig:merkle}
 \end{figure}
 
 \section{Bitcoin and Cryptocurrency Technologies}
@@ -322,17 +321,22 @@ useful form of evaluation.
 \end{itemize}
 
 \subsection{Should have}
+\begin{itemize}
+    \item A feature that can help with the smooth running of the network is an incentive for nodes to mine blocks. Without this there
+    is no reason for nodes to mine blocks and add to the blockchain. This is necessary as there needs to be a majority of 
+    honest nodes othewise it is easy for malicious nodes to take control of the blockchain and can then add any blocks with
+    which ever transactions they would like to the blockchain wether they are valid or not.
+\end{itemize}
 
-A feature that can help with the smooth running of the network is an incentive for nodes to mine blocks. Without this there
-is no reason for nodes to mine blocks and add to the blockchain. This is necessary as there needs to be a majority of 
-honest nodes othewise it is easy for malicious nodes to take control of the blockchain and can then add any blocks with
-which ever transactions they would like to the blockchain wether they are valid or not.
 
 \subsection{Could have}
-In Bitcoin, every 2016 blocks that are mined the difficulty of mining is changed in order to maintain the same average time
-to mine a block. This difficulty is either made harder or easier based on how quickly the nodes mined the previous blocks.
-This is not a high priority in this project as all the mining is taking place on the same computer and each node will have
-the same computational power. In theory this means that the average time for mining blocks shouldn't change.
+\begin{itemize}
+    \item In Bitcoin, every 2016 blocks that are mined the difficulty of mining is changed in order to maintain the same average time
+    to mine a block. This difficulty is either made harder or easier based on how quickly the nodes mined the previous blocks.
+    This is not a high priority in this project as all the mining is taking place on the same computer and each node will have
+    the same computational power. In theory this means that the average time for mining blocks shouldn't change.
+\end{itemize}
+
 
 \section{Non-Functional Requirements}
 Non-functional requiremnts are features that if included will improve the way the cryptocurrency operates by increasing
@@ -340,23 +344,30 @@ speed or lowering the storage space required. These features are not imperative 
 but would bring the project closer to what might be used in current cryptocurrencies in the world at the moment.
 
 \subsection{Must have}
-It is important that the way in which the transactions within blocks is efficient. The must be stored using the Merkle
-tree structure (REFERENCE). This way each transaction is a leaf node and every branch node is a hash of its two children.
-This makes it extremely efficient for checking the validity of each block as you only have to check the hash of the root
-hash.
+\begin{itemize}
+    \item It is important that the way in which the transactions within blocks is efficient. The must be stored using the Merkle
+    tree structure (REFERENCE). This way each transaction is a leaf node and every branch node is a hash of its two children.
+    This makes it extremely efficient for checking the validity of each block as you only have to check the hash of the root
+    hash.
+\end{itemize}
+
 
 \subsection{Should have}
-The cryptocurrency should have the ability to split the balance of wallets such that if you send an amount but you only
-have an increment of the currency larger than that amount then you should be sent back the value that you overpaid by.
-For example if you start with 10 coins and you want to send 3 to another wallet you should be able to send your 10 coins
-and recieve 7 back as overpay.
+\begin{itemize}
+    \item The cryptocurrency should have the ability to split the balance of wallets such that if you send an amount but you only
+    have an increment of the currency larger than that amount then you should be sent back the value that you overpaid by.
+    For example if you start with 10 coins and you want to send 3 to another wallet you should be able to send your 10 coins
+    and recieve 7 back as overpay.    
+\end{itemize}
 
 \subsection{Could have}
-One feature that would save storage space would be the way in which transactions are stored in blocks. In the merkle tree
-structure the transactions are hashed in order to speed up validation for nodes. This could be improved even more for 
-nodes. It is possible that nodes only need to store the root hash of each block in order to do their validation as the
-block hash is sufficient to check for incorrect transactions. This means each node can save a huge amount of storage space
-by only storing each blocks root hash.
+\begin{itemize}
+    \item One feature that would save storage space would be the way in which transactions are stored in blocks. In the Merkle tree
+    structure the transactions are hashed in order to speed up validation for nodes. This could be improved even more for 
+    nodes. It is possible that nodes only need to store the root hash of each block in order to do their validation as the
+    block hash is sufficient to check for incorrect transactions. This means each node can save a huge amount of storage space
+    by only storing each blocks root hash.
+\end{itemize}
 
 \section{Chosen Limitaions}
 In this section some of the limitations that have been placed on the project which would not help demonstrate the 
@@ -403,10 +414,25 @@ are made up of the outputs of previous transactions that have been addresed to t
 checking a user's balance would involve going through the blockchain adding up all the transaction outputs that
 are addressed to that particular user and not already spent. This concept will be explained in more detail in the Blockchain section.
 
+%Diagram of a transaction
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/utxo-model.jpg}    
+
+    \caption{
+        This diagram shows the process of transactions. Transactions require inputs to send value. These inputs come from
+        the outputs of previous transactions. These transactions then produce more transaction outputs which conntinue
+        the chain. This is the process Bitcoin uses and is the same one that will be used in this project.
+    }
+
+    % use the notation fig:name to cross reference a figure
+    \label{fig:transaction} 
+\end{figure}
+
 \subsection{Process and Checks}
 %signatures
 A key functionality of a transaction is it's ability to generate a signature for itself using the values
-from the various metadata it contains. It also has to be able to vefify that this signature is valid.
+from the various metadata it contains. It also has to be able to verify that this signature is valid.
 
 %Process transaction
 When a transaction is created it has to be processed before it is considered valid and added to a block and subsequently
@@ -425,13 +451,11 @@ running the risk of double spend attacks. This is covered in more detail in the 
 \subsection{Overpay}
 In a real environment it is common that the ammount a user is trying to send is not equal to the value of one of
 the transactions they have recieved in the past. For example, if a user recieves a transaction of 10 it is likely
-that the next time they want to pay someone they may want to only send 5. This issue is solved by the concept of
+that the next time they want to pay someone they may want to only spend 5. This issue is solved by the concept of
 overpay. In this design, when a user is sending a value to a recipient which is not equal to the transaction
 input they are expending, the transaction processing creates two transaction outputs. The first sends the value
 of the transaction to the recipient and the second sends the transaction input value minus the transaction value
 back to the sender. This ensures that the transaction input is used up but the sender is not out of pocket.
-
-
 
 %Coin creation
 \subsection{Coin Creation}
@@ -445,24 +469,9 @@ amount of the currency which does not come from any particular user, instead thi
 coin creation flag. After the initial creation of the network this is the only case where new currency will be
 minted.
 
-%Diagram of a transaction
-
-%Blockchain diagram
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=1\linewidth]{images/blockchaindiagram.png}    
-
-    \caption{
-        .
-    }
-
-    % use the notation fig:name to cross reference a figure
-    \label{fig:blockchainDiagram} 
-\end{figure}
-
 \section{Blockchain}
 The second major feature of the project to design is the Blockchain. This chain of blocks needs to be robust in
-the sense that a malicious user cannot alter any previous transactions in the ledger for their benefit. It must
+the sense that a malicious user cannot benidit by altering any previous transactions in the ledger. It must
 also be an accurate ledger containing every transaction exchanged to date. The way this blockchain was created was
 by first collating a group of transactions into blocks. Then each block would create a signature hash which would
 be a combination of all the transactions in the block. Then, in order to create an irreversible and immutable chain
@@ -470,7 +479,19 @@ of these blocks, the hash of each block is concatenated with the hash of the pre
 any change to a transaction would cascade through each hash in each block and ultimately affect everything in the
 chain. This means that it is easy for any node to check that the blockchain is valid using a simple and fast check.
 
+%Blockchain diagram
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/blockchaindiagram.png}    
 
+    \caption{
+        This figure shows how the blockchain works by having the previous block's hash fed into the next
+        block's hash in order to create a chain.
+    }
+
+    % use the notation fig:name to cross reference a figure
+    \label{fig:blockchainDiagram} 
+\end{figure}
 
 \subsection{UTXOs}
 The strategy of utilising Transaction inputs and transaction Outputs means that it is vital that the Blockchain
@@ -481,8 +502,8 @@ are addressed to them. If the transactions are not tracked by removing transacti
 user may be able to spend more than they own using double spending attacks.
 
 This leads to the concept of an Unspent Transaction Output list (UTXO). This list is a structure tied to the blockchain
-that stores all the transaction outputs that have not been spent as inputs by a tranasction. When they are used.
-The transaction processing stage removes that output from the UTXO list and adds the new output to the list.
+that stores all the transaction outputs that have not been spent as inputs by a tranasction. When they are used 
+the transaction processing stage removes that output from the UTXO list and adds the new output to the list.
 It is important to note that this is not a list of new transaction ouputs as that would not be secure outside the
 blockchain and would be vulnerable to attack. It is simply a way of listing the transactions already added to the
 blockchain. When a transaction is processed it goes through the new block and updates the UTXO list by recreating 
@@ -1579,5 +1600,7 @@ Blockchain technology: Principles and applications Marc Pilkington
 The sybil attack John Douceur
 
 https://blockchainwolf.net/blockchain-technology/what-is-blockchain-easiest-explanation-ever/ [blockchain diagram]
+
+https://bitcoin.org/en/blockchain-guide [Transaction diagram]
 
 \end{document}
