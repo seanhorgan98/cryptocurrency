@@ -623,15 +623,15 @@ transaction will be flooded to prevent double spending attacks.
 The final stage to designing the project was deciding how all of these features of the currency could be shown
 and how the security could be effectively presented. To meet the requirements specification it would mean developing
 a test harness that could generate multiple nodes and simulate a real network of sending transactions back and 
-forth between wallets in order to demonstrate the building of blocks and the blockchain. All while Demonstrating
+forth between wallets in order to demonstrate the building of blocks and the blockchain, all the while demonstrating
 the prevention of doubling spending and other attacks. 
 
-\section{Chosing a Programming Language}
+\section{Choosing a Programming Language}
 %Explain why object oriented programming was necessary 
 %Explain why java for security packages etc
 In order to decide what language we would use for this project it was best to look at how the project was designed
 and then narrow it down to the most suitable contenders. The way in which this cryptocurrency was designed was 
-utilising many different objects and structures, transactions, blocks, and the blockchain. This made it clear that 
+by utilising many different objects and structures, transactions, blocks, and the blockchain. This made it clear that 
 the best choice of language for the project would be an object-oriented programming language. This narrowed down
 the playing field to \textit{Java} or \textit{C\#}. From this it was decided that \textit{Java} would be the best 
 option as it includes security packages which would be invaluable for implementing core features like signatures and 
@@ -644,9 +644,9 @@ over another.
 
 %==================================================================================================================================
 \chapter{Implementation}
-This section of the paper will go in depth into the technical construction and implementation of the cryptocurrency.
+This section of the paper will describe in detail the technical construction and implementation of the cryptocurrency.
 This will start with describing the software development process used during construction and then how the different
-aspects of the project were created and joined to deliver the finished product. This section will also examine the 
+aspects of the project were created and joined together to deliver the finished product. This section will also examine the 
 technical achievements made and how any problems that came to light were tackled.
 
 %Challanges and how they were overcome
@@ -654,10 +654,12 @@ technical achievements made and how any problems that came to light were tackled
 %You can't talk about everything. Cover the high level first, then cover important, relevant or impressive details.
 
 \section{Software Engineering Practices}
-In order to create this cryptocurrencies it was important to have a solid software development process and an
-aim to stick to the different practices.
+%***ambiguous
+In order to create this cryptocurrency it was important to have a solid software development process and an
+aim to stick to the different development practices.
 
 \subsection{Version Control}
+%reference git?
 It was decided that the method of version control to be used would be Git. Making use of the GitHub website to 
 host the project repository online. This allowed for the addition of code from different computers during the
 development stages. This project made use of the branching feature of git in order to keep the project organised.
@@ -668,11 +670,13 @@ would not exist until the very end of the project as all the features had to be 
 correctly. This was also the reason why the decision to not make use of continuous integration was made. It was
 much faster and easier to run small tests and log outputs locally rather than make use of \textit{TravisCI} or an 
 alternative.
+%italics and reference travis
 
+%figure 5.2 (ref) 
 GitHub was an incredibly important website to the construction of this project as it allowed the ability to keep
 track of the completion of each feature using issues and milestones. Each feature and even small bugs were assigned
 an issue [\ref{fig:issues}] and then those issues were assigned to one of the milestones [\ref{fig:milestones}]. 
-This made it easy to prioritise each feature and keep on track with what needed to be done. The ritual of creating
+This made it easy to prioritise each feature and keep control of what needed to be done. The ritual of creating
 an issue when a feature or problem is identified and then closing the issue when it is dealt with was important to 
 the smooth development process.
 
@@ -684,7 +688,8 @@ the smooth development process.
     \includegraphics[width=1\linewidth]{images/issues.png}    
 
     \caption{
-        A view of the main issue tracking board on GitHub. Making it easy to keep track of state of the project
+        %FIX THIS ENGLISH
+        A view of the main issue tracking board on GitHub. Making it easy to keep track of the state of the project
         and what is still left to be completed.
     }
 
@@ -699,7 +704,8 @@ the smooth development process.
     \includegraphics[width=1\linewidth]{images/milestones.png}    
 
     \caption{
-        The main milestone board on GitHub showing the dates that each feature need to be completed by and
+        %FIX THIS ENGLISH
+        The main milestone board on GitHub showing the dates that each feature needs to be completed and
         allows for easy prioritisation of issues.
     }
 
@@ -710,9 +716,9 @@ the smooth development process.
 \section{Project Structure}
 %Separation into classes and the string util class(will be talked about later), main
 As this project lent itself to using an object oriented approach it made sense to separate the project into
-Java class filed for each object. These object would then be able to interact together by calling functions
+Java class files for each object. These objects would then be able to interact together by calling functions
 of other classes throughout the process. This left the main class which was used to host the test harness by
-instantiating all the objects and simulating many nodes and transactions.
+initiating all the objects and simulating many nodes and transactions.
 
 %Project structure diagram
 
@@ -725,7 +731,7 @@ of the program.
 %Maybe describe hashing more in depth to emphasise security
 \subsubsection{ApplySha256}
 The first function applySha256() takes in a string input and apply the SHA256 encryption
-algorithm to that string and return the result. This function was used all throughout the program for generating
+algorithm to that string and return the result. This function was used throughout the program for generating
 the hash values for objects. When an object like a transaction or a block is created, it takes all the metadata that
 it is created with and feeds them into this StringUtil function which returns the hash value. This essentially gives
 a unique identifier to every instance of each object. This function is the core of what keeps each block from being
@@ -770,14 +776,12 @@ all of the blocks [\ref{lst:blockchainDefinition}]. This was a simple and easy w
 have any specific security. All the security is created around this structure so all that was needed was a simple 
 structure to store a list of blocks that was easy to work with. 
 
-
-
 \subsection{The UTXOs}
 %UTXO hashmap
 In order to store the UTXOs it was important that a data structure was used such that the actual transaction
 object could be tied to the transaction that created that output. This meant making use of one of Java's HashMaps
 [\ref{lst:blockchainDefinition}]. Every time a transaction is processed by a node the outputs that are created 
-along with the ID of the transaction are appended to the UTXO map. After this the process transaction function 
+along with the ID of the transaction are appended to the UTXO map, after this the process transaction function 
 removes any transaction inputs that have been consumed in the process of the transaction.
 
 \begin{lstlisting}[language=java, float, caption={This figure shows the definitions for the blockchain and also 
@@ -795,7 +799,7 @@ building the Merkle tree structure.
 
 One technical challenge that needed to be overcome was how the Block class would organise all its transactions
 into the Merkle tree structure. This was implemented by first taking a copy of the list of transactions in the
-block to work on. Then, using a utility function, it would loop through the list and every two transactions it 
+block to work on. Then, using a utility function, it would loop through the list and every two transactions, it 
 adds the combined hash to a new list. This is repeated until only one hash is left which is known as the root 
 hash of the block. This would result in a structure identical to the one described previously in this paper
 [\ref{fig:merkle}].
@@ -810,16 +814,16 @@ significant time when nodes are traversing the blockchain to make sure it is val
 As one of the main aspects of this project is the security of the cryptocurrency, it is important to include
 thorough unit tests throughout the project to make sure that the features they are testing are working correctly.
 It is not only the unit tests that matter however, there are also tests that are run during normal functionality
-like the tests that are run when nodes are deciding how to handle incoming transactions from other nodes in the
+such as the tests that are run when nodes are deciding how to handle incoming transactions from other nodes in the
 network. This section covers how these tests were constructed and any challenges that had to be overcome in order
 to keep the network running.
 
 \subsection{Blockchain Tests}
 %Checking the blockchain is valid by going through each block hash by hash
 The main test used on the blockchain had the goal of making sure that the whole blockchain was valid. This meant
-ensuring every block in this particular blockchain had the correct hash and linked to the correct hash after it.
+ensuring every block in this particular blockchain had the correct hash and linked to the following hash in the next block.
 This was achieved in practice by looping over the whole blockchain and first calculating a new hash using the 
-transactions within for the current block and checking that it was equal to the hash that is saved in the 
+transactions within the current block and checking that it was equal to the hash that is saved in the 
 blockchain. This test would also run through and make sure that each block in the chain has the correct hash
 stored of the previous block in the chain ensuring continuity.
 
@@ -837,33 +841,36 @@ This test checks whether the transaction is a valid construction. This is essent
 correctly match up to previous outputs on the blockchain. This test achieves this by looping through each transaction
 input for this transaction and checking the parent transaction ID attribute for that input matches with a transaction
 on the current blockchain that produces a transaction output that matches. If no matching transaction is found
-then the transaction is disregarded from the block the node is building and not sent to any other nodes. This test
-carried out across the network stops the transaction from entering the blockchain.
+then the transaction is disregarded from the block the node is building and not sent to any other nodes. This test,
+carried out across the network, stops the transaction from entering the blockchain.
 
+%*** no question headings
 \subsubsection{Are Outputs Spent?}
 The second test is to remove the chance of users committing a double spending attack. This is done by checking
 that the outputs that are being consumed for this transaction have not already been spent. The test achieves this
-by running through the the blockchain and checking if any transactions are using the same transaction outputs 
+by running through the blockchain and checking if any transactions are using the same transaction outputs 
 as the current transaction is trying to use. If so the transaction is removed and not spread further through
 the network.
 
 \subsubsection{Has Transaction already been seen?}
-This one is simple as it simply runs through the existing transactions in the block it is building up and
-checks if the current transaction matches any of them. If they do then the transaction is disregarded from the
+This test is straightforward as it runs through the existing transactions in the block it is building up and
+checks if the current transaction matches any of them. If they do, the transaction is disregarded from the
 block and not sent to any other nodes.
 
 \section{Nearby Nodes Algorithm}
 %Nearby Nodes algorithm
+%topographically
+%nearby-nodes hyphonate
 One key aspect to the network is the process of node creation. As briefly discussed earlier in the paper, nodes
 do not carry an up to date list of all nodes in the network at all times. This would be bloated and unnecessary.
 Instead, nodes keep a small list of nodes that are topographically nearby on the network. In practice these nearby
-nodes tend to be nodes that are created within similar time frames as each other. When a node is created it is
+nodes tend to be nodes that are created within similar time frames of each other. When a node is created it is
 paired with an already existing node called a seed node. This way, every time a new node is created it can query
-its seed node to find new nodes on the network. This algorithm for building a nodes nearby nodes list is important
+its seed node to find new nodes on the network. This algorithm for building a nodes nearby-nodes list is important
 as if a node were to simply copy the nearby nodes list of its seed node then all nodes would be created with the
 same list and it would be impossible for transactions being flooded through the network to reach every node. Instead
 a recursive method is used. The algorithm sets up a loop to run until the node's nearby nodes list is full
-[\ref{alg:nearbyNodes}]. Each iteration it gets a random node in the seed node's nearby nodes list and checks if 
+[\ref{alg:nearbyNodes}]. With each iteration it gets a random node in the seed node's nearby nodes list and checks if 
 the current node already contains that node in its list. If so it ignores it and moves on. If it has not seen 
 that node then it is added to the list and the loop moves on to the next iteration. At the end it is important 
 that the node adds itself to its list of nearby nodes. This seems redundant but it is necessary in order for 
