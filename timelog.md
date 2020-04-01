@@ -227,3 +227,6 @@ Notes for background work/design
 1 hour adding tests to evaluation section
 2 hours finishing evaluation section
 2 hour formatting and adding appendix work
+
+1/04
+2 hours working on conclusion
