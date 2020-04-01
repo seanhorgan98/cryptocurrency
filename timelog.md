@@ -230,3 +230,5 @@ Notes for background work/design
 
 1/04
 2 hours working on conclusion
+1 hour formatting
+1 hour spell checking
