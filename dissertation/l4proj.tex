@@ -1534,11 +1534,42 @@ nodes to expire and be released from the network if they don't contribute to the
 
 \section{Test Code}
 As the tests are not included in the main class of the project as they conflicted with the test harness, they were implemented
-in a separate branch of the project. As such they are included here.
+in a separate branch of the project. As such they are included here. Each test is run separately, this is not the format they appeared
+in the class.
 
 \begin{lstlisting}[language=java, float=h
     , label=lst:testCode]
-    
+    //Initial transaction
+    Transaction testTransaction = walletList.get(1).sendFunds(walletList.get(2).publicKey, 10);
+
+    //Testing for tx already seen by node
+    Transaction testTransaction = new Transaction(null, walletList.get(2).publicKey,10, null, blockchain);
+    nodeList.get(0).floodTransaction(testTransaction);
+    nodeList.get(0).floodTransaction(testTransaction);
+
+
+    //Testing transaction already on chain
+    Transaction testTransaction = new Transaction(walletList.get(1).publicKey, walletList.get(2).publicKey, 10, null, blockchain);
+    Block testBlock = new Block(block1.hash);
+    testTransaction.transactionId = "test";
+    testBlock.addTransaction(testTransaction);
+    blockchain.addBlock(testBlock);
+    nodeList.get(0).floodTransaction(testTransaction);
+
+
+    //Testing chain validation
+    //Creation of first transaction
+    Transaction test3Transaction = new Transaction(walletList.get(1).publicKey, walletList.get(2).publicKey, 10, null, blockchain);
+    Block test3Block = new Block(block1.hash);
+    test3Transaction.transactionId = "test3";
+    test3Block.addTransaction(test3Transaction);
+    blockchain.addBlock(test3Block);
+
+    //Modifying that transactions value
+    test3Block.hash = "this is not a correct hash";
+
+    //Adding new block to see if it rejects the blockchain
+    walletList.get(3).sendFunds(walletList.get(4).publicKey, 6);
 \end{lstlisting}
 
 \section{Mining Test Results}
