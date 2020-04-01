@@ -2,10 +2,12 @@ package main;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 class Main {
     public static void main(String[] args) {
         System.out.println("\n---------OUTPUT------------");
+        final int TEST_LENGTH = 1;
 
         //Create Genesis Block
         Block genesisBlock = Block.buildGenesisBlock();
@@ -51,14 +53,25 @@ class Main {
         //Necessary as coin creation transactions are deliberately not added to the blockchain automatically
         blockchain.addBlock(block1);
 
+        Random r = new Random();
+        r.setSeed(2184253);
+        for(int i = 0; i < TEST_LENGTH; i++){
+            //Create a transaction from two random wallets
+            int wallet1 = r.nextInt(10);
+            int wallet2 = r.nextInt(10);
+            while(wallet2 == wallet1){
+                wallet2 = r.nextInt(10);
+            }
+            float value = r.nextInt(10);
+            walletList.get(wallet1).sendFunds(walletList.get(wallet2).publicKey, value);
+        }
 
-        walletList.get(1).sendFunds(walletList.get(2).publicKey, 5);
-        walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
+        // walletList.get(1).sendFunds(walletList.get(2).publicKey, 5);
+        // walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
 
-        walletList.get(1).sendFunds(walletList.get(3).publicKey, 50);
-        walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
+        // walletList.get(1).sendFunds(walletList.get(3).publicKey, 50);
+        // walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
 
-        System.out.println("WALLET 3 BALANCE: " + walletList.get(3).getBalance());
 
 
         
