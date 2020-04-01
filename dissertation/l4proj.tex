@@ -1021,42 +1021,6 @@ be released to the public. Regardless, it was important to keep the project easy
 and also helped make the project easier to develop. As such, each class and all functions were labeled clearly
 and laid out in logical order to make navigation around the project easy.
 
-
-\clearpage
-
-\subsection{Equations}
-
-Equations should be typeset correctly and precisely. Make sure you get parenthesis sizing correct, and punctuate equations correctly 
-(the comma is important and goes \textit{inside} the equation block). Explain any symbols used clearly if not defined earlier. 
-
-For example, we might define:
-\begin{equation}
-    \hat{f}(\xi) = \frac{1}{2}\left[ \int_{-\infty}^{\infty} f(x) e^{2\pi i x \xi} \right],
-\end{equation}    
-where $\hat{f}(\xi)$ is the Fourier transform of the time domain signal $f(x)$.
-
-\subsection{Tables}
-
-If you need to include tables, like Table \ref{tab:operators}, use a tool like https://www.tablesgenerator.com/ to generate the table as it is
-extremely tedious otherwise. 
-
-\begin{table}[]
-    \caption{The standard table of operators in Python, along with their functional equivalents from the \texttt{operator} package. Note that table
-    captions go above the table, not below. Do not add additional rules/lines to tables. }\label{tab:operators}
-    %\tt 
-    \rowcolors{2}{}{gray!3}
-    \begin{tabular}{@{}lll@{}}
-    %\toprule
-    \textbf{Operation}    & \textbf{Syntax}                & \textbf{Function}                            \\ %\midrule % optional rule for header
-    Addition              & \texttt{a + b}                          & \texttt{add(a, b)}                                    \\
-    Concatenation         & \texttt{seq1 + seq2}                    & \texttt{concat(seq1, seq2)}                           \\
-    Containment Test      & \texttt{obj in seq}                     & \texttt{contains(seq, obj)}                           \\
-    Division              & \texttt{a / b}                          & \texttt{div(a, b) }  \\
-    % \bottomrule
-    \end{tabular}
-    \end{table}
-\subsection{Code}
-
 %==================================================================================================================================
 \chapter{Evaluation} 
 This section presents the methods of evaluation that were conducted on this project. This will show how the effective the
@@ -1107,10 +1071,6 @@ Finally it checks if the transaction has already been seen by this node [\ref{ls
 verify that the transaction that is being checked is not a double spend attack. This will be presented in this 
 evaluation by providing an incorrect transaction to a node and showing how the node responds.
 
-In order to evaluate how this project copes with double spend attacks transactions that attempt to expoit the system
-will be created and fed to node. Then the ouput of the node will be recorded to show how it responds to the fraudulent
-transacations.
-
 %Show tests
 \begin{lstlisting}[language=java, float=h, caption=
     {
@@ -1145,7 +1105,7 @@ transacations.
     }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, float=h, caption=
+\begin{lstlisting}[language=java, float=!t, caption=
     {
         This shows the third check performed by nodes to see if the transaction has already been encountered by
         this node and can therefore be disgarded.
@@ -1161,6 +1121,11 @@ transacations.
     }
 \end{lstlisting}
 
+In order to evaluate how this project copes with double spend attacks transactions that attempt to expoit the system
+will be created and fed to node. Then the ouput of the node will be recorded to show how it responds to the fraudulent
+transacations.
+
+
 
 \subsection{Results}
 %Show invalid transactions
@@ -1175,7 +1140,9 @@ a valid transaction in every other way.
     \includegraphics[width=1\linewidth]{images/check1.png}    
     \caption
     {
-.
+        This figure shows the program output when running the test to see if a transaction has already been included
+        on the blockchain. This shows that program recognised this and did not proceed to adding the transaction to a 
+        block.
     }
     % use the notation fig:name to cross reference a figure
     \label{fig:check1} 
@@ -1194,7 +1161,9 @@ transaction attempting to spend outputs that have already been consumed.
     \includegraphics[width=1\linewidth]{images/inputsspent.png}    
     \caption
     {
-.
+        This figure shows the program output when attempting to create a transaction that uses transaction inputs
+        that have already been consumed by a different transaction. The node scans the blockchain and disregards the
+        invalid transaction and does not flood the transaction through the network.
     }
     % use the notation fig:name to cross reference a figure
     \label{fig:inputsspent}
@@ -1215,7 +1184,8 @@ should trigger the test to fail.
     \includegraphics[width=1\linewidth]{images/seenbynode.png}    
     \caption
     {
-.
+        This figure shows the program output when running the test designed to add a transaction to a node more than
+        once. The node scans through its list of transactions and catches the duplicate and disgards the transaction.
     }
     % use the notation fig:name to cross reference a figure
     \label{fig:seenbynode} 
@@ -1228,6 +1198,22 @@ transaction was caught and not flooded to any other nodes or added to the block 
 \subsection{Analysis and conclusion}
 %Nature of scope means that double spending may occur as number of transactions are low and so are nodes and blocks
 %This is the same as bitcoin etc though and would be correct on a larger scale.
+The results from these tests show that the blockchain is resistant to these single attempts to induce a double spend
+attack. The first test shows how if someone were to add a transaction to the blockchain more than once they would
+be stopped by the node evaluating the transaction before it is added to any blocks. The second test shows how if
+someone were trying to profit by using transaction inputs that have already been consumed, maybe to dublicate a
+transaction they have already made, they are also stopped by the node evaluating the transaction. The final test
+shows how if someone tried to create a transaction and then before the transaction was added to a block, add the same
+exact transaction to the same block in an attempt to duplicate the transaction, they would be stopped by the node.
+
+These tests show that the network is secure against most double-spend attacks however the network is succeptable
+along with most real cryptocurrencies to double spend exploitation in fringe cases. This however is a design feature
+that is common in more real cryptocurrencies like Bitcoin (REFERENCE) as the scale would need to be very small for these
+cases to occur. The scale of this project does mean that sometimes transactions can be created and then other transacations
+can be created that use the same inputs before they are consumed by the first transaction. This issue is nullified 
+at higher mining difficulty times. This is a non-factor in real world cryptocurrencies as mining is in the order of 
+minutes not milliseconds however this project requires fast mining times as the test harness is being run on a singular
+machine rather than many nodes with more collective compuational power.
 
 \section{Does the cryptocurrency prevent Sybil attacks?}
 A sybil attack is the act of taking over a system by forging multipe identities (REFERENCE). The name comes from a book
@@ -1280,13 +1266,25 @@ required to mine a block.
 
 
 \subsection{Results}
+The results from these tests are displayed below [\ref{fig:avgBar}] and [\ref{fig:fulldatascatter}]. For each 
+difficulty setting from 1 to 5, 20 data points were taken measuring the time elapsed during the mining of
+a block. The block in question contained 10 transactions sending 100 coins to 10 different wallets. This block
+remained the same for each measurement. Each measurement was run on the same laptop with the same environment
+set up and no other programs running.
+
+The first graph shows the mean of the 20 data points measured for each difficulty and how they increase relative
+to the increase in difficulty level.
+
+The second graph shows the full picture including all 100 total data points as a scatter plot. There is a logarithmic
+scale on the Y axis to give a clear picture of the different scales for each difficulty.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=1\linewidth]{images/check2.png}    
     \caption
     {
-.
+        This figure shows the program output during normal process when a block is being mined. Here the transaction
+        details for the block, the block hash that was mined, and the time taken to complete the mining are displayed.
     }
     % use the notation fig:name to cross reference a figure
     \label{fig:check2} 
@@ -1297,7 +1295,10 @@ required to mine a block.
     \includegraphics[width=1\linewidth]{images/avgBar.png}    
     \caption
     {
-.
+        This bar chart shows the average time elapsed in milliseconds of the block mining function for one block.
+        As the difficulty increases the time elapsed grows exponentially from less than 1ms to over 1200ms. This
+        demonstrates how the mining process can demonstrate different levels of computational power expended by
+        nodes.
     }
     % use the notation fig:name to cross reference a figure
     \label{fig:avgBar} 
@@ -1308,13 +1309,29 @@ required to mine a block.
     \includegraphics[width=1\linewidth]{images/fulldatascatter.png}    
     \caption
     {
-.
+        This scatter graph presents the full data set for each difficulty setting showing how long in milliseconds
+        the mining process elapsed. The logarithmic scale for time elasped demonstrates clearly how the difficulty
+        increasing causes the time elapsed to grow exponentially. This shows how the difficulty increasing causes
+        nodes to expend exponentially more computational power in order to add blocks to the blockchain.
     }
     % use the notation fig:name to cross reference a figure
     \label{fig:fulldatascatter} 
 \end{figure}
 
 \subsection{Analysis and conclusion}
+The results from testing the mining system of the show how the mining system developed for the project effectivly
+demonstrates the expendature of computational power. This is clear by the increase in time elapsed increasing as the
+control vairable of mining difficulty is increased. This means that the progam is effective at preventing a sybil attack
+as in order to influence the blockchain an attacker would have to expend computation power and time in order to complete
+the proof of work stage.
+
+The results show only the change in time elapsed from difficulties one to five however it is safe to assume that the
+exponential increase would contiue as the difficulty increases which would make it easy to adjust depending on the
+size of the network much like how Bitcoin and other cryptocurrencies work (REFERENCE).
+
+The second graph [\ref{fig:fulldatascatter}] has a logarithmic scale for time elasped better showing how the 
+time increases proportionally relative to the difficulty.
+
 
 \section{Is the blockchain secure?}
 This final evaulation section is based on is demonstrating whether the blockchain can adapt and resist an attempt to 
@@ -1337,42 +1354,89 @@ added to the Transaction class which will allow the changing of the value of a t
 blockchain and so will cause nodes in the future to abandon this blockchchain infavour of a valid chain.
 
 \subsection{Results}
+The results of the test can be seen in [\ref{fig:check3}] where the output log from the program is shown. This shows
+how the network reacts to a block being altered after it is added to the blockchain.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=1\linewidth]{images/check3.png}    
     \caption
     {
-.
+        This figure shows the program output when running the test designed to alter a block after it has been added
+        to the blockchain. It details the first valid transaction and then it shows when a second transaction is being
+        added the node recognises that the blockchain is no longer valid. The node stops what it is doing and looks
+        to switch to a different valid blockchain.
     }
     % use the notation fig:name to cross reference a figure
     \label{fig:check3} 
 \end{figure}
 
 \subsection{Analysis and conclusion}
+The results from this test show that the network is capable of withstanding such an attack attempting to alter previous
+attributes like transactions or blocks on the blockchain. The blockchain does not prevent the actual attempt to alter
+previous tranasctions as this would be out of scope and generally not necessary. Instead the network is able to recover
+by checking the blockchain is valid before any changes are made. This is where the node recognises the blockchain is
+incorrect and decides to scan its nearby neighbors for an alternate blockchain to try to append to. This is the safe
+option and ensures that the blockchain is immutable and transactions cannot be changed once added to it. Within the
+scope of this project these tests are sufficient to label the blockchain as secure and this goal as achieved.
+
 
 \section{Requirements Validation}
 
+\subsubsection{Tamperproof Ledger:}
+As demonstrated by the third test in the evaluation, the blockchain that was created functioned correctly and the nodes
+prevented any attempts to alter that blockchain from affecting the network. The blockchain was distributed as a version
+was held by each node on the network and the nodes collectivly maintain a correct copy. This satisfies the requirement of creating a
+tamper-proof distrobuted ledger.
+\subsubsection{Consensus Mechanism:}
+The consensus mechanism created for this project allows for nodes to maintain a list of nearby nodes in order to send
+new valid transactions they recieve. This allows transactions to flood through the whole network and for all nodes to
+work on adding transactions to the blockchains. This implementation satisfies the requirement of a consensus mechanism.
+%SECURE consensus mechanism
+\subsubsection{Proof of Work}
+The proof of work system implemented in this project is seen in the second test of the evaluation to be effective. It
+correctly loops through different block hashs until a hash is found within a target range. This system effectivly provided a way for nodes to present
+proof that they have expended compuational power in order to add to the blockchain and maintain the honesty of the 
+network.
+\subsubsection{Mining Incentive \& difficulty}
+The difficulty of the mining was determined by a variable which changed the target range required for nodes to hash
+blocks into. This was condensed into a single variable and made it easy to modulate to control the time required to 
+mine a block. This satisfies the requirement of adding a difficulty controller to the mining mechanism. Unfortunately
+the program does not include the functionality for sending incentive back to nodes that mine a block. As a result the
+total amount of coins in the network would never change unless new coins are manually created. In a real world scenario
+this would collapse the currency as there would be no incentive to mine blocks and therefor the blockchain would either
+not be appended to or run the risk of malicious nodes adding whatever transactions they wanted to the blockchain. This
+means the requirement for mining incentives was not met.
+\subsubsection{Merkle Tree}
+In this implementation the transactions inside blocks were made to be stored using a Merkle tree structure meaning
+all transactions were stored as their hash values as leaf nodes and ever branch node in the tree was the combined hash
+of its two children. This provided an easy way for nodes to scan through the block and make sure that no transactions
+had been altered as if there had been any alterations then the root hash would have to have been changed. This means
+that the requirement of storing transactions within blocks in the Merkle tree structure was satisfied.
+\subsubsection{Currency Splitting}
+
+\subsubsection{Storage Improvements}
+
 \section{Limitaitons}
+A limitation that the project had was the issues with the scale of the project. The nature of cryptocurrencies is
+that of a wide scale with many users and nodes ensuring the quality of the system. Having the test harness of this
+project being run on a singular machine made having difficult and time consuming mining impossible. This lead to some
+double spending issues when using small amounts of nodes and transaction. This is not a design flaw and had the project
+been run on a powerful machine or the test harness being run on a network of machines it would work correctly.
 %Block Size Problem (Double Spending at low user numbers)
 
 %==================================================================================================================================
 \chapter{Conclusion}    
-Summarise the whole project for a lazy reader who didn't read the rest (e.g. a prize-awarding committee).
-\section{Guidance}
-\begin{itemize}
-    \item
-        Summarise briefly and fairly.
-    \item
-        You should be addressing the general problem you introduced in the
-        Introduction.        
-    \item
-        Include summary of concrete results (``the new compiler ran 2x
-        faster'')
-    \item
-        Indicate what future work could be done, but remember: \textbf{you
-        won't get credit for things you haven't done}.
-\end{itemize}
+\section{Summary}
+
+
+%Summarise the whole project for a lazy reader who didn't read the rest (e.g. a prize-awarding committee).
+%You should be addressing the general problem you introduced in the
+%Introduction.        
+%Include summary of concrete results (``the new compiler ran 2x
+%faster'')
+%Indicate what future work could be done, but remember: you
+%won't get credit for things you haven't done.
 
 \section{Future Work}
 
@@ -1386,26 +1450,50 @@ Summarise the whole project for a lazy reader who didn't read the rest (e.g. a p
 
 \chapter{Appendices}
 
-Typical inclusions in the appendices are:
+\section{Test Code}
+As the tests are not included in the main class of the project as they conflicted with the test harness, they were implemented
+in a separate branch of the project. As such they are included here.
 
-\begin{itemize}
-\item
-  Copies of ethics approvals (required if obtained)
-\item
-  Copies of questionnaires etc. used to gather data from subjects.
-\item
-  Extensive tables or figures that are too bulky to fit in the main body of
-  the report, particularly ones that are repetitive and summarised in the body.
+\begin{lstlisting}[language=java, float=h
+    , label=lst:testCode]
+    
+\end{lstlisting}
 
-\item Outline of the source code (e.g. directory structure), or other architecture documentation like class diagrams.
-
-\item User manuals, and any guides to starting/running the software.
-
-\end{itemize}
-
-\textbf{Don't include your source code in the appendices}. It will be
-submitted separately.
-
+\section{Mining Test Results}
+\begin{table}[!ht]
+    \centering
+    \rowcolors{2}{}{gray!3}
+    \begin{tabular}{ccccc}
+    \hline
+    \multicolumn{5}{c}{\textbf{Difficulty Setting}}                \\
+    \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} \\ \hline
+    1.300      & 53         & 45         & 180        & 2845       \\
+    1.922      & 7          & 18         & 486        & 400        \\
+    0.686      & 5          & 30         & 373        & 708        \\
+    0.238      & 12         & 73         & 91         & 4545       \\
+    1.249      & 20         & 70         & 308        & 1185       \\
+    0.563      & 11         & 59         & 185        & 424        \\
+    2.489      & 11         & 112        & 374        & 379        \\
+    2.415      & 27         & 95         & 297        & 258        \\
+    0.491      & 5          & 60         & 236        & 761        \\
+    1.052      & 6          & 96         & 351        & 403        \\
+    1.908      & 1          & 81         & 46         & 1769       \\
+    0.739      & 3          & 69         & 258        & 640        \\
+    1.073      & 10         & 41         & 20         & 2046       \\
+    1.082      & 5          & 3          & 240        & 479        \\
+    0.332      & 4          & 91         & 423        & 2681       \\
+    1.614      & 2          & 129        & 231        & 386        \\
+    0.736      & 18         & 17         & 290        & 1293       \\
+    1.478      & 15         & 72         & 81         & 1662       \\
+    0.805      & 8          & 69         & 406        & 2078       \\
+    1.873      & 6          & 32         & 185        & 753       
+    \end{tabular}
+    \vspace{1cm}
+    \caption{
+        The full data for elapsed time to mine for different difficulty settings.
+    }
+    \label{tab:mining}
+\end{table}
 \end{appendices}
 
 %==================================================================================================================================
