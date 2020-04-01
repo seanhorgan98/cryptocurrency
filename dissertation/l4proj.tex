@@ -14,11 +14,13 @@
 \begin{abstract}
     \vskip 0.5em
     Over the past decade, cryptocurrency has become a rapidly growing area of interest as it aims to provide a 
-    decentrilised alternative to regular fiat currencies. The goal of this project is to implement a peer-based 
+    decentralised alternative to regular fiat currencies. The goal of this project is to implement a peer-based 
     cryptocurrency. It is designed to include a distributed, tamper-proof ledger, a consensus mechanism 
     for distributing transactions to all participating nodes, a mining system, and wallets for sending 
     the currency between different addresses. It also includes a test harness so that a number of nodes 
-    can be created and run on a single computer in order to test the system.
+    can be created and run on a single computer in order to test the system. Several tests are run in order to
+    test the project's resistance to double spend attacks, Sybil attacks, and other attacks on the blockchain. 
+    Thees tests prove that the cryptocurrency created is secure.
 \end{abstract}
 
 %==============================================================================
@@ -96,7 +98,7 @@ a limit on the total amount of the currency available.
 
 \section{Goals}
 The goal of this project is to create a secure and robust cryptocurrency from scratch. There are several key aspects
-to the project that must be met in order to demonstrate a woking cryptocurrency.
+to the project that must be met in order to demonstrate a working cryptocurrency.
 
 The currency will be based around
 a distributed ledger that is resistant to retroactive changes. It will use a concept know as proof of work,
@@ -108,13 +110,13 @@ is trying to add are valid and acceptable.
 This cryptocurrency will include wallets, allowing users to send any of their currency to another
 wallet using its public key address. This will be shown in the test harness where a number of nodes and wallets 
 will be created to simulate a populated network of users. A large number of emulated users will be required because on
-a smaller scale cryptocurrencies do not work perfectly and are succeptable to double-spending attacks where users
+a smaller scale cryptocurrencies do not work perfectly and are susceptible to double-spending attacks where users
 can spend more money than they own. The test harness should simulate a large active network by randomly creating
 transactions from user to user to then be added to the blockchain once the nodes have shown proof of work using 
 the mining mechanism.
 
 \section{Dissertation Outline}
-The following dissertaiton is split into seven chapters as described below:
+The following dissertation is split into seven chapters as described below:
 \begin{itemize}
     \item
         \textbf{Chapter 2} gives insight into the original Bitcoin paper and other features of cryptocurrencies
@@ -148,13 +150,13 @@ in the completion of this project.
 The first cryptocurrency to be created was Bitcoin. It was first presented in 2008 by Satoshi Nakamoto in the Bitcoin White Paper
 titled "Bitcoin: A Peer-to-Peer Electronic Cash System". The concise nine page article defines Nakamoto's method of preventing
 double-spending attacks in a peer-to-peer currency without the need for a third party like a financial institution to 
-act as a middle man. The creater of Bitcoin wanted to avoid the use of a centralised mint as it can be seen as a single 
+act as a middle man. The creator of Bitcoin wanted to avoid the use of a centralised mint as it can be seen as a single 
 point of failure through which every transaction must be routed. This places the whole trust of the network on the middle 
 man and the company running this mint.  Bitcoin avoids the need for a centralised middleman utilising modern cryptographic 
 methods and technologies. This paper outlines the requirements for a functional cryptocurrency and as such was instrumental 
 in guiding this project.
 
-Below the main funtionality described in the Bitcoin white paper will be presented.
+Below the main functionality described in the Bitcoin white paper will be presented.
 
 
 \subsection{Transactions}
@@ -167,14 +169,14 @@ is confirmed as valid.
 
 One issue with this method is that the recipient can validate that the transaction is correct but it cannot ensure
 that the sender is not double-spending the coin. This means the recipient cannot prevent the sender from also sending the 
-same coin to another user. As Bitcoin was inteded to be a peer-to-peer currency with no centralised mint validating
+same coin to another user. As Bitcoin was intended to be a peer-to-peer currency with no centralised mint validating
 all transactions and making sure there are no double spends, it is vital that there be some cryptographic method of
 preventing these exploits.
 
 
 \subsection{Blockchain}
 The way Bitcoin achieves this validation without the need for a middleman is through the invention of the blockchain.
-The blockchain is described as a timestamp server which works by taking the hash of a block of data and publically
+The blockchain is described as a timestamp server which works by taking the hash of a block of data and publicly
 announcing this hash. This proves that the data exists at that time. Then the next block of data can include the
 previous block's hash in it's own hash proving that both of these blocks of data existed at that time. This creates 
 a chain of blocks which prove the order and time of creation.
@@ -191,8 +193,8 @@ In order for the whole system of users to work, all nodes must agree on what is 
 which blocks of transactions are to be added to the blockchain every time. This is implemented by Bitcoin using a proof of
 work mechanism. This system, also known as mining, means that in order for a node to add a block to the blockchain it
 must find a value that, after being hashed, results in a number starting with a certain amount of '0's. This is 
-effectivly setting a computational barrier to appending a block to the blockchain. This means that a certain amount of
-CPU power is neseccary to append to the blockchain. This adds security to the system as it prevents singular malicious
+effectively setting a computational barrier to appending a block to the blockchain. This means that a certain amount of
+CPU power is necessary to append to the blockchain. This adds security to the system as it prevents singular malicious
 users from hording IP addresses in order to take control of the network as theoretically the majority of computational
 power in the network will be from benevolent users.
 
@@ -201,12 +203,12 @@ It is easy for the nodes to decide which blockchain to add their blocks to becau
 determining which blocks are added to the blockchain. They simply choose the longest blockchain as this will be
 the blockchain with the most CPU power invested in it. This is secure because if an attacker were trying to alter a 
 previous block they would also have to redo all the proof of work completed for every block after that in the chain.
-It is infeasable as the attacker would have to complete the proof of work for these blocks extremely quickly in order
+It is infeasible as the attacker would have to complete the proof of work for these blocks extremely quickly in order
 to outpace the community and become the longest chain before other nodes would start to use that blockchain.
 
 
 \subsection{Blocks}
-The final point relevent to this project mentioned in the Bitcoin white paper is the way that Bitcoin aimed to store
+The final point relevant to this project mentioned in the Bitcoin white paper is the way that Bitcoin aimed to store
 the transactions within the blocks in the blockchain. A simple method of storing these transactions in the block may
 just be an unordered list. This would work as each transaction is unrelated to the other transactions in the block in
 every way except perhaps the time it took place. This storage solution can be improved though by using a data structure
@@ -217,9 +219,9 @@ This means that in order for a node to check that a block is valid it only needs
 if there were any altered transactions within the block that would have an avalanche effect up through the hashes
 ultimately changing the root hash of the whole block.
 
-Another benifit that the paper mentions of storing the transaction within the block this way is that it can lessen
+Another benefit that the paper mentions of storing the transaction within the block this way is that it can lessen
 the storage space needed to store each block. As the blocks can be validated using only their main hash. Nodes do 
-not need to store every single transaction in the blockchain in order to confirm transactions relevent to itself.
+not need to store every single transaction in the blockchain in order to confirm transactions relevant to itself.
 Instead it can just store the main block hashes and save a large amount of storage. As Bitcoin becomes more and
 more popular this is a significant storage space saving as the number of transactions grows larger and larger.
 
@@ -238,48 +240,47 @@ more popular this is a significant storage space saving as the number of transac
 
 \section{Bitcoin and Cryptocurrency Technologies}
 A large source of the information used to plan this project and choose the relevant technologies to include was the
-book \emph{Bitcoin and Cryptocurrency Technologies} by Narayanan et al. This provided a more in depth disscussion
+book \emph{Bitcoin and Cryptocurrency Technologies} by Narayanan et al. This provided a more in depth discussion
 about the intricacies of the structures needed for the project. The book also gave good information about cryptocurrencies
 that were not Bitcoin which gave a bigger picture and provided options for doing things differently or ways to 
 exclude areas of bitcoin that would not be relevant in the project.
 
 \subsection{Flooding}
-%**
 One of the key topics described in the book was the way for the nodes in the network to reach a consensus. This happens
-multiple times during the running of a network. *** Once when nodes must identify and decide on which blockchain to use when
-alternates appear. This is described by the Bitcoin white paper by picking the longest chain and distrobuting this to 
-other nodes. It also happens when a new transaction occurs between two wallets, the transaction must be sent to all
-nodes in order for the nodes to include it in their blocks so they can start mining the blocks to validate the transaction 
-on the blockchain.
+multiple times during the running of a network. This can happen in many different scenarios like when 
+nodes must identify and decide on which blockchain to use when alternates appear. This is described by the Bitcoin white 
+paper by picking the longest chain and distributing this to other nodes. It also happens when a new transaction occurs 
+between two wallets, the transaction must be sent to all nodes in order for the nodes to include it in their blocks so 
+they can start mining the blocks to validate the transaction on the blockchain.
 
 This method of flooding is explained in the book by showing that every node has a list of nearby nodes that is created
-when it joins the network. Whenever a node recieves a transaction it first performs some checks and if it passes the 
-checks, the transaction is propogated to all nodes on its nearby nodes list. First, the node checks if the transaction is
+when it joins the network. Whenever a node receives a transaction it first performs some checks and if it passes the 
+checks, the transaction is propagated to all nodes on its nearby nodes list. First, the node checks if the transaction is
 valid. It runs through the blockchain and checks that the funds the sender is trying to send actually belong to the sender.
 Next, the node checks that the coins are not being double-spent, meaning the same funds have not already been sent to another
-address perviously. Finally, the node checks if it has already seen the transaction and if it has, it just disgards this new
+address previously. Finally, the node checks if it has already seen the transaction and if it has, it just discards this new
 transaction as the node will already have added it to a block. If the transaction passes all these test it is sent to the
 nearby nodes where it is put through the same tests until eventually it is spread to every node in the network or included
 in a block on the blockchain.
 
 \subsection{Mining}
 One functionality described in the book is how mining changes over time. When a node mines a block that is included in the
-blockchain they recieve a small reward which is an incentive to keep the blockchain updated. As explained perviously,
+blockchain they receive a small reward which is an incentive to keep the blockchain updated. As explained previously,
 mining is the process of solving a hash calculation to result in a number starting with a certain number of '0's. The number
 of 0s or target range, is changed over time. In Bitcoin, once every 2016 blocks that are mined the difficulty of mining will be
 altered. The way that this difficulty is altered depends on how quickly blocks were mined in the previous 2016 blocks. This
-is done in order to maintain a consistant mining speed. The faster the nodes are mining blocks, the harder the difficulty
+is done in order to maintain a consistent mining speed. The faster the nodes are mining blocks, the harder the difficulty
 will subsequently become. As the network of users increases, the processing power increases and so the mining will happen
 faster. This is also offset as over time the size of the incentive reward for successfully mining a block is lowered.
 This reward system is the only way new coins are created and because of this there is a maximum to the total amount of coins
-that will be in the system. This effectivly makes Bitcoin immune to inflation.
+that will be in the system. This effectively makes Bitcoin immune to inflation.
 
 The way bitcoin automatically responds to changes in the amount of processing power and size of the network is impressive,
-however will not be a useful addition to the project. As this project will run at a relativly small scale over a small
+however will not be a useful addition to the project. As this project will run at a relatively small scale over a small
 time span, it would not be utilised and would be unnecessary to include this feature.
 
 \subsection{Bitcoin scripting}
-Another major part of blockchain that the book describes is the small scripting languague that was invented specifically for
+Another major part of blockchain that the book describes is the small scripting language that was invented specifically for
 transactions which helps with the verification of transfers. This simple bitcoin scripting language is used
 by nodes when mining blocks to verify that all transactions in the block are valid. Every transaction in Bitcoin is
 sent with a script, most often instructing the node to compute the inputs of this transaction and the specified outputs of
@@ -292,7 +293,7 @@ in the project would be unnecessary as there would only be one script needed and
 %==================================================================================================================================
 \chapter{Analysis/Requirements}
 In this section we outline the exact nature of the project and how we gathered these requirements in order to 
-complete the goals listed previously. We also discuss any functionality or features that have deliberatley been
+complete the goals listed previously. We also discuss any functionality or features that have deliberately been
 left out of scope.
 
 In this project the MoSCow method was used in order to prioritise the features so that the most important attributes
@@ -300,8 +301,8 @@ were included and some of the less important ones could be left to the end of th
 time to spare.
 
 \section{Functional Requirements}
-Functional requirements listed here are features that must be included in the project in order for a woking,
-useable cryptocurrency to be created. Without these requirements being met it would be impossible to carry out any
+Functional requirements listed here are features that must be included in the project in order for a working,
+usable cryptocurrency to be created. Without these requirements being met it would be impossible to carry out any
 useful form of evaluation.
 
 \subsection{Must have}
@@ -315,7 +316,7 @@ useful form of evaluation.
         and decide which transactions to include on the blockchain. They must be able to circulate each transaction once
         it occurs and flood it to other nodes on the network.
     
-    \item Before blocks can be added to the blockchain it is important to inculde proof of work so that the integrity of the 
+    \item Before blocks can be added to the blockchain it is important to include proof of work so that the integrity of the 
         networks blockchain can be maintained and guided by the processing power of the whole network and not a small minority
         of harmful nodes trying to take over.
 \end{itemize}
@@ -324,8 +325,8 @@ useful form of evaluation.
 \begin{itemize}
     \item A feature that can help with the smooth running of the network is an incentive for nodes to mine blocks. Without this there
     is no reason for nodes to mine blocks and add to the blockchain. This is necessary as there needs to be a majority of 
-    honest nodes othewise it is easy for malicious nodes to take control of the blockchain and can then add any blocks with
-    which ever transactions they would like to the blockchain wether they are valid or not.
+    honest nodes otherwise it is easy for malicious nodes to take control of the blockchain and can then add any blocks with
+    which ever transactions they would like to the blockchain whether they are valid or not.
 \end{itemize}
 
 
@@ -339,7 +340,7 @@ useful form of evaluation.
 
 
 \section{Non-Functional Requirements}
-Non-functional requiremnts are features that if included will improve the way the cryptocurrency operates by increasing
+Non-functional requirements are features that if included will improve the way the cryptocurrency operates by increasing
 speed or lowering the storage space required. These features are not imperative to the operating of the cryptocurrency
 but would bring the project closer to what might be used in current cryptocurrencies in the world at the moment.
 
@@ -357,7 +358,7 @@ but would bring the project closer to what might be used in current cryptocurren
     \item The cryptocurrency should have the ability to split the balance of wallets such that if you send an amount but you only
     have an increment of the currency larger than that amount then you should be sent back the value that you overpaid by.
     For example if you start with 10 coins and you want to send 3 to another wallet you should be able to send your 10 coins
-    and recieve 7 back as overpay.    
+    and receive 7 back as overpay.    
 \end{itemize}
 
 \subsection{Could have}
@@ -369,27 +370,27 @@ but would bring the project closer to what might be used in current cryptocurren
     by only storing each blocks root hash.
 \end{itemize}
 
-\section{Chosen Limitaions}
+\section{Chosen Limitations}
 In this section some of the limitations that have been placed on the project which would not help demonstrate the 
 primary purpose of the project are presented.
 \begin{itemize}
     \item One feature that has been omitted is the concept of scripting. In Bitcoin, every transaction is sent
-        with a short piece of code writen in the Bitcoin scripting language. This serves the function of allowing 
+        with a short piece of code written in the Bitcoin scripting language. This serves the function of allowing 
         different forms of transactions like ESCROW or multi user transactions. While useful in the functionality of
-        Bitcoin, this feature is not necessary in our implemtation of a cryptocurrency as there will only be a need
+        Bitcoin, this feature is not necessary in our implementation of a cryptocurrency as there will only be a need
         for one type of transaction.
     \item Another aspect chosen to exclude is the way in which nodes work. In real cryptocurrencies if a node
         has not been active in mining or creating transactions, after a specified amount of time the node will expire
-        meaning other nearby nodes will cease to send transactions to this node. This effectivly removes the node from
+        meaning other nearby nodes will cease to send transactions to this node. This effectively removes the node from
         the network. This functionality is useful in keeping the list of nodes exclusive to active nodes and saves
         collective processing power for the whole network. In the project's implementation this would be unnecessary as a fixed
-        number of nodes will be created for demonstration perposes.
+        number of nodes will be created for demonstration purposes.
 \end{itemize}
 
 %==================================================================================================================================
 \chapter{Design}
 In this section the decisions that were made when designing the project in order to meet the requirements
-that have been laid out in the previous section are disscussed. The discussion will include the approach taken when
+that have been laid out in the previous section are discussed. The discussion will include the approach taken when
 choosing one particular design instead of another and why those choices were made.
 
 \section{Overview}
@@ -410,7 +411,7 @@ recieved and also contain the necessary information such as the amount of curren
 In order for a user to send some currency to another user they first have to have a sufficient amount themselves. The
 way this condition was enforced was through the use of Transaction Inputs and Outputs. When a transaction is
 sent, the value of that transaction (amount of currency it is attempting to send), is a collection of inputs. These inputs
-are made up of the outputs of previous transactions that have been addresed to the user. This means that the process of
+are made up of the outputs of previous transactions that have been addressed to the user. This means that the process of
 checking a user's balance would involve going through the blockchain adding up all the transaction outputs that
 are addressed to that particular user and not already spent. This concept will be explained in more detail in the Blockchain section.
 
@@ -421,7 +422,7 @@ are addressed to that particular user and not already spent. This concept will b
 
     \caption{
         This diagram shows the process of transactions. Transactions require inputs to send value. These inputs come from
-        the outputs of previous transactions. These transactions then produce more transaction outputs which conntinue
+        the outputs of previous transactions. These transactions then produce more transaction outputs which continue
         the chain. This is the process Bitcoin uses and is the same one that will be used in this project.
     }
 
@@ -449,8 +450,8 @@ running the risk of double spend attacks. This is covered in more detail in the 
 
 %Overpay
 \subsection{Overpay}
-In a real environment it is common that the ammount a user is trying to send is not equal to the value of one of
-the transactions they have recieved in the past. For example, if a user recieves a transaction of 10 it is likely
+In a real environment it is common that the amount a user is trying to send is not equal to the value of one of
+the transactions they have received in the past. For example, if a user receives a transaction of 10 it is likely
 that the next time they want to pay someone they may want to only spend 5. This issue is solved by the concept of
 overpay. In this design, when a user is sending a value to a recipient which is not equal to the transaction
 input they are expending, the transaction processing creates two transaction outputs. The first sends the value
@@ -471,7 +472,7 @@ minted.
 
 \section{Blockchain}
 The second major feature of the project to design is the Blockchain. This chain of blocks needs to be robust in
-the sense that a malicious user cannot benidit by altering any previous transactions in the ledger. It must
+the sense that a malicious user cannot benefit by altering any previous transactions in the ledger. It must
 also be an accurate ledger containing every transaction exchanged to date. The way this blockchain was created was
 by first collating a group of transactions into blocks. Then each block would create a signature hash which would
 be a combination of all the transactions in the block. Then, in order to create an irreversible and immutable chain
@@ -502,9 +503,9 @@ are addressed to them. If the transactions are not tracked by removing transacti
 user may be able to spend more than they own using double spending attacks.
 
 This leads to the concept of an Unspent Transaction Output list (UTXO). This list is a structure tied to the blockchain
-that stores all the transaction outputs that have not been spent as inputs by a tranasction. When they are used 
+that stores all the transaction outputs that have not been spent as inputs by a transaction. When they are used 
 the transaction processing stage removes that output from the UTXO list and adds the new output to the list.
-It is important to note that this is not a list of new transaction ouputs as that would not be secure outside the
+It is important to note that this is not a list of new transaction outputs as that would not be secure outside the
 blockchain and would be vulnerable to attack. It is simply a way of listing the transactions already added to the
 blockchain. When a transaction is processed it goes through the new block and updates the UTXO list by recreating 
 it. This maintains security and prevents malicious users from attacking the system this way.
@@ -521,17 +522,17 @@ machine it is important that the nodes be able to perform checks as quickly as p
 %block size
 Another important factor was the number of transactions to include in a block. The larger this number is, the
 longer it will take to fill up with transactions and so the longer it will take I decided to keep the 
-number of transactions in blocks relativly small in order to progress through the cryptocurrency lifecycle
+number of transactions in blocks relatively small in order to progress through the cryptocurrency life cycle
 more quickly and demonstrate all features.
 
 \section{Consensus}
-This final section dicusses the way in which the system was designed in order that all nodes communicate correctly and
+This final section discusses the way in which the system was designed in order that all nodes communicate correctly and
 that they all maintain an up-to-date copy of the blockchain. It also explains the decision to 
 use one particular method of mining instead of alternatives.
 
 \subsection{Proof of Work vs Proof of Stake}
 In order for the network to function correctly, a consensus must be achieved by all the nodes. They need to agree
-on what the correct blockchain is so they can add to it and they must also keep a consistant list of all the 
+on what the correct blockchain is so they can add to it and they must also keep a consistent list of all the 
 transactions yet to be included on the chain. It is vital that this consensus is achieved by nodes that are not
 malicious or compromised and that the consensus they come to is proposed by an honest node to avoid attackers
 taking over the blockchain. 
@@ -540,7 +541,7 @@ There are two common methods of distributed consensus methods. Proof of Work and
 are a way for nodes to prove that they are not malicious and are simply trying to honestly contribute to the
 network. These concepts are not limited to cryptocurrencies and have many other applications in the world that 
 have been researched by others [1,2]. The main idea behind these methods is tying the task of adding blocks to the 
-blockchain to a reasouce that cannot be monopolised and as such the whole network cannot be controlled by a 
+blockchain to a resource that cannot be monopolised and as such the whole network cannot be controlled by a 
 singular entity. Each method aims to achieve this in a different way by using different resources.
 
 \subsubsection{Proof of Work}
@@ -552,17 +553,17 @@ hash and the hash of the current block concatenated together with a number known
 that falls within a specific target range. Nodes must go through incrementing the nonce in order to find the 
 correct value that will satisfy the requirement. The size of the target range influences how hard and so how long
 it will take for nodes to find. Once a node has found a nonce that results in a value inside the target range
-they have proven that they have used compuational power and are entitled to add to the blockchain.
+they have proven that they have used computational power and are entitled to add to the blockchain.
 
 \subsubsection{Proof of Stake}
-Much like the proof of work method, proof of stake is essentially assinging nodes the power to vote on what the
-blockchain should be. The more of a resouce a node has, the more voting power it has. Proof of Stake is different
+Much like the proof of work method, proof of stake is essentially assigning nodes the power to vote on what the
+blockchain should be. The more of a resource a node has, the more voting power it has. Proof of Stake is different
 to Proof of Work as instead of tying voting power to computational power, it ties voting power to the amount
 of currency a node holds. This means that the nodes with the most currency hold the most power to decide what the
 blockchain will look like. In practice this means that these rich nodes will more often be selected to add a new
 block to the chain. This methods has many advantages over the proof of work concept. This would significantly
 reduce the environmental impact of the whole currency as there would be little to no mining taking place and so
-there would be no groups of computers solving calculations indefinitely. This has the added benifit that
+there would be no groups of computers solving calculations indefinitely. This has the added benefit that
 it would lower the chance that the network would become more centralised by mining companies. This method also
 avoids the risk of a majority of malicious nodes aiming to destroy the currency. As any user holding any amount
 of the currency is essentially a stakeholder in the network, any node that achieves a majority of the currency 
@@ -576,7 +577,7 @@ in this project. It would be more beneficial to show the proof of work system as
 functionality of the system better.
 
 In this cryptocurrency the target range will be a number that begins with a certain
-ammount of 0s. This means I have the ability to adjust the difficulty of the mining process by increasing
+amount of 0s. This means I have the ability to adjust the difficulty of the mining process by increasing
 or decreasing the number of 0s in the target range. The more 0s required means that the final value must be more
 specific and as such will take longer to find. I have decided that for this cryptocurrency the difficulty of mining
 will remain low as processing power comes at a premium for one computer running multiple nodes.
@@ -585,7 +586,7 @@ will remain low as processing power comes at a premium for one computer running 
 %Nearby nodes
 In order for nodes to be able to communicate the details of transactions and the correct blockchain to use,
 they first have to be able to identify and keep a list of nodes that are nearby in the network. This does not
-necessarily mean geograpihcally nearby but in practice it is most likely nodes created most recently.
+necessarily mean geographically nearby but in practice it is most likely nodes created most recently.
 The way nodes are designed in this project is that a node is created with a seed node. Upon creation, nodes
 query the seed node in order to obtain a list of nearby nodes, these nodes are selected randomly in order
 to avoid every node's nearby list containing the same subset of the network.
@@ -601,9 +602,9 @@ to be spending and makes sure that they line up with transaction outputs listed 
 exist and haven't already been spent. The second check is to see if the transaction has already been seen by
 the node if so it moves on without adding it to the block it is trying to create. If the transaction passes
 these tests then the node adds it to the block it is planning to mine and then sends the transactions on to all
-other nodes on its list of nearby nodes. Nodes recieving transactions like this from other nodes will perform the
+other nodes on its list of nearby nodes. Nodes receiving transactions like this from other nodes will perform the
 same checks and then decide whether to pass on the transaction again. This way the transaction should be flooded
-through the whole network and be eligable to be added to any block.
+through the whole network and be eligible to be added to any block.
 
 \subsection{Wallets}
 %Something about wallets, maybe the overall process of sending coins
@@ -620,7 +621,7 @@ transaction will be flooded to prevent double spending attacks.
 %Describing how the whole process works together
 %Can include diagram showing main program flow
 The final stage to designing the project was deciding how all of these features of the currency could be shown
-and how the security could be effectivly presented. To meet the requiremnets specification it would mean developing
+and how the security could be effectively presented. To meet the requirements specification it would mean developing
 a test harness that could generate multiple nodes and simulate a real network of sending transactions back and 
 forth between wallets in order to demonstrate the building of blocks and the blockchain. All while Demonstrating
 the prevention of doubling spending and other attacks. 
@@ -633,7 +634,7 @@ and then narrow it down to the most suitable contenders. The way in which this c
 utilising many different objects and structures, transactions, blocks, and the blockchain. This made it clear that 
 the best choice of language for the project would be an object-oriented programming language. This narrowed down
 the playing field to \textit{Java} or \textit{C\#}. From this it was decided that \textit{Java} would be the best 
-option as it includes security packages which would be invaluble for implementing core features like signatures and 
+option as it includes security packages which would be invaluable for implementing core features like signatures and 
 public/private key verification.
 
 \section{Summary}
@@ -706,9 +707,9 @@ the smooth development process.
     \label{fig:milestones} 
 \end{figure}
 
-\section{Project Strucutre}
+\section{Project Structure}
 %Separation into classes and the string util class(will be talked about later), main
-As this project lended itself to using an object oriented approach it made sense to separate the project into
+As this project lent itself to using an object oriented approach it made sense to separate the project into
 Java class filed for each object. These object would then be able to interact together by calling functions
 of other classes throughout the process. This left the main class which was used to host the test harness by
 instantiating all the objects and simulating many nodes and transactions.
@@ -728,7 +729,7 @@ algorithm to that string and return the result. This function was used all throu
 the hash values for objects. When an object like a transaction or a block is created, it takes all the metadata that
 it is created with and feeds them into this StringUtil function which returns the hash value. This essentially gives
 a unique identifier to every instance of each object. This function is the core of what keeps each block from being
-tampered with retroactivly as the hash identifier created by this function would change if any of the metadata from
+tampered with retroactively as the hash identifier created by this function would change if any of the metadata from
 the block would change.
 
 %Show hashing equation
@@ -757,17 +758,17 @@ sender can be verified by anyone that they come from that specific user by using
 transactions cannot pretend to be sent by anyone as each user should only have access to their own private key.
 
 \section{Data Structures}
-One of the main challanges with this project was deciding what data stuctures should be used for each object and
+One of the main challenges with this project was deciding what data structures should be used for each object and
 how all of these objects were able to interact. These decisions were vital to being able to correctly implement
 all of the requirements. This section goes into detail which structures were chosen and why these were the best
 choices.
 
 \subsection{The blockchain}
 %Why blockchain is an arraylist
-In this implementation of a cryptocurrency the blockchain is represented with an ArrayList data structure cointaining
+In this implementation of a cryptocurrency the blockchain is represented with an ArrayList data structure containing
 all of the blocks [\ref{lst:blockchainDefinition}]. This was a simple and easy way to store the blocks as the actual data structure did not need to
 have any specific security. All the security is created around this structure so all that was needed was a simple 
-strucutre to store a list of blocks that was easy to work with. 
+structure to store a list of blocks that was easy to work with. 
 
 
 
@@ -792,7 +793,7 @@ Similar to the way the blockchain stores all of the blocks, the blocks store the
 using an ArrayList as well. This allowed for easy manipulation of the transactions within to help the process of
 building the Merkle tree structure.
 
-One technical challange that needed to be overcome was how the Block class would organise all its transactions
+One technical challenge that needed to be overcome was how the Block class would organise all its transactions
 into the Merkle tree structure. This was implemented by first taking a copy of the list of transactions in the
 block to work on. Then, using a utility function, it would loop through the list and every two transactions it 
 adds the combined hash to a new list. This is repeated until only one hash is left which is known as the root 
@@ -807,17 +808,17 @@ significant time when nodes are traversing the blockchain to make sure it is val
 \section{Testing}
 %How the unit tests work
 As one of the main aspects of this project is the security of the cryptocurrency, it is important to include
-thourough unit tests throughout the project to make sure that the features they are testing are working correctly.
+thorough unit tests throughout the project to make sure that the features they are testing are working correctly.
 It is not only the unit tests that matter however, there are also tests that are run during normal functionality
-like the tests that are run when nodes are deciding how to handle incomming transactions from other nodes in the
-network. This section covers how these tests were constructed and any challanges that had to be overcome in order
+like the tests that are run when nodes are deciding how to handle incoming transactions from other nodes in the
+network. This section covers how these tests were constructed and any challenges that had to be overcome in order
 to keep the network running.
 
 \subsection{Blockchain Tests}
 %Checking the blockchain is valid by going through each block hash by hash
 The main test used on the blockchain had the goal of making sure that the whole blockchain was valid. This meant
 ensuring every block in this particular blockchain had the correct hash and linked to the correct hash after it.
-This was achieved in practive by looping over the whole blockchain and first calculating a new hash using the 
+This was achieved in practice by looping over the whole blockchain and first calculating a new hash using the 
 transactions within for the current block and checking that it was equal to the hash that is saved in the 
 blockchain. This test would also run through and make sure that each block in the chain has the correct hash
 stored of the previous block in the chain ensuring continuity.
@@ -828,7 +829,7 @@ mining for a new block, or when switching from one blockchain to another longer 
 \subsection{Node Test}
 %Add more depth to the transaction validation parts
 The tests that each node run are in relation to dealing with new transactions when they are flooded through
-the network from other nodes. This is covered breifly in previous sections but here I will present more depth
+the network from other nodes. This is covered briefly in previous sections but here I will present more depth
 on the implementation of these tests.
 
 \subsubsection{Valid Transaction}
@@ -842,12 +843,12 @@ carried out across the network stops the transaction from entering the blockchai
 \subsubsection{Are Outputs Spent?}
 The second test is to remove the chance of users committing a double spending attack. This is done by checking
 that the outputs that are being consumed for this transaction have not already been spent. The test achieves this
-by running throught the the blockchain and checking if any transactions are using the same transaction outputs 
+by running through the the blockchain and checking if any transactions are using the same transaction outputs 
 as the current transaction is trying to use. If so the transaction is removed and not spread further through
 the network.
 
 \subsubsection{Has Transaction already been seen?}
-This one is simple as it simply runs through the exsisting transactions in the block it is building up and
+This one is simple as it simply runs through the existing transactions in the block it is building up and
 checks if the current transaction matches any of them. If they do then the transaction is disregarded from the
 block and not sent to any other nodes.
 
@@ -869,10 +870,10 @@ that the node adds itself to its list of nearby nodes. This seems redundant but 
 future nodes to be able to select that node to be part of their lists.
 
 \section{Switching Blockchains}
-Another technical challange that had to be achieved was the ability for nodes to switch from one blockchain
+Another technical challenge that had to be achieved was the ability for nodes to switch from one blockchain
 to another. In real world cryptocurrencies this mainly happens when one blockchain is longer than another or
 when one blockchain becomes invalid. A blockchain could become invalid if a transaction of block is changed 
-causing the chain of hashs to become invalid. In the case of this blockchain this should not happen as we can
+causing the chain of hashes to become invalid. In the case of this blockchain this should not happen as we can
 control whether nodes are honest and not trying to alter previous transactions in the blockchain.
 
 Nodes in this project are able to decide which blockchain to use. They hold a variable called currentblockchain
@@ -899,14 +900,14 @@ The next step is to create a list of transaction inputs that will be used to gen
 This list is populated by running through all the UTXOs that are address to this user which were discovered in 
 the previous step. Each iteration the values of these transaction outputs are added to a total and a new 
 transaction input object is created with the same value as the output object. This new input object is added
-to the arraylist created earlier. When the total value is greater than or equal to the value the main transaction
+to the Arraylist created earlier. When the total value is greater than or equal to the value the main transaction
 is trying to send the loop stops. This means only enough transaction outputs are consumed in order to create the
 transaction.
 
 Now that all of the inputs have been collated, the transaction object can be created. The new transaction 
-object is created using the public key of the wallet for the sender parameter, the reciever public key as the
-reciever, the value as the value, and the newly created list of transaction inputs as the inputs. After this 
-object is created a signature can be created for the transcation. This is called by the wallet using its private
+object is created using the public key of the wallet for the sender parameter, the receiver public key as the
+receiver, the value as the value, and the newly created list of transaction inputs as the inputs. After this 
+object is created a signature can be created for the transaction. This is called by the wallet using its private
 key to sign the object. This proves that the transaction came from this wallet and nowhere else which can be 
 verified by anyone using the wallets public key.
 
@@ -933,7 +934,7 @@ add it to their blocks which they will mine, eventually adding the transaction t
     }
     
 \caption{
-    The Algoritm used when nodes are created in order to get a good sample of nodes that are topographically nearby
+    The Algorithm used when nodes are created in order to get a good sample of nodes that are topographically nearby
     in the network. This recursive algorithm selects a random node from the seed node and adds it to its list. Then
     selecting a random node from that list in order to prevent the whole network having similar nearby nodes lists.
 }
@@ -949,13 +950,13 @@ initialising all the relevant objects and running the test harness to specificat
 The process starts off with the creation of the blockchain. In order for the chain to be created there needs to be
 a block. This first block is known as a genesis block and it is different to all other blocks. This genesis block
 is created with a dedicated constructor that generates a block with no transactions and does not point to a previous
-block's hash. This block will not be mined and cointains no transactions so therefore can be kept relativly simple
+block's hash. This block will not be mined and contains no transactions so therefore can be kept relatively simple
 in design without consideration for security. 
 
 \subsubsection{Blockchain}
 Now that the genesis block has been created the first blockchain can be created. The constructor for the blockchain
 initialises the object with the genesis block. For this project this initial blockchain is the starting point for
-all transactions however much like all real world cryptocurrencies, this project containes the framework for 
+all transactions however much like all real world cryptocurrencies, this project contains the framework for 
 nodes to switch from using one blockchain to another given the correct circumstances. This topic is explained further
 in a later section.
 
@@ -978,7 +979,7 @@ is initialised in the main class, the constructor in the Wallet.java class assig
 funds balance for that node to 0, and finally generates the key pair. This key pair is essential to the security 
 of the currency. The public key is used by other wallets in the network as an address for which they they can send
 currency to. The private key is used as a way of verifying transactions that have been sent to the wallet.
-These keys are created by a function called generateKeyPair() which makes sure of the java security packagaes in order
+These keys are created by a function called generateKeyPair() which makes sure of the java security packages in order
 to generate a KeyPair object. These keys are unique for each wallet and stay the same for the entire lifetime
 of the associated wallets. 
 %Maybe include code snippets from the generateKeyPair function (ASK RON)
@@ -995,12 +996,12 @@ send to other wallets during the test harness process.
 
 Transactions can be created in the main class using the
 format shown in listing [\ref{lst:transactionCreation}]. The senderAddress and recieverAddress are the public keys
-that have been assigned to the sender and reciever's wallets respectivly. The value is the amount of currency the
+that have been assigned to the sender and receiver's wallets respectively. The value is the amount of currency the
 transaction is attempting to send. Finally the inputs are the collection of transaction outputs that are going
-to be consumed as transaction inputs by the transaction in order to send the specified ammount.
+to be consumed as transaction inputs by the transaction in order to send the specified amount.
 
 \begin{lstlisting}[language=java, float=h, caption={This code snippet shows how transactions are created using
-    the address of the sender, the address of the reciever, the value of the transaction, and the transaction
+    the address of the sender, the address of the receiver, the value of the transaction, and the transaction
     inputs that are to be consumed by the transaction.}, label=lst:transactionCreation]
     Transaction exampleTransaction = new Transaction(senderAddress, recieverAddress, value, inputs);
 \end{lstlisting}
@@ -1038,13 +1039,13 @@ transactions to others.
 %Maybe show more code snippets
 %Switching blockchains
 
-\section{Maintanence}
+\section{Maintenance}
 %Documentation
 The nature of this project meant it was easy to get confused as there were many similar objects and functions 
 that executed unrelated tasks. This created a need for clean code and well documented classes to stay on top 
 of things.
 
-This maintanence of this project was mainly focused on the needs of myself rather than leaving the project open
+This maintenance of this project was mainly focused on the needs of myself rather than leaving the project open
 to other programmers to add on to as this was mainly a demonstration of features rather than a product that will
 be released to the public. Regardless, it was important to keep the project easy to update as it is good practice
 and also helped make the project easier to develop. As such, each class and all functions were labeled clearly
@@ -1052,7 +1053,7 @@ and laid out in logical order to make navigation around the project easy.
 
 \section{Summary}
 This section discussed the concrete ways in which the design set out in the previous section were implemented.
-It also discusses the technical acomplishments that were overcome in order to create som eof the features.
+It also discusses the technical accomplishments that were overcome in order to create some of the features.
 
 %==================================================================================================================================
 \chapter{Evaluation} 
@@ -1077,11 +1078,11 @@ the beginning of the project were met.
 %that your work is the most amazing product ever.
 
 \section{Aims}
-The overal goal of the project was to demonstrate the security of a basic cryptocurrency. This can be broken down into
+The overall goal of the project was to demonstrate the security of a basic cryptocurrency. This can be broken down into
 smaller more concrete aims which will be the focus of this evaluation.
 \begin{itemize}
     \item Prevention of double spending attacks
-    \item Prevention of sybil attacks
+    \item Prevention of Sybil attacks
     \item Prevention of malicious attack of blockchain
 \end{itemize}
 
@@ -1094,7 +1095,7 @@ to be on purpose and can occur in many different scenarios which this project tr
 \subsection{Design}
 As a double spend attack is a fairly general problem there are many points of failure in a blockchain that if not designed
 correctly could lead to exploitation. In order to mitigate this risk there are several features and tests that have been
-implemented which keep the blockchain from allowing such an attack. This evaluation will present the existance and 
+implemented which keep the blockchain from allowing such an attack. This evaluation will present the existence and 
 reliability of these tests and features to display the extent to which the cryptocurrency is immune to such an attack.
 
 These tests take place within the Node class and are executed whenever a transaction is passed through the network
@@ -1141,7 +1142,7 @@ evaluation by providing an incorrect transaction to a node and showing how the n
 \begin{lstlisting}[language=java, float=!t, caption=
     {
         This shows the third check performed by nodes to see if the transaction has already been encountered by
-        this node and can therefore be disgarded.
+        this node and can therefore be discarded.
     }
     , label=lst:check3]
     private boolean isTransactionAlreadySeen(Transaction tx){
@@ -1154,9 +1155,9 @@ evaluation by providing an incorrect transaction to a node and showing how the n
     }
 \end{lstlisting}
 
-In order to evaluate how this project copes with double spend attacks transactions that attempt to expoit the system
-will be created and fed to node. Then the ouput of the node will be recorded to show how it responds to the fraudulent
-transacations.
+In order to evaluate how this project copes with double spend attacks transactions that attempt to exploit the system
+will be created and fed to node. Then the output of the node will be recorded to show how it responds to the fraudulent
+transactions.
 
 
 
@@ -1203,7 +1204,7 @@ transaction attempting to spend outputs that have already been consumed.
 \end{figure}
 
 This resulted in the program outputting "TRANSACTION FAILED: Transaction inputs have already been spent!" and
-therefor the node disgards the transaction, does not add the transaction to its current block, and does not flood
+therefor the node discards the transaction, does not add the transaction to its current block, and does not flood
 the transaction to other nodes [\ref{fig:inputsspent}].
 
 The final check can be evaluated by first setting the max number of transactions in a block to a number higher than
@@ -1218,7 +1219,7 @@ should trigger the test to fail.
     \caption
     {
         This figure shows the program output when running the test designed to add a transaction to a node more than
-        once. The node scans through its list of transactions and catches the duplicate and disgards the transaction.
+        once. The node scans through its list of transactions and catches the duplicate and discards the transaction.
     }
     % use the notation fig:name to cross reference a figure
     \label{fig:seenbynode} 
@@ -1234,47 +1235,47 @@ transaction was caught and not flooded to any other nodes or added to the block 
 The results from these tests show that the blockchain is resistant to these single attempts to induce a double spend
 attack. The first test shows how if someone were to add a transaction to the blockchain more than once they would
 be stopped by the node evaluating the transaction before it is added to any blocks. The second test shows how if
-someone were trying to profit by using transaction inputs that have already been consumed, maybe to dublicate a
+someone were trying to profit by using transaction inputs that have already been consumed, maybe to duplicate a
 transaction they have already made, they are also stopped by the node evaluating the transaction. The final test
 shows how if someone tried to create a transaction and then before the transaction was added to a block, add the same
 exact transaction to the same block in an attempt to duplicate the transaction, they would be stopped by the node.
 
-These tests show that the network is secure against most double-spend attacks however the network is succeptable
+These tests show that the network is secure against most double-spend attacks however the network is susceptible
 along with most real cryptocurrencies to double spend exploitation in fringe cases. This however is a design feature
 that is common in more real cryptocurrencies like Bitcoin (REFERENCE) as the scale would need to be very small for these
-cases to occur. The scale of this project does mean that sometimes transactions can be created and then other transacations
+cases to occur. The scale of this project does mean that sometimes transactions can be created and then other transactions
 can be created that use the same inputs before they are consumed by the first transaction. This issue is nullified 
 at higher mining difficulty times. This is a non-factor in real world cryptocurrencies as mining is in the order of 
 minutes not milliseconds however this project requires fast mining times as the test harness is being run on a singular
-machine rather than many nodes with more collective compuational power.
+machine rather than many nodes with more collective computational power.
 
 \section{Does the cryptocurrency prevent Sybil attacks?}
-A sybil attack is the act of taking over a system by forging multipe identities (REFERENCE). The name comes from a book
-called Sybil by Flora Schreiber about a woman with dissociative identity dissorder. The idea behind a Sybil attack is to 
+A Sybil attack is the act of taking over a system by forging multiple identities (REFERENCE). The name comes from a book
+called Sybil by Flora Schreiber about a woman with dissociative identity disorder. The idea behind a Sybil attack is to 
 generate enough fake pseudonyms to gain control of the system with a majority vote power. The paper by John Douceur 
-also shows that it is practically impossible to prevent a sybil attack on a peer-to-peer system (REFERENCE?) without some
+also shows that it is practically impossible to prevent a Sybil attack on a peer-to-peer system (REFERENCE?) without some
 form of central third party ensuring trust.
 
 \subsection{Design}
 In all cryptocurrencies this attack is mitigated using the proof system. Either proof of work, proof of stake, or any one
 of the many methods of demonstrating proof. In this system this is implemented by proof of work and more specifically
 the process of mining. This means that the system for voting on the direction of the blockchain is tied to computational 
-power and not simply the existance of nodes. This means that if an attacker were to try to take over the network by 
+power and not simply the existence of nodes. This means that if an attacker were to try to take over the network by 
 forging a majority of nodes they would not be able to without also controlling the majority of computational power.
 
-Bitcoin and other cryptocurrencies like the one created in this project are then able to operate under the assumtion
+Bitcoin and other cryptocurrencies like the one created in this project are then able to operate under the assumption
 that there is not a majority stakeholder in the network that is malicious. This is both because it is unlikely there will
 ever be a majority of computational power held by one user and also because even in there was it would be in the best 
 interest of that user to remain an honest node.
 
-The mining mechanism in this project is executed by nodes on a block when they recieve enough valid transactions to
+The mining mechanism in this project is executed by nodes on a block when they receive enough valid transactions to
 fill a block [\ref{lst:mining}].
 
 \begin{lstlisting}[language=java, float=h, caption=
     {
         This snippet of code shows the process of finding a hash that fits within a specified target range (hash starting
         with set number of 0s). Each loop tried a new hash by incrementing the nonce before calculating a hash. This 
-        function proves that a node has expended computational power before appending to the blockchain preventing sybil
+        function proves that a node has expended computational power before appending to the blockchain preventing Sybil
         attacks.
     }
     , label=lst:mining]
@@ -1290,7 +1291,7 @@ fill a block [\ref{lst:mining}].
     }
 \end{lstlisting}
 
-This evaluation will test this function by showing that this block mining function effectivly finds a hash that fits 
+This evaluation will test this function by showing that this block mining function effectively finds a hash that fits 
 within a specified range depending on the difficulty. This will demonstrate that a certain amount of computational
 power must be used in order to mine a block. This will be tested using a range of different difficulties and the time
 elapsed for each bock to be mined will be taken. This will show how the difficulty effects how the computational power 
@@ -1343,7 +1344,7 @@ scale on the Y axis to give a clear picture of the different scales for each dif
     \caption
     {
         This scatter graph presents the full data set for each difficulty setting showing how long in milliseconds
-        the mining process elapsed. The logarithmic scale for time elasped demonstrates clearly how the difficulty
+        the mining process elapsed. The logarithmic scale for time elapsed demonstrates clearly how the difficulty
         increasing causes the time elapsed to grow exponentially. This shows how the difficulty increasing causes
         nodes to expend exponentially more computational power in order to add blocks to the blockchain.
     }
@@ -1352,22 +1353,22 @@ scale on the Y axis to give a clear picture of the different scales for each dif
 \end{figure}
 
 \subsection{Analysis and conclusion}
-The results from testing the mining system of the show how the mining system developed for the project effectivly
-demonstrates the expendature of computational power. This is clear by the increase in time elapsed increasing as the
-control vairable of mining difficulty is increased. This means that the progam is effective at preventing a sybil attack
+The results from testing the mining system of the show how the mining system developed for the project effectively
+demonstrates the expenditure of computational power. This is clear by the increase in time elapsed increasing as the
+control variable of mining difficulty is increased. This means that the program is effective at preventing a Sybil attack
 as in order to influence the blockchain an attacker would have to expend computation power and time in order to complete
 the proof of work stage.
 
 The results show only the change in time elapsed from difficulties one to five however it is safe to assume that the
-exponential increase would contiue as the difficulty increases which would make it easy to adjust depending on the
+exponential increase would continue as the difficulty increases which would make it easy to adjust depending on the
 size of the network much like how Bitcoin and other cryptocurrencies work (REFERENCE).
 
-The second graph [\ref{fig:fulldatascatter}] has a logarithmic scale for time elasped better showing how the 
+The second graph [\ref{fig:fulldatascatter}] has a logarithmic scale for time elapsed better showing how the 
 time increases proportionally relative to the difficulty.
 
 
 \section{Is the blockchain secure?}
-This final evaulation section is based on is demonstrating whether the blockchain can adapt and resist an attempt to 
+This final evaluation section is based on is demonstrating whether the blockchain can adapt and resist an attempt to 
 alter previous transactions in the blockchain. The purpose of a blockchain is to have an immutable ledger of all transactions.
 This means that once transactions enter the blockchain they cannot be altered or removed. This attack may be carried out
 by users that wish to profit illegally. If they somehow were able to access and alter the blockchain they could increase
@@ -1384,7 +1385,7 @@ previous transactions. This means that this will be tested instead by the main f
 be created between wallets and then added to blocks and mined to then be added to the blockchain. Once this has happened,
 One of the transactions from the blocks will attempt to be altered. This will be implemented using a temporary function
 added to the Transaction class which will allow the changing of the value of a transaction. This should alter the 
-blockchain and so will cause nodes in the future to abandon this blockchchain infavour of a valid chain.
+blockchain and so will cause nodes in the future to abandon this blockchain in favour of a valid chain.
 
 \subsection{Results}
 The results of the test can be seen in [\ref{fig:check3}] where the output log from the program is shown. This shows
@@ -1407,7 +1408,7 @@ how the network reacts to a block being altered after it is added to the blockch
 \subsection{Analysis and conclusion}
 The results from this test show that the network is capable of withstanding such an attack attempting to alter previous
 attributes like transactions or blocks on the blockchain. The blockchain does not prevent the actual attempt to alter
-previous tranasctions as this would be out of scope and generally not necessary. Instead the network is able to recover
+previous transactions as this would be out of scope and generally not necessary. Instead the network is able to recover
 by checking the blockchain is valid before any changes are made. This is where the node recognises the blockchain is
 incorrect and decides to scan its nearby neighbors for an alternate blockchain to try to append to. This is the safe
 option and ensures that the blockchain is immutable and transactions cannot be changed once added to it. Within the
@@ -1419,17 +1420,17 @@ scope of this project these tests are sufficient to label the blockchain as secu
 \subsubsection{Tamperproof Ledger:}
 As demonstrated by the third test in the evaluation, the blockchain that was created functioned correctly and the nodes
 prevented any attempts to alter that blockchain from affecting the network. The blockchain was distributed as a version
-was held by each node on the network and the nodes collectivly maintain a correct copy. This satisfies the requirement of creating a
-tamper-proof distrobuted ledger.
+was held by each node on the network and the nodes collectively maintain a correct copy. This satisfies the requirement of creating a
+tamper-proof distributed ledger.
 \subsubsection{Consensus Mechanism:}
 The consensus mechanism created for this project allows for nodes to maintain a list of nearby nodes in order to send
-new valid transactions they recieve. This allows transactions to flood through the whole network and for all nodes to
+new valid transactions they receive. This allows transactions to flood through the whole network and for all nodes to
 work on adding transactions to the blockchains. This implementation satisfies the requirement of a consensus mechanism.
 %SECURE consensus mechanism
 \subsubsection{Proof of Work}
 The proof of work system implemented in this project is seen in the second test of the evaluation to be effective. It
-correctly loops through different block hashs until a hash is found within a target range. This system effectivly provided a way for nodes to present
-proof that they have expended compuational power in order to add to the blockchain and maintain the honesty of the 
+correctly loops through different block hashes until a hash is found within a target range. This system effectively provided a way for nodes to present
+proof that they have expended computational power in order to add to the blockchain and maintain the honesty of the 
 network.
 \subsubsection{Mining Incentive \& difficulty}
 The difficulty of the mining was determined by a variable which changed the target range required for nodes to hash
@@ -1447,7 +1448,7 @@ of its two children. This provided an easy way for nodes to scan through the blo
 had been altered as if there had been any alterations then the root hash would have to have been changed. This means
 that the requirement of storing transactions within blocks in the Merkle tree structure was satisfied.
 \subsubsection{Currency Splitting}
-The project allows for users to send currency that is a smaller demonination that their current transaction inputs. This
+The project allows for users to send currency that is a smaller denomination that their current transaction inputs. This
 works by sending the full transaction input and then sending the overpay back to the sender. This satisfies the 
 requirement of splitting wallet currency down. 
 \subsubsection{Storage Improvements}
@@ -1456,7 +1457,7 @@ hash values inside blocks in the blockchain. This would allow nodes to save a si
 they would not have to store the actual transaction objects. This feature was given a high priority and was a 
 non-functional requirement and as such was not implemented in this project due to time constraints.
 
-\section{Limitaitons}
+\section{Limitations}
 A limitation that the project had was the issues with the scale of the project. The nature of cryptocurrencies is
 that of a wide scale with many users and nodes ensuring the quality of the system. Having the test harness of this
 project being run on a singular machine made having difficult and time consuming mining impossible. This lead to some
@@ -1471,10 +1472,10 @@ were demonstrated and the results were shown along with some analysis why the te
 %==================================================================================================================================
 \chapter{Conclusion}
 So far this paper has presented the aims and motivations for the project, how these aims were translated into functional
-and non-functional requiremnets. Then the design of the cryptocurrency was presented showing how key features were examined
+and non-functional requirements. Then the design of the cryptocurrency was presented showing how key features were examined
 and planned. This section was followed by the concrete implementation methods which demonstrated how the designs were 
-executed and giving light to important technical challanges that were overcome. The evaluation followed giving evidence
-to show if the project was successfull at answering the main goals of the project. To conclude, a summary of the whole 
+executed and giving light to important technical challenges that were overcome. The evaluation followed giving evidence
+to show if the project was successful at answering the main goals of the project. To conclude, a summary of the whole 
 project is given.
 
 \section{Summary}
@@ -1486,27 +1487,27 @@ project is given.
 The overall goal for this project was to demonstrate the security of a basic cryptocurrency. This goal was broken down
 into concrete goals for designing the cryptocurrency. First, a distributed peer-to-peer immutable ledger was created 
 in order to keep a secure method of transaction history. A proof of work system was created in order to have nodes
-demonstrate the expendature of computational power before adding to the blockchain. This is implemented as a mining
+demonstrate the expenditure of computational power before adding to the blockchain. This is implemented as a mining
 mechanism where node have to hash a block along with a nonce until the result is within a specified target range. A
 consensus mechanism was added so nodes on the network do not have to store the address of every other node in the network
 but transactions can still be flooded throughout the network and added to any blocks. Transactions within blocks are
-stored using the Merkle tree strucutre in order to make the process of verifying a block much faster for nodes as they
+stored using the Merkle tree structure in order to make the process of verifying a block much faster for nodes as they
 only have to scan the root hash, not each individual transaction.
 
-After the project was created an evauation was performed in order to see how well the cryptocurrency provided an answer
+After the project was created an evaluation was performed in order to see how well the cryptocurrency provided an answer
 to the goal of the project. The evaluation was centered on showing that the cryptocurrency is secure and resistant to 
-different types of attack that are likely to occur to a blockchain network. The evaulation consisted of three tests.
+different types of attack that are likely to occur to a blockchain network. The evaluation consisted of three tests.
 The first test evaluated how well the network resisted double-spend attacks where an attacker could add more than one
 of the same transaction to the blockchain. The tests showed that the project correctly identifies these attacks and
-prevents them from being included on the blockchain. The second test was designed to evaulate how the program might
+prevents them from being included on the blockchain. The second test was designed to evaluate how the program might
 deal with a Sybil attack. The project demonstrated the effectiveness of the proof of work mining mechanism. The test 
 showed the time elapsed for mining a block depending on the difficulty setting. This shows how the mining mechanism 
 correctly takes longer as the difficulty increases and makes it clear that nodes have to show proof of work before
 adding to the blockchain. The final test aimed to evaluate how the program deals with an alteration made to a block
-that has already been added to a block. The project effectivly recognised an alteration with the blockchain and 
+that has already been added to a block. The project effectively recognised an alteration with the blockchain and 
 nodes did not append to that blockchain but instead looked for a different valid blockchain to continue working on.
 
-The cryptocurrency effectivly and securely met almost all of the requirements set at the begining of the project. It
+The cryptocurrency effectively and securely met almost all of the requirements set at the beginning of the project. It
 satisfied the goals of creating a secure and robust cryptocurrency.
 
 
@@ -1517,7 +1518,7 @@ There are many different avenues that could be explored for adding to the crypto
 Largely these improvements would be new features and not additions that would alter or improve the security of the
 network. One example would be the inclusion of scripts within transaction much like Bitcoin (REFERENCE). This would a
 allow for transactions to include more substance and accomplish more complex goals than just sending currency from 
-one wallet to another. This could be incorperating escrow transactions or transactions that are addressed to more than
+one wallet to another. This could be incorporating escrow transactions or transactions that are addressed to more than
 one recipient or other smart contracts (REFERENCE book).
 
 Another place for future work could be in the network set up. Currently when a node is created it is part of the
