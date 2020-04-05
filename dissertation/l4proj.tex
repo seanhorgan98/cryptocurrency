@@ -476,7 +476,8 @@ the sense that a malicious user cannot benefit by altering any previous transact
 also be an accurate ledger containing every transaction exchanged to date. The way this blockchain was created was
 by first collating a group of transactions into blocks. Then each block would create a signature hash which would
 be a combination of all the transactions in the block. Then, in order to create an irreversible and immutable chain
-of these blocks, the hash of each block is concatenated with the hash of the previous block in the chain [\ref{fig:blockchainDiagram}]. This means
+of these blocks, the hash of each block is concatenated with the hash of the previous block in the chain. This is
+shown in figure [\ref{fig:blockchainDiagram}]. This means
 any change to a transaction would cascade through each hash in each block and ultimately affect everything in the
 chain. This means that it is easy for any node to check that the blockchain is valid using a simple and fast check.
 
@@ -659,7 +660,7 @@ In order to create this cryptocurrency it was important to have a solid software
 aim to stick to the different development practices.
 
 \subsection{Version Control}
-%reference git?
+%reference git & travisCI
 It was decided that the method of version control to be used would be Git. Making use of the GitHub website to 
 host the project repository online. This allowed for the addition of code from different computers during the
 development stages. This project made use of the branching feature of git in order to keep the project organised.
@@ -675,7 +676,7 @@ alternative.
 %figure 5.2 (ref) 
 GitHub was an incredibly important website to the construction of this project as it allowed the ability to keep
 track of the completion of each feature using issues and milestones. Each feature and even small bugs were assigned
-an issue [\ref{fig:issues}] and then those issues were assigned to one of the milestones [\ref{fig:milestones}]. 
+an issue [\textit{Figure \ref{fig:issues}}] and then those issues were assigned to one of the milestones [\textit{Figure \ref{fig:milestones}}]. 
 This made it easy to prioritise each feature and keep control of what needed to be done. The ritual of creating
 an issue when a feature or problem is identified and then closing the issue when it is dealt with was important to 
 the smooth development process.
@@ -772,7 +773,7 @@ choices.
 \subsection{The Blockchain}
 %Why blockchain is an arraylist
 In this implementation of a cryptocurrency the blockchain is represented with an ArrayList data structure containing
-all of the blocks [\ref{lst:blockchainDefinition}]. This was a simple and easy way to store the blocks as the actual data structure did not need to
+all of the blocks [\textit{Listing \ref{lst:blockchainDefinition}}]. This was a simple and easy way to store the blocks as the actual data structure did not need to
 have any specific security. All the security is created around this structure so all that was needed was a simple 
 structure to store a list of blocks that was easy to work with. 
 
@@ -780,7 +781,7 @@ structure to store a list of blocks that was easy to work with.
 %UTXO hashmap
 In order to store the UTXOs it was important that a data structure was used such that the actual transaction
 object could be tied to the transaction that created that output. This meant making use of one of Java's HashMaps
-[\ref{lst:blockchainDefinition}]. Every time a transaction is processed by a node the outputs that are created 
+[\textit{Listing \ref{lst:blockchainDefinition}}]. Every time a transaction is processed by a node the outputs that are created 
 along with the ID of the transaction are appended to the UTXO map, after this the process transaction function 
 removes any transaction inputs that have been consumed in the process of the transaction.
 
@@ -802,7 +803,7 @@ into the Merkle tree structure. This was implemented by first taking a copy of t
 block to work on. Then, using a utility function, it would loop through the list and every two transactions, it 
 adds the combined hash to a new list. This is repeated until only one hash is left which is known as the root 
 hash of the block. This would result in a structure identical to the one described previously in this paper
-[\ref{fig:merkle}].
+[\textit{Figure \ref{fig:merkle}}].
 
 %Maybe add more depth to explain this better.
 
@@ -870,11 +871,36 @@ its seed node to find new nodes on the network. This algorithm for building a no
 as if a node were to simply copy the nearby-nodes list of its seed node then all nodes would be created with the
 same list and it would be impossible for transactions being flooded through the network to reach every node. Instead
 a recursive method is used. The algorithm sets up a loop to run until the node's nearby-nodes list is full
-[\ref{alg:nearbyNodes}]. With each iteration it gets a random node in the seed node's nearby-nodes list and checks if 
+[\textit{Algorithm \ref{alg:nearbyNodes}}]. With each iteration it gets a random node in the seed node's nearby-nodes list and checks if 
 the current node already contains that node in its list. If so it ignores it and moves on. If it has not seen 
 that node then it is added to the list and the loop moves on to the next iteration. At the end it is important 
 that the node adds itself to its list of nearby nodes. This seems redundant but it is necessary in order for 
 future nodes to be able to select that node to be part of their lists.
+
+%Nearby Nodes algorithm
+\begin{algorithm}
+    \DontPrintSemicolon
+    \Begin{
+        nodeToQuery = seed node\;
+        \While{nearbyNodes list not full}
+        {
+            NodeToAdd = getRandomNearByNode(nodeToQuery)\;
+            \If{nearbyNodes list dees not contain NodeToAdd}
+            {
+                nodeToQuery = node\;
+                append node to nearbyNodes list\;
+            }
+        }
+    }
+    \vspace{1cm}
+    
+\caption{
+    \textit{The Algorithm used when nodes are created in order to get a good sample of nodes that are topographically nearby
+    in the network. This recursive algorithm selects a random node from the seed node and adds it to its list. Then
+    selecting a random node from that list in order to prevent the whole network having similar nearby-node lists.}
+}
+\label{alg:nearbyNodes}
+\end{algorithm}
 
 \section{Switching Blockchains}
 Another technical challenge that had to be achieved was the ability for nodes to switch from one blockchain
@@ -926,30 +952,7 @@ is remove the outputs from its own list of UTXOs. Finally the wallet updates its
 of a new transaction. This starts the process of transaction flooding through the network and allows nodes to 
 add it to their blocks which they will mine, eventually adding the transaction to the blockchain.
 
-%Nearby Nodes algorithm
-\begin{algorithm}
-    \DontPrintSemicolon
-    \Begin{
-        nodeToQuery = seed node\;
-        \While{nearbyNodes list not full}
-        {
-            NodeToAdd = getRandomNearByNode(nodeToQuery)\;
-            \If{nearbyNodes list dees not contain NodeToAdd}
-            {
-                nodeToQuery = node\;
-                append node to nearbyNodes list\;
-            }
-        }
-    }
-    \vspace{1cm}
-    
-\caption{
-    \textit{The Algorithm used when nodes are created in order to get a good sample of nodes that are topographically nearby
-    in the network. This recursive algorithm selects a random node from the seed node and adds it to its list. Then
-    selecting a random node from that list in order to prevent the whole network having similar nearby-node lists.}
-}
-\label{alg:nearbyNodes}
-\end{algorithm}
+
 
 \section{Full Process}
 This section will demonstrate the full process of the project from the creation of a blockchain to transactions
@@ -1005,7 +1008,7 @@ be sent to every wallet in order for the wallets to have some starting currency 
 send to other wallets during the test harness process. 
 
 Transactions can be created in the main class using the
-format shown in listing [\ref{lst:transactionCreation}]. The senderAddress and recieverAddress are the public keys
+format shown in listing \ref{lst:transactionCreation}. The senderAddress and recieverAddress are the public keys
 that have been assigned to the sender's and receiver's wallets respectively. The value is the amount of currency the
 transaction is attempting to send. Finally the inputs are the collection of transaction outputs that are going
 to be consumed as transaction inputs by the transaction in order to send the specified amount.
@@ -1112,8 +1115,8 @@ reliability of these tests and features to display the extent to which this cryp
 
 These tests take place within the Node class and are executed whenever a transaction is passed through the network
 between nodes in order to be added to a block. First the node checks if the transaction has already appeared on the
-blockchain [\ref{lst:check1}]. Next the node checks if the transaction outputs have already been spent [\ref{lst:check2}]. 
-Finally it checks if the transaction has already been seen by this node [\ref{lst:check3}]. All three of these tests 
+blockchain [\textit{Listing \ref{lst:check1}}]. Next the node checks if the transaction outputs have already been spent [\textit{Listing \ref{lst:check2}}]. 
+Finally it checks if the transaction has already been seen by this node [\textit{Listing \ref{lst:check3}}]. All three of these tests 
 verify that the transaction that is being checked is not a double spend attack. This will be presented in this 
 evaluation by providing an incorrect transaction to a node and showing how the node responds.
 
@@ -1193,7 +1196,7 @@ a valid transaction in every other way.
 \end{figure}
 
 This resulted in the output: "TRANSACTION FAILED: This transaction is already included on the blockchain!" and as
-a result the transaction did not make it through the nodes checks and was not added to the blockchain [\ref{fig:check1}].
+a result the transaction did not make it through the nodes checks and was not added to the blockchain [\textit{Figure \ref{fig:check1}}].
 
 The second test required making specialised transaction output objects to feed first into an honest transaction that
 would be added to the blockchain. Then those same outputs would be fed into a second transaction to emulate a
@@ -1215,7 +1218,7 @@ transaction attempting to spend outputs that have already been consumed.
 
 This resulted in the program outputting: "TRANSACTION FAILED: Transaction inputs have already been spent!" and
 therefor the node discards the transaction, does not add the transaction to its current block, and does not flood
-the transaction to other nodes [\ref{fig:inputsspent}].
+the transaction to other nodes [\textit{Figure \ref{fig:inputsspent}}].
 
 The final check can be evaluated by first setting the max number of transactions in a block to a number higher than
 1 to make sure that the block will not be mined before the next transaction arrives. Next an honest transaction is 
@@ -1236,7 +1239,7 @@ should trigger the test to fail.
 \end{figure}
 
 This resulted in the output: "TRANSACTION FAILED: Transaction already seen by this node!" meaning the duplicate
-transaction was caught and not flooded to any other nodes or added to the block a second time [\ref{fig:seenbynode}].
+transaction was caught and not flooded to any other nodes or added to the block a second time [\textit{Figure \ref{fig:seenbynode}}].
 
 %Show log output from tests
 \subsection{Analysis and conclusion}
@@ -1280,7 +1283,7 @@ ever be a majority of computational power held by one user and also because even
 interest of that user to remain an honest node.
 
 The mining mechanism in this project is executed by nodes on a block when they receive enough valid transactions to
-fill a block [\ref{lst:mining}].
+fill a block [\textit{Listing \ref{lst:mining}}].
 
 \begin{lstlisting}[language=java, float=h, caption=
     {
@@ -1311,7 +1314,7 @@ required to mine a block.
 
 
 \subsection{Results}
-The results from these tests are displayed below [\ref{fig:avgBar}] and [\ref{fig:fulldatascatter}]. For each 
+The results from these tests are displayed below [\textit{Figure \ref{fig:avgBar}}] and [\textit{Figure \ref{fig:fulldatascatter}}]. For each 
 difficulty setting from 1 to 5, 20 data points were taken measuring the time elapsed during the mining of
 a block. The block in question contained 10 transactions sending 100 coins to 10 different wallets. This block
 remained the same for each measurement. Each measurement was run on the same computer with the same environment
@@ -1374,7 +1377,7 @@ The results show only the change in time elapsed from difficulties one to five, 
 exponential increase would continue as the difficulty increases, which would make it easy to adjust depending on the
 size of the network, much like how Bitcoin and other cryptocurrencies work (REFERENCE).
 
-The second graph [\ref{fig:fulldatascatter}] has a logarithmic scale for time elapsed, better showing how the 
+The second graph [\textit{Figure \ref{fig:fulldatascatter}}] has a logarithmic scale for time elapsed, better showing how the 
 time increases proportionally relative to the difficulty.
 
 
@@ -1399,7 +1402,7 @@ added to the Transaction class which will allow the changing of the value of a t
 blockchain and so will cause nodes in the future to abandon this blockchain in favour of a valid chain.
 
 \subsection{Results}
-The results of the test can be seen in [\ref{fig:check3}] where the output log from the program is shown. This shows
+The results of the test can be seen in figure \ref{fig:check3} where the output log from the program is shown. This shows
 how the network reacts to a block being altered after it is added to the blockchain.
 
 \begin{figure}[!ht]
