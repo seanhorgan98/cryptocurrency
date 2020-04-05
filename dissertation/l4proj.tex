@@ -14,7 +14,7 @@
 \begin{abstract}
     \vskip 0.5em
     Over the past decade, cryptocurrency has become a rapidly growing area of interest as it aims to provide a 
-    decentralised alternative to regular physical currencies. The goal of this project is to implement a peer-based 
+    decentralised alternative to regular physical currencies. The goal of this project is to implement a secure peer-based 
     cryptocurrency. It is designed to include a distributed, tamper-proof ledger, a consensus mechanism 
     for distributing transactions to all participating nodes, a mining system, and wallets for sending 
     the currency between different addresses. It also includes a test harness so that a number of nodes 
@@ -81,7 +81,7 @@ The concept of cryptocurrency has only emerged in the past fifteen years as an a
 centralised fiat currencies backed by governments around the world. In 2008 Satoshi Nakamoto, the 
 founder of Bitcoin, invented the worlds first cryptocurrency providing a peer-to-peer currency
 not bound to a central bank. This new currency, secured by modern cryptographic methods, is a way in
-which people around the world can trade without having to send the funds via a financial institution. (REFERENCE).
+which people around the world can trade without having to send the funds via a financial institution \citep{narayanan2016bitcoin}.
 
 This new currency ensured security to its users by implementing a distributed ledger of transactions. Bitcoin
 ensured that the ledger was immutable by ensuring proof of work was given before transactions would be
@@ -145,10 +145,12 @@ In this chapter I will discuss the background of the project. This will be prese
 others that has similar goals to this project. I will also examine other cryptocurrencies created in the past that have aided 
 in the completion of this project.
 
+%Mention what a node is
+%Maybe mention that is is cmd line not GUI
 
 \section{Bitcoin white paper}
 The first cryptocurrency to be created was Bitcoin. It was first presented in 2008 by Satoshi Nakamoto in the Bitcoin White Paper
-titled "Bitcoin: A Peer-to-Peer Electronic Cash System". The concise nine page article defines Nakamoto's method of preventing
+titled "Bitcoin: A Peer-to-Peer Electronic Cash System" \citep{nakamoto2019bitcoin}. The concise nine page article defines Nakamoto's method of preventing
 double-spending attacks in a peer-to-peer currency without the need for a third party like a financial institution to 
 act as a middle man. The creator of Bitcoin wanted to avoid the use of a centralised mint as it can be seen as a single 
 point of failure through which every transaction must be routed. This places the whole trust of the network on the middle 
@@ -161,7 +163,7 @@ Below the main functionality described in the Bitcoin white paper will be presen
 
 \subsection{Transactions}
 The primary component of a cryptocurrency is a transaction between two users. In bitcoin this is described as being "a
-chain of digital signatures" (REFERENCE). In this sense, a transaction is just a way of showing that ownership of the coin has
+chain of digital signatures" \citep{nakamoto2019bitcoin}. In this sense, a transaction is just a way of showing that ownership of the coin has
 passed from the sender's address to the recipient's address. Bitcoin ensures the immutability of these transactions
 by making the sender generate a hash of the previous transaction combined with the public key, equivalent to the address,
 of the recipient. This means that the recipient can then verify the transaction using their own key and the transaction
@@ -212,7 +214,7 @@ The final point relevant to this project mentioned in the Bitcoin white paper is
 the transactions within the blocks in the blockchain. A simple method of storing these transactions in the block may
 just be an unordered list. This would work as each transaction is unrelated to the other transactions in the block in
 every way except perhaps the time it took place. This storage solution can be improved though by using a data structure
-known as a Merkle tree (REFERENCE). This data structure is a way in which to make the process of checking block validity
+known as a Merkle tree \citep{merkle1987digital}. This data structure is a way in which to make the process of checking block validity
 more efficient. The way Merkle trees work is by having every leaf node be the hash of the transaction it represents 
 and every branch node is the hash of its two child nodes . This builds up a chain of hashes similar to the blockchain.
 This means that in order for a node to check that a block is valid it only needs to check the root hash of the block as
@@ -231,16 +233,14 @@ more popular this is a significant storage space saving as the number of transac
 
     \caption{
         The Merkle tree structure within a block of transactions. Transactions are hashed together as leaf nodes
-        and repeated all the way up the tree to the main hash of the block, known as the Merkle root.
+        and repeated all the way up the tree to the main hash of the block, known as the Merkle root \citep{merkleimage}.
     }
-
-    % use the notation fig:name to cross reference a figure
     \label{fig:merkle}
 \end{figure}
 
 \section{Bitcoin and Cryptocurrency Technologies}
 A large source of the information used to plan this project and choose the relevant technologies to include was the
-book \emph{Bitcoin and Cryptocurrency Technologies} by Narayanan et al. This provided a more in depth discussion
+book \emph{Bitcoin and Cryptocurrency Technologies} \citep{narayanan2016bitcoin}. This provided a more in depth discussion
 about the intricacies of the structures needed for the project. The book also gave good information about cryptocurrencies
 that were not Bitcoin which gave a bigger picture and provided options for doing things differently or ways to 
 exclude areas of bitcoin that would not be relevant in the project.
@@ -296,9 +296,11 @@ In this section I outline the exact nature of the project and how these requirem
 complete the goals listed previously. I also discuss any functionality or features that have deliberately been
 left out of scope.
 
-In this project the MoSCow method was used in order to prioritise the features so that the most important attributes
+In this project the MoSCow method \citep{moscow} was used in order to prioritise the features so that the most important attributes
 were included and some of the less important ones could be left to the end of the project to be added in if there was
 time to spare.
+
+%MoSCoW remember to mention the W for wont have
 
 \section{Functional Requirements}
 Functional requirements listed here are features that must be included in the project in order for a working,
@@ -347,7 +349,7 @@ but would bring the project closer to what might be used in current cryptocurren
 \subsection{Must have}
 \begin{itemize}
     \item It is important that the way in which the transactions within blocks is efficient. The must be stored using the Merkle
-    tree structure (REFERENCE). This way each transaction is a leaf node and every branch node is a hash of its two children.
+    tree structure \citep{merkle1987digital}. This way each transaction is a leaf node and every branch node is a hash of its two children.
     This makes it extremely efficient for checking the validity of each block as you only have to check the hash of the root
     hash.
 \end{itemize}
@@ -423,10 +425,8 @@ are addressed to that particular user and not already spent. This concept will b
     \caption{
         This diagram shows the process of transactions. Transactions require inputs to send value. These inputs come from
         the outputs of previous transactions. These transactions then produce more transaction outputs which continue
-        the chain. This is the process Bitcoin uses and is the same one that will be used in this project.
+        the chain. This is the process Bitcoin uses and is the same one that will be used in this project \citep{bitcoinimage}. 
     }
-
-    % use the notation fig:name to cross reference a figure
     \label{fig:transaction} 
 \end{figure}
 
@@ -488,10 +488,8 @@ chain. This means that it is easy for any node to check that the blockchain is v
 
     \caption{
         This figure shows how the blockchain works by having the previous block's hash fed into the next
-        block's hash in order to create a chain.
+        block's hash in order to create a chain \citep{blockchainimage}.
     }
-
-    % use the notation fig:name to cross reference a figure
     \label{fig:blockchainDiagram} 
 \end{figure}
 
@@ -660,20 +658,17 @@ In order to create this cryptocurrency it was important to have a solid software
 aim to stick to the different development practices.
 
 \subsection{Version Control}
-%reference git & travisCI
-It was decided that the method of version control to be used would be Git. Making use of the GitHub website to 
+It was decided that the method of version control to be used would be \textit{Git}. Making use of the GitHub \citep{github} website to 
 host the project repository online. This allowed for the addition of code from different computers during the
-development stages. This project made use of the branching feature of git in order to keep the project organised.
+development stages. This project made use of the branching feature of Git in order to keep the project organised.
 Every new feature/element that was added was designated a new branch and once complete was merged back into the
 main development branch. Only at the end of the project was everything merged back into the master branch. This
 was decided as the master branch is always supposed to keep a working copy of the software but this working copy
 would not exist until the very end of the project as all the features had to be completed in order to work together
 correctly. This was also the reason why the decision to not make use of continuous integration was made. It was
-much faster and easier to run small tests and log outputs locally rather than make use of \textit{TravisCI} or an 
+much faster and easier to run small tests and log outputs locally rather than make use of \textit{TravisCI} \citep{travis} or an 
 alternative.
-%italics and reference travis
 
-%figure 5.2 (ref) 
 GitHub was an incredibly important website to the construction of this project as it allowed the ability to keep
 track of the completion of each feature using issues and milestones. Each feature and even small bugs were assigned
 an issue [\textit{Figure \ref{fig:issues}}] and then those issues were assigned to one of the milestones [\textit{Figure \ref{fig:milestones}}]. 
@@ -693,8 +688,6 @@ the smooth development process.
         A view of the main issue tracking board on GitHub. Making it easy to keep track of the state of the project
         and what is still left to be completed.
     }
-
-    % use the notation fig:name to cross reference a figure
     \label{fig:issues} 
 \end{figure}
 \vspace{10cm}
@@ -709,8 +702,6 @@ the smooth development process.
         The main milestone board on GitHub showing the dates that each feature needs to be completed and
         allows for easy prioritisation of issues.
     }
-
-    % use the notation fig:name to cross reference a figure
     \label{fig:milestones} 
 \end{figure}
 
@@ -1191,7 +1182,6 @@ a valid transaction in every other way.
         on the blockchain. This shows that program recognised this and did not proceed to adding the transaction to a 
         block.
     }
-    % use the notation fig:name to cross reference a figure
     \label{fig:check1} 
 \end{figure}
 
@@ -1212,7 +1202,6 @@ transaction attempting to spend outputs that have already been consumed.
         that have already been consumed by a different transaction. The node scans the blockchain and disregards the
         invalid transaction and does not flood the transaction through the network.
     }
-    % use the notation fig:name to cross reference a figure
     \label{fig:inputsspent}
 \end{figure}
 
@@ -1234,7 +1223,6 @@ should trigger the test to fail.
         This figure shows the program output when running the test designed to add a transaction to a node more than
         once. The node scans through its list of transactions and catches the duplicate and discards the transaction.
     }
-    % use the notation fig:name to cross reference a figure
     \label{fig:seenbynode} 
 \end{figure}
 
@@ -1255,7 +1243,7 @@ exact transaction to the same block in an attempt to duplicate the transaction, 
 
 These tests show that the network is secure against most double-spend attacks however the network is susceptible
 along with most real cryptocurrencies to double spend exploitation in fringe cases. This however is a design feature
-that is common in most real cryptocurrencies like Bitcoin (REFERENCE) which is unlikely to occur as the scale would need to be very small. 
+that is common in most real cryptocurrencies like Bitcoin \citep{nakamoto2019bitcoin} which is unlikely to occur as the scale would need to be very small. 
 The scale of this project does mean that occasionally transactions can be created and then other transactions
 can be created that use the same inputs before they are consumed by the first transaction. This issue is nullified 
 at higher mining difficulty times. This is a non-factor in real world cryptocurrencies as mining is in the order of 
@@ -1263,10 +1251,10 @@ minutes not milliseconds however this project requires fast mining times as the 
 machine rather than many nodes with more collective computational power.
 
 \section{Does the cryptocurrency prevent Sybil attacks?}
-A Sybil attack is the act of taking over a system by forging multiple identities (REFERENCE). The name comes from a book
-called Sybil by Flora Schreiber (REFERENCE) about a woman with dissociative identity disorder. The idea behind a Sybil attack is to 
+A Sybil attack is the act of taking over a system by forging multiple identities \citep{douceur2002sybil}. The name comes from a book
+called Sybil by Flora Schreiber \citep{schreiber1973sybil} about a woman with dissociative identity disorder. The idea behind a Sybil attack is to 
 generate enough fake pseudonyms to gain control of the system with a majority vote power. The paper by John Douceur 
-also shows that practically it is impossible to prevent a Sybil attack on a peer-to-peer system (REFERENCE?) without some
+also shows that practically it is impossible to prevent a Sybil attack on a peer-to-peer system \citep{douceur2002sybil} without some
 form of central third party ensuring trust, however this would require a .
 %^ Fix last sentence
 
@@ -1334,7 +1322,6 @@ scale on the Y axis to give a clear picture of the different scales for each dif
         This figure shows the program output during normal process when a block is being mined. Here the transaction
         details for the block, the block hash that was mined, and the time taken to complete the mining are displayed.
     }
-    % use the notation fig:name to cross reference a figure
     \label{fig:check2} 
 \end{figure}
 
@@ -1348,7 +1335,6 @@ scale on the Y axis to give a clear picture of the different scales for each dif
         demonstrates how the mining process can demonstrate different levels of computational power expended by
         nodes.
     }
-    % use the notation fig:name to cross reference a figure
     \label{fig:avgBar} 
 \end{figure}
 
@@ -1362,7 +1348,6 @@ scale on the Y axis to give a clear picture of the different scales for each dif
         increasing causes the time elapsed to grow exponentially. This shows how the difficulty increasing causes
         nodes to expend exponentially more computational power in order to add blocks to the blockchain.
     }
-    % use the notation fig:name to cross reference a figure
     \label{fig:fulldatascatter} 
 \end{figure}
 
@@ -1375,7 +1360,7 @@ the proof of work stage.
 
 The results show only the change in time elapsed from difficulties one to five, however it is safe to assume that the
 exponential increase would continue as the difficulty increases, which would make it easy to adjust depending on the
-size of the network, much like how Bitcoin and other cryptocurrencies work (REFERENCE).
+size of the network, much like how Bitcoin and other cryptocurrencies work \citep{narayanan2016bitcoin}.
 
 The second graph [\textit{Figure \ref{fig:fulldatascatter}}] has a logarithmic scale for time elapsed, better showing how the 
 time increases proportionally relative to the difficulty.
@@ -1415,7 +1400,6 @@ how the network reacts to a block being altered after it is added to the blockch
         added the node recognises that the blockchain is no longer valid. The node stops what it is doing and looks
         to switch to a different valid blockchain.
     }
-    % use the notation fig:name to cross reference a figure
     \label{fig:check3} 
 \end{figure}
 
@@ -1528,12 +1512,14 @@ satisfied the goals of creating a secure and robust cryptocurrency.
 \section{Future Work}
 %Indicate what future work could be done, but remember: you
 %won't get credit for things you haven't done.
+
+% Running with transactions added in main class works but future work could involve an environment to add in transactions while running
 There are many different avenues that could be explored for adding to the cryptocurrency created in this project. 
 Largely these improvements would be new features and not additions that would alter or improve the security of the
-network. One example would be the inclusion of scripts within transaction much like Bitcoin (REFERENCE). This would
+network. One example would be the inclusion of scripts within transaction much like Bitcoin \citep{nakamoto2019bitcoin}. This would
 allow for transactions to include more substance and accomplish more complex goals than just sending currency from 
 one wallet to another. This could be incorporating escrow transactions or transactions that are addressed to more than
-one recipient or other smart contracts (REFERENCE book).
+one recipient or other smart contracts \citep{narayanan2016bitcoin}.
 
 Another place for future work could be in the network set up. Currently when a node is created it is part of the
 network forever. In the real world it is likely that nodes get abandoned or shut down. Future work could allow for 
@@ -1625,28 +1611,7 @@ in the class.
 
 %==================================================================================================================================
 %   BIBLIOGRAPHY   
-
-% The bibliography style is abbrvnat
-% The bibliography always appears last, after the appendices.
-
 \bibliographystyle{abbrvnat}
 
 \bibliography{l4proj}
-Merkle trees
-
-Bitcoin white paper
-
-Bitcoin and cryptocurrency technologies
-
-https://hackernoon.com/merkle-trees-181cb4bc30b4
-[IMAGE OF MERKLE TREE] 
-
-Blockchain technology: Principles and applications Marc Pilkington
-
-The sybil attack John Douceur
-
-https://blockchainwolf.net/blockchain-technology/what-is-blockchain-easiest-explanation-ever/ [blockchain diagram]
-
-https://bitcoin.org/en/blockchain-guide [Transaction diagram]
-
 \end{document}
