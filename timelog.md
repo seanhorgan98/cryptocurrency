@@ -5,14 +5,6 @@
 * 2184253
 * Dr Ron Poet
 
-## Guidance
-
-* This file contains the time log for your project. It will be submitted along with your final dissertation.
-* **YOU MUST KEEP THIS UP TO DATE AND UNDER VERSION CONTROL.**
-* This timelog should be filled out honestly, regularly (daily) and accurately. It is for *your* benefit.
-* Follow the structure provided, grouping time by weeks.  Quantise time to the half hour.
-
-## Week 1
 
 ### 26 Sep 2019
 
@@ -92,143 +84,135 @@
 * *3 hours* Coin creation changed to be a new transaction in order to be immutable
 
 ### 6 Dec 2019
+* *1 hour* Fixed block hashing and coin creation
+* *2 hours* Updated main process
+* *1 hour* Started work on node class
 
+### 21 Jan 2020
+* *2 hours* Researching consensus
+* *2 hours* Re-evaluating whole project structure.
 
+### 27 Jan 2020
+* *2 hours* Working on node structure and adding some documentation
 
+### 28 Jan 2020
+* *30 mins* Updated documentation
+* *1 hour* Created data structure for storing node network
+* *30 mins* Cleaned up code
+* *1 hour* Improved network generation
 
-21/01/20
-Researching consensus 2 hours
-Re-evaluating whole project structure.
+### 4 Feb 2020
+* *30 mins* merging node consensus into develop branch
 
-28/01/20
-Updated documentation
-Created data structure for storing node network
-Cleaned up code
-Improved network generation
+### 7 Feb 2020
+* *3 hours* Improving the main class to making full process better
 
+### 11 Feb 2020
+* *1 hour* Changing the way UTXOs are handled
+* *1 hour* Worked on fixing double spending bug
 
-Deciding which consensus algorithm to go with (PoW) Raft?
-Is each main a node?
-Add unit test to replace chain function.
-Perform double spend checks at nodes
-perform transaction validation checks on new blocks
-wallet must be linked to node when created
-fixing double (quadrouple) spending problem
-number of double spends for evaluation
-inputs for transactions are not updating correctly
-always staying the same. Before it even reaches Transaction.java so must occur in wallet
-Block sending 0 earlier on in the process. (Currently blocked in processTransaction
-Might actually have been a feature not a bug lol.
+### 12 Feb 2020
+* *3 hours* Fixing double spending bug again
 
-Notes for future work:
-    - Nodes expiring, going offline.
-    - bitcoin scripts
+### 18 Feb 2020
+* *4 hours* finished writing abstract. planned and started introduction. Read HoF
 
-Notes for evaluation:
-    - Running with transactions added in main class works but future work could involve an environment to add in transactions while running
+### 20 Feb 2020
+* *2 hours* reading HoF, started introduction
 
-    - Decided not to add incentive as all nodes will always be honest
-    - Nodes currently do store every single transaction not just block hashs
+### 22 Feb 2020
+* *3 hours* writing introduction
 
-Notes for background work/design
-    - Mention what a node is
-    - Mention sybil attacks
-    - Maybe mention that it is all command line not GUI
+### 25 Feb 2020
+* *2 hours* starting writing the background section
 
-18/02
-4 hours finished writing abstract. planned and started introduction. Read HoF
+### 26 Feb 2020
+* *2 hours* writing bitcoin white paper part of background.
 
-20/02
-2 hours reading HoF, started introduction
+### 27 Feb 2020
+* *1 hour* finishing bitcoin white paper background section.
+* *2 hours* writing book background section and creating analysis structure.
 
-22/02
-3 hours writing introduction
+### 01 Mar 2020
+* *2 hours* tidying up intro and background
 
-25/02
-2 hours starting writing the background section
+### 02 Mar 2020
+* *3 hours* completing requirements section
 
-26/02
-2 hours writing bitcoin white paper part of background.
+### 03 Mar 2020
+* *1 hour* finishing requirements and planning design section
 
-27/02
-1 hour finishing bitcoin white paper background section.
-2 hours writing book background section and creating analysis structure.
+### 04 Mar 2020
+* *1 hour* updating documentation
 
-1/03
-2 hours tidying up intro and background
+### 11 Mar 2020/03
+* *1 hour* planning design
 
-2/03
-3 hour completing requirements section
+### 14 Mar 2020
+* *1 hour* starting design section (transactions and overview)
 
-3/03
-1 hour finishing requirements and planning design section
+### 16 Mar 2020
+* *1 hour* working on the design section
 
-4/03
-1 hour updating documentation
+### 17 Mar 2020
+* *2 hours* design section
 
-11/03
-1 hour planning design
+### 18 Mar 2020
+* *3 hours* working on design section
 
-14/03
-/1 hour starting design section (transactions and overview)
+### 19 Mar 2020
+* *1 hour* implementation planning
+* *1 hour* planning extra sections for design
 
-16/03
-1 hour working on the design section
+### 20 Mar 2020
+* *1 hour* more implementation planning
 
-17/03
-2 hour design section
+### 21 Mar 2020
+* *30 mins* adding section to design
+* *1 hour* starting implementation section (Software development process)
 
-18/03
-3 hours working on design section
+### 22 Mar 2020
+* *2 hours* proof reading work done so far
+* *1 hour* writing StringUtil implementation section
+* *1 hour* writing blockchain implementation section
 
-19/03
-1 hour implementation planning
-1 hour planning extra sections for design
+### 23 Mar 2020
+* *1 hour* added testing section for implementation
 
-20/03
-1 hour more implementation planning
+### 24 Mar 2020
+* *1 hour* adding nearby nodes section and some writing on tests
+* *2 hours* filling out more sections in implementation (Full process)
 
-21/03
-30 mins adding section to design
-1 hour starting implementation section (Software development process)
+### 27 Mar 2020
+* *1 hour* planning evaluation section
+* *2 hours* setting up unit testing
+* *1 hour* working on test harness
 
-22/03
-2 hours proof reading work done so far
-1 hour writing StringUtil implementation section
-1 hour writing blockchain implementation section
+### 28 Mar 2020
+* *1 hour* starting evaluation section
+* *2 hours* adding two test sections to evaluation (double spending & sybil attacks)
+* *1 hour* adding third test section to evaluation
 
-23/03
-1 hour added testing section for implementation
+### 29 Mar 2020
+* *1 hour* designing evaluation more
 
-24/03
-1 hour adding nearby nodes section and some writing on tests
-2 hours filling out more sections in implementation (Full process)
+### 30 Mar 2020
+* *1 hour* completing tests for evaluation
+* *1 hour* correcting test harness bug
+* *1 hour* working on evaluation write up
+* *3 hours* creating graphs with matplotlib
 
-27/03
-1 hour planning evaluation section
-2 hours setting up unit testing
-1 hour working on test harness
+### 31 Mar 2020
+* *1 hour* adding tests to evaluation section
+* *2 hours* finishing evaluation section
+* *2 hours* formatting and adding appendix work
 
-28/03
-1 hour starting evaluation section
-2 hours adding two test sections to evaluation (double spending & sybil attacks)
-1 hour adding third test section to evaluation
+### 01 Apr 2020
+* *2 hours* working on conclusion
+* *1 hour* formatting
+* *1 hour* spell checking
 
-29/03
-1 hour designing evaluation more
-
-30/03
-1 hours completing tests for evaluation
-2 hours correcting test harness bug
-1 hour working on evaluation write up
-3 hours creating graphs with matplotlib
-
-31/03
-1 hour adding tests to evaluation section
-2 hours finishing evaluation section
-2 hour formatting and adding appendix work
-
-1/04
-2 hours working on conclusion
-1 hour formatting
-1 hour spell checking
+### 5 Apr 2020
+* *1 hour* proofreading
+* *2 hours* making presentation
+* *1 hour* admin work
