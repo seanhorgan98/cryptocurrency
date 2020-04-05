@@ -187,6 +187,10 @@ This would cascade through the whole blockchain invalidating every block from th
 network would then recognise this chain is invalid and switch to a valid chain rendering the action of the malicious
 user pointless.
 
+Blockchains like this can have many different applications, not just within cryptocurrencies. Their security makes them
+extremely valuable to any buisness area that keeps track of events or items in a ledger. Whether these blockchains are
+public to the world, private to a single business, or a hybrid \citep{pilkington2016blockchain}, the invention of the blockchain has helped many different areas.
+
 \subsection{Consensus}
 In order for the whole system of users to work, all nodes must agree on what is the correct blockchain to be using and
 which blocks of transactions are to be added to the blockchain every time. This is implemented by Bitcoin using a proof of
@@ -411,7 +415,7 @@ way this condition was enforced was through the use of Transaction Inputs and Ou
 sent, the value of that transaction (amount of currency it is attempting to send), is a collection of inputs. These inputs
 are made up of the outputs of previous transactions that have been addressed to the user. This means that the process of
 checking a user's balance would involve going through the blockchain adding up all the transaction outputs that
-are addressed to that particular user and not already spent. This concept will be explained in more detail in the Blockchain section.
+are addressed to that particular user and not already spent.
 
 %Diagram of a transaction
 \begin{figure}[!ht]
@@ -442,7 +446,7 @@ and make sure that this is greater than or equal to the value of the transaction
 Once these checks have been completed it is time to execute the transaction. The way this is achieved is by
 creating a new Transaction Output addressed to the recipient using the value of the transaction. It is important
 that the previous transaction inputs are then removed as otherwise they would still be valid for the user to send
-running the risk of double spend attacks. This is covered in more detail in the Blockchain section.
+running the risk of double spend attacks. This is covered in more detail in the Blockchain section \ref{sec:desblockchain}.
 
 %Overpay
 \subsection{Overpay}
@@ -467,6 +471,7 @@ currency creation flag. After the initial creation of the network this is the on
 minted.
 
 \section{Blockchain}
+\label{sec:desblockchain}
 The second major feature of the project to design is the Blockchain. This chain of blocks needs to be robust in
 the sense that a malicious user cannot benefit by altering any previous transactions in the ledger. It must
 also be an accurate ledger containing every transaction exchanged to date. The way this blockchain was created was
