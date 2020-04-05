@@ -134,15 +134,15 @@ The following dissertation is split into seven chapters as described below:
         \textbf{Chapter 6} discusses the evaluation of the projects. This shows how well the requirements were met, the
         performance of the system, and unit testing.
     \item
-        \textbf{Chapter 7} concludes the project, summarising the project and reflecting on its execution. Here we also
-        outline any future work that could be accomplished.
+        \textbf{Chapter 7} concludes the project, summarising the project and reflecting on its execution. Here the
+        outline of any future work that could be accomplished is presented.
 \end{itemize}
 
 
 %==================================================================================================================================
 \chapter{Background}
-In this chapter we will discuss the background of the project. This will be presented by looking at the relevant research done by 
-others that has similar goals to this project. We will also examine other cryptocurrencies created in the past that have aided 
+In this chapter I will discuss the background of the project. This will be presented by looking at the relevant research done by 
+others that has similar goals to this project. I will also examine other cryptocurrencies created in the past that have aided 
 in the completion of this project.
 
 
@@ -292,8 +292,8 @@ in the project would be unnecessary as there would only be one script needed and
 
 %==================================================================================================================================
 \chapter{Analysis/Requirements}
-In this section we outline the exact nature of the project and how we gathered these requirements in order to 
-complete the goals listed previously. We also discuss any functionality or features that have deliberately been
+In this section I outline the exact nature of the project and how these requirements were gathered in order to 
+complete the goals listed previously. I also discuss any functionality or features that have deliberately been
 left out of scope.
 
 In this project the MoSCow method was used in order to prioritise the features so that the most important attributes
@@ -629,7 +629,7 @@ the prevention of doubling spending and other attacks.
 \section{Choosing a Programming Language}
 %Explain why object oriented programming was necessary 
 %Explain why java for security packages etc
-In order to decide what language we would use for this project it was best to look at how the project was designed
+In order to decide what language to use for this project it was best to look at how the project was designed
 and then narrow it down to the most suitable contenders. The way in which this cryptocurrency was designed was 
 by utilising many different objects and structures, transactions, blocks, and the blockchain. This made it clear that 
 the best choice of language for the project would be an object-oriented programming language. This narrowed down
@@ -769,7 +769,7 @@ how all of these objects were able to interact. These decisions were vital to be
 all of the requirements. This section goes into detail which structures were chosen and why these were the best
 choices.
 
-\subsection{The blockchain}
+\subsection{The Blockchain}
 %Why blockchain is an arraylist
 In this implementation of a cryptocurrency the blockchain is represented with an ArrayList data structure containing
 all of the blocks [\ref{lst:blockchainDefinition}]. This was a simple and easy way to store the blocks as the actual data structure did not need to
@@ -880,8 +880,9 @@ future nodes to be able to select that node to be part of their lists.
 Another technical challenge that had to be achieved was the ability for nodes to switch from one blockchain
 to another. In real world cryptocurrencies this mainly happens when one blockchain is longer than another or
 when one blockchain becomes invalid. A blockchain could become invalid if a transaction of block is changed 
-causing the chain of hashes to become invalid. In the case of this blockchain this should not happen as we can
-control whether nodes are honest and not trying to alter previous transactions in the blockchain.
+causing the chain of hashes to become invalid. In the case of this blockchain this should not happen as I can
+control whether nodes are honest and I am not trying to alter previous transactions in the blockchain during the normal
+running of the network.
 
 Nodes in this project are able to decide which blockchain to use. Nodes hold a variable called currentBlockchain
 which they perform all their functions on such as mining blocks. If they are notified about a blockchain that is
@@ -1218,7 +1219,7 @@ the transaction to other nodes [\ref{fig:inputsspent}].
 
 The final check can be evaluated by first setting the max number of transactions in a block to a number higher than
 1 to make sure that the block will not be mined before the next transaction arrives. Next an honest transaction is 
-created and added to a block by a node. Then we will try to send the same transaction again to the same node. This
+created and added to a block by a node. Then I will try to send the same transaction again to the same node. This
 should trigger the test to fail.
 
 %Image of result
