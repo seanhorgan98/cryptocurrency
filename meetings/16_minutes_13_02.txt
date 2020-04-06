@@ -1,0 +1,13 @@
+Meeting 16
+Date: 13/02/20
+
+This week I was encountering lots of double spending issues when the number
+of transaction in the block were kept small. We decided this was actually a 
+feature of cryptocurencies and not a bug that I was having. In a real world 
+scenario with lots more transactions and nodes it should work well.
+
+Decided it was definiately time to put the main focus onto the dissertation
+and not the code. Plan for the next week is to make a start on the introduction
+section and planning the dissertation.
+
+Next meeting 11:30 Thursday.

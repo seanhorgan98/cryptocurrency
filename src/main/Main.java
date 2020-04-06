@@ -72,6 +72,7 @@ class Main {
         // walletList.get(1).sendFunds(walletList.get(3).publicKey, 50);
         // walletList.get(2).sendFunds(walletList.get(1).publicKey, 10);
 
+        System.out.println("RANDOM WALLET BALANCE: " + walletList.get(3).getBalance());
 
 
         

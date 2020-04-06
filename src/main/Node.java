@@ -26,7 +26,8 @@ class Node{
         this.nearbyNodes = new ArrayList<Node>();
         this.allTransactions = new ArrayList<Transaction>();
         this.currentBlockchain = blockchain;
-
+        
+        
         //If not genesis node
         if(seedNode != null){
             //Get list of all nearby nodes from seedNode. Need to request random assortment of nodes.
@@ -47,9 +48,6 @@ class Node{
 
         //Add itself to the nearby nodes list
         nearbyNodes.add(this);
-
-        
-
     }
 
     // Creates a String hash of all the variables of the node
