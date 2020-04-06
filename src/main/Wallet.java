@@ -95,7 +95,7 @@ public class Wallet {
 
 		ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
 		
-		//TODO: change how the inputs are chosen. Make sure it is choosing the smallest inputs greater than the value
+		
 		float total = 0;
 		for (Map.Entry<String, TransactionOutput> item: walletUTXOs.entrySet()){
 			TransactionOutput UTXO = item.getValue();
