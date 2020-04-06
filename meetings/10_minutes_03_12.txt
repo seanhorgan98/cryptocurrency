@@ -1,0 +1,15 @@
+Meeting 10
+Date: 03/12/19
+
+This week I finished of last weeks work by removing the coin creation via
+altering the UTXO list on the blockchain. I added a way of creating a transaction
+to be added to a block in order to keep coin creation immutable and part of
+the blockchain. I also changed transactions so they were called as a method
+of wallets. This means I can also keep track of wallet balances and make sure
+that wallets have sufficient funds in order to make a transaction.
+
+Clarified the extent of the test harness I am supposed to implement in order
+to run multiple nodes on the same computer.
+
+Plan for next week is to start working on nodes and how the consensus/flooding
+algorithm will work.

@@ -1,0 +1,10 @@
+Meeting 12
+Date: 16/01/20
+
+I was away over almost the entirety of the chirstmas break so couldn't get
+any of the programming work done however I believe I have made good progress
+so far and don't think this is an issue. I made good progress deciding on how
+I will go about evaluating the project using unit test etc.
+
+Plan for this week is to make progress on the nodes and consensus algorithms
+to hopefully get close to finishing off the project.

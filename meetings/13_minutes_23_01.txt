@@ -1,0 +1,16 @@
+Meeting 13
+Date: 23/01/20
+
+I had a very busy week this week due to personal reasons and so I was
+only able to fix some minor fixes and make some progress researching
+how to implement the consensus and flooding algorithms.
+
+We talked about how having the whole program run from a main class which
+will create a large amount of nodes and simulate a network sending transactions
+will be fine for the scope of the project.
+Also discussed running the program with an argument to let the user choose
+the random seed. Finally talked about how the heap structure for nodes sending
+coins will work.
+
+Plan for next week is to try to finish off the nodes and consensus part of the
+project.

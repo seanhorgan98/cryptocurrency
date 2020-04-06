@@ -1,27 +1,18 @@
-# Guidance
-This is a suggested template for a project. You can modify it as you please, but
-but remember to keep:
+# Demonstrating the security of a basic cryptocurrency
 
-* a timelog, updated regularly in the `timelog.md` format;
-* all source under version control;
-* data well organised and with appropriate ethical approval (for human subject data);
+This is my final year dissertation project
 
-Here's an overview of the structure as it stands:
+## Abstract
+Over the past decade, cryptocurrency has become a rapidly growing area of interest as it aims to provide a 
+decentralised alternative to regular physical currencies. The goal of this project is to implement a secure 
+peer-based cryptocurrency. It is designed to include a distributed, tamper-proof ledger, a consensus mechanism 
+for distributing transactions to all participating nodes, a mining system, and wallets for sending 
+the currency between different addresses. It also includes a test harness so that a number of nodes 
+can be created and run on a single computer in order to test the system. Several tests are run in order to
+test the project's resistance to double spend attacks, Sybil attacks, and other attacks on the blockchain. 
+Thees tests prove that the cryptocurrency created is secure.
 
-* `timelog.md` The time log for your project.
-* `plan.md` A skeleton week-by-week plan for the project. 
-* `data/` data you acquire during the project
-* `src/` source code for your project
-* `status_report/` the status report submitted in December
-* `meetings/` Records of the meetings you have during the project.
-* `dissertation/` source and for your project dissertation
-* `presentation/` your presentation
 
-* Make sure you add a `.gitignore` or similar for your VCS for the tools you are using!
-* Add any appropriate continuous integration (e.g. Travis CI) in this directory.
-
-* Remove this `readme.md` file from any repository and replace it with something more appropriate!
-
-## Important
-* It should be easy to rebuild and run your project and your dissertation
-        * Include clear instructions in the relevant directories to make this possible
+## Running this project
+This project is exclusivly a collection of Java files and as such should be able to be run by any Java environment
+or command line interface like any other java program by calling the main method in src/main/Main.java

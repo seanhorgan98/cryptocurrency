@@ -1,0 +1,29 @@
+Meeting 15
+Date: 07/02/20
+
+<<<<<<< HEAD
+Discussed how I am still almost finished the implementation however,
+I was struggling with a few bugs during the week. 
+
+We also talked about how clean the code needed to be. Dr Poet told me
+that it wasn't all that important and that the comments were only really necesary
+for my own use in navigating the program as there would not be other
+maintainers on the project that would need to read the code.
+
+Plan for next week is as usual to finish off the implementation.
+
+Next meeting is back on schedule for next Thursday at 11:30
+=======
+I have mainly finished the coding part of the project with only a few minor
+parts to fix in the test harness in order to get it running. This week mainly
+consisted of bug fixing in the nodes and transaction classes. Was struggling
+with a double spending issue again.
+
+We discussed how important the cleanliness of the code will be in the final 
+assessment and agreed as long as I am able to navigate the code it should not
+be a problem as there will be no maintainers of the code after me. Although I
+will try to keep the code tidy if I ever want to show the code to potential
+employers.
+
+Next meeing is same time next week.
+>>>>>>> dissertation

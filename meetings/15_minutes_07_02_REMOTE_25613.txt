@@ -1,0 +1,15 @@
+Meeting 15
+Date: 07/02/20
+
+I have mainly finished the coding part of the project with only a few minor
+parts to fix in the test harness in order to get it running. This week mainly
+consisted of bug fixing in the nodes and transaction classes. Was struggling
+with a double spending issue again.
+
+We discussed how important the cleanliness of the code will be in the final 
+assessment and agreed as long as I am able to navigate the code it should not
+be a problem as there will be no maintainers of the code after me. Although I
+will try to keep the code tidy if I ever want to show the code to potential
+employers.
+
+Next meeing is same time next week.

@@ -1,0 +1,18 @@
+Meeting 8
+Date: 19/11/19
+
+This week I created a hashmap for unspent transaction outputs in order to keep track
+of coins. This allowed me to store the balance for each wallet and update this balance
+by looping through the UTXOs and summing all transactions that match the wallet's 
+public key. I also implemented coin creation by adding a new transaction output to the 
+UTXO map.
+
+We decided that it is not secure to simply add to the UTXO map to create coins as only
+the transactions are immutable. This means that next week I will change the coin creation
+to create a new transaction.
+I also confirmed that updating the wallet balance should be client side and not when the
+block is created.
+
+Plan for next week is to fix the coin creation, wallet transaction validation eg checking
+the wallet has enough coins to send when creating a transaction. Finally to start researching
+the plan for consensus and proof of work algorithms.

@@ -1,0 +1,14 @@
+Meeting 15
+Date: 07/02/20
+
+Discussed how I am still almost finished the implementation however,
+I was struggling with a few bugs during the week. 
+
+We also talked about how clean the code needed to be. Dr Poet told me
+that it wasn't all that important and that the comments were only really necesary
+for my own use in navigating the program as there would not be other
+maintainers on the project that would need to read the code.
+
+Plan for next week is as usual to finish off the implementation.
+
+Next meeting is back on schedule for next Thursday at 11:30
