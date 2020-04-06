@@ -216,3 +216,7 @@
 * *1 hour* proofreading
 * *2 hours* making presentation
 * *1 hour* admin work
+
+### 6 Apr 2020
+* *3 hours* making presentation
+* *1 hour* final proof reading and submittion
