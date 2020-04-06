@@ -5,7 +5,7 @@ import java.util.*;
 class Blockchain {
     public ArrayList<Block> blockChain = new ArrayList<Block>(1);
 
-    //List of all unspent transactions in a Map<TransactionOutput.id, TransactionOutput>
+    // List of all unspent transactions in a Map<TransactionOutput.id, TransactionOutput>
     public Map<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
     
     public static final float MIN_TRANSACTION = 0.1f;
@@ -16,7 +16,6 @@ class Blockchain {
         this.blockChain.add(genesisBlock);
     }
 
-    //WILL BE DEPRECIATED
     // Adds a block to the blockchain by setting it's previous hash to the hash of the
     // current tail of the blockchain and then mining the block
     public void addBlock(Block blockToAdd){        

@@ -36,8 +36,8 @@ public class Wallet {
 		float total = 0;	
         for (Map.Entry<String, TransactionOutput> item: currentBlockchain.UTXOs.entrySet()){
         	TransactionOutput UTXO = item.getValue();
-            if(UTXO.isMine(publicKey) && !walletUTXOs.containsKey(UTXO.id)) { //if output belongs to me ( if coins belong to me )
-            	walletUTXOs.put(UTXO.id,UTXO); //add it to our list of unspent transactions.
+            if(UTXO.isMine(publicKey) && !walletUTXOs.containsKey(UTXO.id)) { // if output belongs to me ( if coins belong to me )
+            	walletUTXOs.put(UTXO.id,UTXO); // add it to our list of unspent transactions.
             	total += UTXO.value ; 
             }
 		}
@@ -61,7 +61,7 @@ public class Wallet {
 		}
 	}
 
-	//Client side check to see if wallet has enough coins to make transaction
+	// Client side check to see if wallet has enough coins to make transaction
 	public boolean sufficientFunds(Transaction tx){
 		if(balance < tx.value){
 			return false;
@@ -79,7 +79,7 @@ public class Wallet {
 		}
 	}
 
-	//Update the parent node to start flooding the transaction to other nodes
+	// Update the parent node to start flooding the transaction to other nodes
 	private void updateNode(Transaction tx){
 		parentNode.floodTransaction(tx);
 	}
@@ -95,12 +95,10 @@ public class Wallet {
 
 		ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
 		
-		
 		float total = 0;
 		for (Map.Entry<String, TransactionOutput> item: walletUTXOs.entrySet()){
 			TransactionOutput UTXO = item.getValue();
 
-			
 			if(UTXO.value >= value){
 				inputs.add(new TransactionInput(UTXO.id, UTXO.value));
 				break;
@@ -112,9 +110,7 @@ public class Wallet {
 			}
 		}
 	
-		
 		Transaction tx = new Transaction(publicKey, recipient, value, inputs, currentBlockchain);
-		//Is this line necessary
 		tx.outputs.add(new TransactionOutput(tx.reciepient, tx.value, tx.transactionId));
 		tx.generateSignature(privateKey);
 

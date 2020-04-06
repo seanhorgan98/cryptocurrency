@@ -7,7 +7,7 @@ import java.util.Collections;
 
 
 class Transaction{
-    public String transactionId; //Serves as an ID
+    public String transactionId; // Serves as an ID
     public PublicKey sender;
     public PublicKey reciepient;
     public float value;
@@ -16,7 +16,7 @@ class Transaction{
 
     private boolean coinCreationFlag;
 
-    public byte[] signature; //Used for verification
+    public byte[] signature; // Used for verification
 
     public List<TransactionInput> inputs = new ArrayList<TransactionInput>();
     public List<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
@@ -27,7 +27,7 @@ class Transaction{
 		this.reciepient = reciepient;
         this.value = value;
         
-        //Check for coin creation
+        // Check for coin creation
         if(sender == null || inputs == null){
             coinCreationFlag = true;
             this.inputs = Collections.emptyList();
@@ -106,7 +106,7 @@ class Transaction{
         }
         float inputSum = getInputsSum();
 
-        //check if transaction is valid:
+        // check if transaction is valid:
 		if(inputSum < Blockchain.MIN_TRANSACTION && inputs.size() > 0) {
 			System.out.println("Transaction Inputs too small: " + getInputsSum());
 			return false;
@@ -118,7 +118,7 @@ class Transaction{
             return false;
         }
 
-        //Don't allow sends of 0
+        // Don't allow sends of 0
         if(value == 0){
             System.out.println("Cannot send 0.");
             return false;
@@ -132,19 +132,19 @@ class Transaction{
         
         System.out.println("Value: " + value + ", Inputsum: " + inputSum + ", Overpay: " + overPay + ", ID: " + transactionId);
         transactionId = calulateHash();
-        outputs.add(new TransactionOutput(this.reciepient, value, transactionId)); //Send value to reciepient
+        outputs.add(new TransactionOutput(this.reciepient, value, transactionId)); // Send value to reciepient
         if(overPay != 0){
-            outputs.add(new TransactionOutput( this.sender, overPay, transactionId)); //Send Left over back to sender
+            outputs.add(new TransactionOutput( this.sender, overPay, transactionId)); // Send Left over back to sender
         }
         
-        //UTXo key cannot be address as it will overwrite previous transactions. Needs to be transaction ID
+        // UTXo key cannot be address as it will overwrite previous transactions. Needs to be transaction ID
 
-        //Add outputs to Unspent list
+        // Add outputs to Unspent list
 		for(TransactionOutput o : outputs) {
 			currentBlockchain.UTXOs.put(o.id , o);
 		}
 		
-		//Remove transaction inputs from UTXO lists as spent:
+		// Remove transaction inputs from UTXO lists as spent:
 		for(TransactionInput i : inputs) {
 			if(i.UTXO == null) continue; //if Transaction can't be found skip it 
 			currentBlockchain.UTXOs.remove(i.UTXO.id);
