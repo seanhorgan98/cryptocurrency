@@ -14,7 +14,7 @@
 \begin{abstract}
     \vskip 0.5em
     Over the past decade, cryptocurrency has become a rapidly growing area of interest as it aims to provide a 
-    decentralised alternative to regular physical currencies. The goal of this project is to implement a secure peer-based 
+    decentralised alternative to regular physical currencies. The goal of this project is to implement a secure, peer-based 
     cryptocurrency. It is designed to include a distributed, tamper-proof ledger, a consensus mechanism 
     for distributing transactions to all participating nodes, a mining system, and wallets for sending 
     the currency between different addresses. It also includes a test harness so that a number of nodes 
@@ -245,7 +245,7 @@ A large source of the information used to plan this project and choose the relev
 book \emph{Bitcoin and Cryptocurrency Technologies} \citep{narayanan2016bitcoin}. This provided a more in depth discussion
 about the intricacies of the structures needed for the project. The book also gave good information about cryptocurrencies
 that were not Bitcoin which gave a bigger picture and provided options for doing things differently or ways to 
-exclude areas of Bitcoin that would not be relevant in the project.
+exclude areas of Bitcoin that would not be relevant in the project. 
 
 \subsection{Flooding}
 One of the key topics described in the book was the way for the nodes in the network to reach a consensus. This happens
@@ -407,7 +407,7 @@ how the overall process of sending currency from one wallet to another would wor
 \section{Transactions}
 A transaction object is the basic building block of the whole cryptocurrency. This means that it must be designed 
 to be secure and robust. Transactions should contain metadata that is able to identify and validate itself when
-recieved and also contain the necessary information such as the amount of currency being sent in that transaction.
+received and also contain the necessary information such as the amount of currency being sent in that transaction.
 
 \subsection{Inputs and Outputs}
 In order for a user to send some currency to another user they first have to have a sufficient amount themselves. The
@@ -988,7 +988,7 @@ be sent to every wallet in order for the wallets to have some starting currency 
 send to other wallets during the test harness process. 
 
 Transactions can be created in the main class using the
-format shown in listing \ref{lst:transactionCreation}. The senderAddress and recieverAddress are the public keys
+format shown in listing \ref{lst:transactionCreation}. The senderAddress and receiverAddress are the public keys
 that have been assigned to the sender's and receiver's wallets respectively. The value is the amount of currency the
 transaction is attempting to send. Finally the inputs are the collection of transaction outputs that are going
 to be consumed as transaction inputs by the transaction in order to send the specified amount.
@@ -996,7 +996,7 @@ to be consumed as transaction inputs by the transaction in order to send the spe
 \begin{lstlisting}[language=java, float=h, caption={This code snippet shows how transactions are created using
     the address of the sender, the address of the receiver, the value of the transaction, and the transaction
     inputs that are to be consumed by the transaction.}, label=lst:transactionCreation]
-    Transaction exampleTransaction = new Transaction(senderAddress, recieverAddress, value, inputs);
+    Transaction exampleTransaction = new Transaction(senderAddress, receiverAddress, value, inputs);
 \end{lstlisting}
 
 For the large majority of purposes, the new Transaction() command will be called by wallets because this is how nodes
@@ -1248,7 +1248,7 @@ fill a block [\textit{Listing \ref{lst:mining}}].
         This snippet of code shows the process of finding a hash that fits within a specified target range (hash starting
         with set number of 0s). Each loop tried a new hash by incrementing the nonce before calculating a hash. This 
         function proves that a node has expended computational power before appending to the blockchain preventing Sybil
-        attacks.
+        attacks This code was created with help from \cite{miningcode}.
     }
     , label=lst:mining]
     public boolean mineBlock(int difficulty) {
